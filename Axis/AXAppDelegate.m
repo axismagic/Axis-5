@@ -8,21 +8,39 @@
 
 #import "AXAppDelegate.h"
 
-#import "AXViewController.h"
+#import "AXInputViewController.h"
+#import "EAGLView.h"
+#import "AXSceneController.h"
 
 @implementation AXAppDelegate
 
-@synthesize window = _window;
-@synthesize viewController = _viewController;
+@synthesize window;
 
-- (void)dealloc
-{
-    [_window release];
-    [_viewController release];
-    [super dealloc];
+- (void)applicationDidFinishLaunching:(UIApplication *)application {
+    AXSceneController *sceneController = [AXSceneController sharedSceneController];
+    
+    // make a new input view controller, save it
+    AXInputViewController *anInputController = [[AXInputViewController alloc] initWithNibName:nil bundle:nil];
+    sceneController.inputController = anInputController;
+    [anInputController release];
+    
+    // initialise main EAGLView with window bounds
+    EAGLView *glView = [[EAGLView alloc] initWithFrame:window.bounds];
+    sceneController.inputController.view = glView;
+    sceneController.openGLView = glView;
+    [glView release];
+    
+    // set our view as the first window view
+    [window addSubview:sceneController.inputController.view];
+    [window makeKeyAndVisible];
+    
+    // begin the game
+    [sceneController loadScene];
+    [sceneController startScene];
 }
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+/* Original
+ - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
@@ -61,6 +79,12 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}*/
+
+- (void)dealloc
+{
+    [window release];
+    [super dealloc];
 }
 
 @end

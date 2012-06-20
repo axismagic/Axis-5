@@ -8,12 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class AXViewController;
+@interface AXAppDelegate : NSObject <UIApplicationDelegate> {
+    UIWindow *window;
+}
 
-@interface AXAppDelegate : UIResponder <UIApplicationDelegate>
-
-@property (strong, nonatomic) UIWindow *window;
-
-@property (strong, nonatomic) AXViewController *viewController;
+@property (nonatomic, retain) IBOutlet UIWindow *window;
 
 @end

@@ -10,21 +10,22 @@
 		C50DF7AE1591C5D100BBB433 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C50DF7AD1591C5D100BBB433 /* UIKit.framework */; };
 		C50DF7B01591C5D100BBB433 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C50DF7AF1591C5D100BBB433 /* Foundation.framework */; };
 		C50DF7B21591C5D100BBB433 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C50DF7B11591C5D100BBB433 /* CoreGraphics.framework */; };
-		C50DF7B41591C5D100BBB433 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C50DF7B31591C5D100BBB433 /* GLKit.framework */; };
 		C50DF7B61591C5D100BBB433 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C50DF7B51591C5D100BBB433 /* OpenGLES.framework */; };
 		C50DF7BC1591C5D100BBB433 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C50DF7BA1591C5D100BBB433 /* InfoPlist.strings */; };
 		C50DF7BE1591C5D100BBB433 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF7BD1591C5D100BBB433 /* main.m */; };
 		C50DF7C21591C5D100BBB433 /* AXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF7C11591C5D100BBB433 /* AXAppDelegate.m */; };
-		C50DF7C41591C5D100BBB433 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = C50DF7C31591C5D100BBB433 /* Shader.fsh */; };
-		C50DF7C61591C5D100BBB433 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = C50DF7C51591C5D100BBB433 /* Shader.vsh */; };
-		C50DF7C91591C5D100BBB433 /* AXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF7C81591C5D100BBB433 /* AXViewController.m */; };
-		C50DF7CC1591C5D100BBB433 /* AXViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = C50DF7CA1591C5D100BBB433 /* AXViewController_iPhone.xib */; };
-		C50DF7CF1591C5D100BBB433 /* AXViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C50DF7CD1591C5D100BBB433 /* AXViewController_iPad.xib */; };
 		C50DF7D71591C5D100BBB433 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C50DF7D61591C5D100BBB433 /* SenTestingKit.framework */; };
 		C50DF7D81591C5D200BBB433 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C50DF7AD1591C5D100BBB433 /* UIKit.framework */; };
 		C50DF7D91591C5D200BBB433 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C50DF7AF1591C5D100BBB433 /* Foundation.framework */; };
 		C50DF7E11591C5D200BBB433 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C50DF7DF1591C5D200BBB433 /* InfoPlist.strings */; };
 		C50DF7E41591C5D200BBB433 /* AxisTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF7E31591C5D200BBB433 /* AxisTests.m */; };
+		C50DF7F01591C8EE00BBB433 /* AXInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF7EF1591C8EE00BBB433 /* AXInputViewController.m */; };
+		C50DF7F61591CBC200BBB433 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF7F51591CBC200BBB433 /* EAGLView.m */; };
+		C50DF7F91591D44F00BBB433 /* AXSceneController.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF7F81591D44F00BBB433 /* AXSceneController.m */; };
+		C50DF7FC1591D58800BBB433 /* AXMesh.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF7FB1591D58800BBB433 /* AXMesh.m */; };
+		C50DF7FF1591D72100BBB433 /* AXSceneObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF7FE1591D72100BBB433 /* AXSceneObject.m */; };
+		C50DF8011591DFF800BBB433 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C50DF8001591DFF800BBB433 /* QuartzCore.framework */; };
+		C50DF8031591E12200BBB433 /* MainWindow_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = C50DF8021591E12200BBB433 /* MainWindow_iPhone.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,24 +45,30 @@
 		C50DF7B11591C5D100BBB433 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		C50DF7B31591C5D100BBB433 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		C50DF7B51591C5D100BBB433 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		C50DF7B91591C5D100BBB433 /* Axis-Info.plist */ = {isa = PBXFileReference; path = "Axis-Info.plist"; sourceTree = "<group>"; };
+		C50DF7B91591C5D100BBB433 /* Axis-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Axis-Info.plist"; sourceTree = "<group>"; };
 		C50DF7BB1591C5D100BBB433 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C50DF7BD1591C5D100BBB433 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		C50DF7BF1591C5D100BBB433 /* Axis-Prefix.pch */ = {isa = PBXFileReference; path = "Axis-Prefix.pch"; sourceTree = "<group>"; };
-		C50DF7C01591C5D100BBB433 /* AXAppDelegate.h */ = {isa = PBXFileReference; path = AXAppDelegate.h; sourceTree = "<group>"; };
+		C50DF7BF1591C5D100BBB433 /* Axis-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Axis-Prefix.pch"; sourceTree = "<group>"; };
+		C50DF7C01591C5D100BBB433 /* AXAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AXAppDelegate.h; sourceTree = "<group>"; };
 		C50DF7C11591C5D100BBB433 /* AXAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AXAppDelegate.m; sourceTree = "<group>"; };
-		C50DF7C31591C5D100BBB433 /* Shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.fsh; path = Shaders/Shader.fsh; sourceTree = "<group>"; };
-		C50DF7C51591C5D100BBB433 /* Shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.vsh; path = Shaders/Shader.vsh; sourceTree = "<group>"; };
-		C50DF7C71591C5D100BBB433 /* AXViewController.h */ = {isa = PBXFileReference; path = AXViewController.h; sourceTree = "<group>"; };
-		C50DF7C81591C5D100BBB433 /* AXViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AXViewController.m; sourceTree = "<group>"; };
-		C50DF7CB1591C5D100BBB433 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/AXViewController_iPhone.xib; sourceTree = "<group>"; };
-		C50DF7CE1591C5D100BBB433 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/AXViewController_iPad.xib; sourceTree = "<group>"; };
 		C50DF7D51591C5D100BBB433 /* AxisTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AxisTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C50DF7D61591C5D100BBB433 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		C50DF7DE1591C5D200BBB433 /* AxisTests-Info.plist */ = {isa = PBXFileReference; path = "AxisTests-Info.plist"; sourceTree = "<group>"; };
+		C50DF7DE1591C5D200BBB433 /* AxisTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AxisTests-Info.plist"; sourceTree = "<group>"; };
 		C50DF7E01591C5D200BBB433 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C50DF7E21591C5D200BBB433 /* AxisTests.h */ = {isa = PBXFileReference; path = AxisTests.h; sourceTree = "<group>"; };
+		C50DF7E21591C5D200BBB433 /* AxisTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AxisTests.h; sourceTree = "<group>"; };
 		C50DF7E31591C5D200BBB433 /* AxisTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AxisTests.m; sourceTree = "<group>"; };
+		C50DF7EE1591C8EE00BBB433 /* AXInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXInputViewController.h; sourceTree = "<group>"; };
+		C50DF7EF1591C8EE00BBB433 /* AXInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXInputViewController.m; sourceTree = "<group>"; };
+		C50DF7F41591CBC100BBB433 /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
+		C50DF7F51591CBC200BBB433 /* EAGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EAGLView.m; sourceTree = "<group>"; };
+		C50DF7F71591D44F00BBB433 /* AXSceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXSceneController.h; sourceTree = "<group>"; };
+		C50DF7F81591D44F00BBB433 /* AXSceneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXSceneController.m; sourceTree = "<group>"; };
+		C50DF7FA1591D58800BBB433 /* AXMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXMesh.h; path = Objects/AXMesh.h; sourceTree = "<group>"; };
+		C50DF7FB1591D58800BBB433 /* AXMesh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXMesh.m; path = Objects/AXMesh.m; sourceTree = "<group>"; };
+		C50DF7FD1591D72100BBB433 /* AXSceneObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXSceneObject.h; path = Objects/AXSceneObject.h; sourceTree = "<group>"; };
+		C50DF7FE1591D72100BBB433 /* AXSceneObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXSceneObject.m; path = Objects/AXSceneObject.m; sourceTree = "<group>"; };
+		C50DF8001591DFF800BBB433 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C50DF8021591E12200BBB433 /* MainWindow_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainWindow_iPhone.xib; path = Interface/MainWindow_iPhone.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,11 +76,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C50DF7AE1591C5D100BBB433 /* UIKit.framework in Frameworks */,
 				C50DF7B01591C5D100BBB433 /* Foundation.framework in Frameworks */,
+				C50DF7AE1591C5D100BBB433 /* UIKit.framework in Frameworks */,
 				C50DF7B21591C5D100BBB433 /* CoreGraphics.framework in Frameworks */,
-				C50DF7B41591C5D100BBB433 /* GLKit.framework in Frameworks */,
 				C50DF7B61591C5D100BBB433 /* OpenGLES.framework in Frameworks */,
+				C50DF8011591DFF800BBB433 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +119,7 @@
 		C50DF7AC1591C5D100BBB433 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C50DF8001591DFF800BBB433 /* QuartzCore.framework */,
 				C50DF7AD1591C5D100BBB433 /* UIKit.framework */,
 				C50DF7AF1591C5D100BBB433 /* Foundation.framework */,
 				C50DF7B11591C5D100BBB433 /* CoreGraphics.framework */,
@@ -127,12 +135,17 @@
 			children = (
 				C50DF7C01591C5D100BBB433 /* AXAppDelegate.h */,
 				C50DF7C11591C5D100BBB433 /* AXAppDelegate.m */,
-				C50DF7C31591C5D100BBB433 /* Shader.fsh */,
-				C50DF7C51591C5D100BBB433 /* Shader.vsh */,
-				C50DF7C71591C5D100BBB433 /* AXViewController.h */,
-				C50DF7C81591C5D100BBB433 /* AXViewController.m */,
-				C50DF7CA1591C5D100BBB433 /* AXViewController_iPhone.xib */,
-				C50DF7CD1591C5D100BBB433 /* AXViewController_iPad.xib */,
+				C50DF7F41591CBC100BBB433 /* EAGLView.h */,
+				C50DF7F51591CBC200BBB433 /* EAGLView.m */,
+				C50DF7EE1591C8EE00BBB433 /* AXInputViewController.h */,
+				C50DF7EF1591C8EE00BBB433 /* AXInputViewController.m */,
+				C50DF7F71591D44F00BBB433 /* AXSceneController.h */,
+				C50DF7F81591D44F00BBB433 /* AXSceneController.m */,
+				C50DF7FD1591D72100BBB433 /* AXSceneObject.h */,
+				C50DF7FE1591D72100BBB433 /* AXSceneObject.m */,
+				C50DF7FA1591D58800BBB433 /* AXMesh.h */,
+				C50DF7FB1591D58800BBB433 /* AXMesh.m */,
+				C50DF8021591E12200BBB433 /* MainWindow_iPhone.xib */,
 				C50DF7B81591C5D100BBB433 /* Supporting Files */,
 			);
 			path = Axis;
@@ -240,10 +253,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C50DF7BC1591C5D100BBB433 /* InfoPlist.strings in Resources */,
-				C50DF7C41591C5D100BBB433 /* Shader.fsh in Resources */,
-				C50DF7C61591C5D100BBB433 /* Shader.vsh in Resources */,
-				C50DF7CC1591C5D100BBB433 /* AXViewController_iPhone.xib in Resources */,
-				C50DF7CF1591C5D100BBB433 /* AXViewController_iPad.xib in Resources */,
+				C50DF8031591E12200BBB433 /* MainWindow_iPhone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,7 +290,11 @@
 			files = (
 				C50DF7BE1591C5D100BBB433 /* main.m in Sources */,
 				C50DF7C21591C5D100BBB433 /* AXAppDelegate.m in Sources */,
-				C50DF7C91591C5D100BBB433 /* AXViewController.m in Sources */,
+				C50DF7F01591C8EE00BBB433 /* AXInputViewController.m in Sources */,
+				C50DF7F61591CBC200BBB433 /* EAGLView.m in Sources */,
+				C50DF7F91591D44F00BBB433 /* AXSceneController.m in Sources */,
+				C50DF7FC1591D58800BBB433 /* AXMesh.m in Sources */,
+				C50DF7FF1591D72100BBB433 /* AXSceneObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,22 +323,6 @@
 				C50DF7BB1591C5D100BBB433 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		C50DF7CA1591C5D100BBB433 /* AXViewController_iPhone.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C50DF7CB1591C5D100BBB433 /* en */,
-			);
-			name = AXViewController_iPhone.xib;
-			sourceTree = "<group>";
-		};
-		C50DF7CD1591C5D100BBB433 /* AXViewController_iPad.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C50DF7CE1591C5D100BBB433 /* en */,
-			);
-			name = AXViewController_iPad.xib;
 			sourceTree = "<group>";
 		};
 		C50DF7DF1591C5D200BBB433 /* InfoPlist.strings */ = {
