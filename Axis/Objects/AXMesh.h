@@ -12,19 +12,21 @@
 #import <OpenGLES/ES1/glext.h>
 #import <QuartzCore/QuartzCore.h>
 
+#import "AXPoint.h"
+
 @interface AXMesh : NSObject {
     GLfloat *vertexes;
     GLfloat *colors;
     
     GLenum renderStyle;
     NSInteger vertexCount;
-    NSInteger vertexSize;
-    NSInteger colorSize;
+    NSInteger vertexStride;
+    NSInteger colorStride;
 }
 
 @property (assign) NSInteger vertexCount;
-@property (assign) NSInteger vertexSize;
-@property (assign) NSInteger colorSize;
+@property (assign) NSInteger vertexStride;
+@property (assign) NSInteger colorStride;
 @property (assign) GLenum renderStyle;
 
 @property (assign) GLfloat *vertexes;
@@ -32,8 +34,9 @@
 
 - (id)initWithVertexes:(CGFloat*)verts
            vertexCount:(NSInteger)vertCount
-            vertexSize:(NSInteger)vertSize
+          vertexStride:(NSInteger)vertStride
            renderStyle:(GLenum)style;
++ (CGRect)meshBounds:(AXMesh*)mesh scale:(AXPoint)scale;
 
 - (void)render;
 
