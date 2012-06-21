@@ -12,29 +12,30 @@
 #import <OpenGLES/ES1/glext.h>
 #import <QuartzCore/QuartzCore.h>
 
-@class AXMesh;
+#import "AXPoint.h"
+#import "AXMesh.h"
+#import "AXInputViewController.h"
+#import "AXSceneController.h"
 
 @interface AXSceneObject : NSObject {
-    CGFloat x, y, z;
-    CGFloat xRotation, yRotation, zRotation;
-    CGFloat xScale, yScale, zScale;
+    AXPoint translation;
+    AXPoint rotation;
+    AXPoint scale;
     
     AXMesh *mesh;
+    
+    CGRect meshBounds;
     
     BOOL active;
 }
 
-@property (assign) CGFloat x;
-@property (assign) CGFloat y;
-@property (assign) CGFloat z;
+@property (retain) AXMesh *mesh;
 
-@property (assign) CGFloat xRotation;
-@property (assign) CGFloat yRotation;
-@property (assign) CGFloat zRotation;
+@property (assign) CGRect meshBounds;
 
-@property (assign) CGFloat xScale;
-@property (assign) CGFloat yScale;
-@property (assign) CGFloat zScale;
+@property (assign) AXPoint translation;
+@property (assign) AXPoint rotation;
+@property (assign) AXPoint scale;
 
 @property (assign) BOOL active;
 

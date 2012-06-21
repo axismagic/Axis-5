@@ -28,22 +28,16 @@ static CGFloat spinnySquareColors[16] = {
 
 @implementation AXSceneObject
 
-@synthesize x, y, z, xRotation, yRotation, zRotation, xScale, yScale, zScale, active;
+@synthesize translation, rotation, scale, active, mesh, meshBounds;
 
 - (id)init {
     self = [super init];
     if (self != nil) {
-        x = 0.0;
-        y = 0.0;
-        z = 0.0;
+        translation = AXPointMake(0.0, 0.0, 0.0);
+        rotation = AXPointMake(0.0, 0.0, 0.0);
+        scale = AXPointMake(1.0, 1.0, 1.0);
         
-        xRotation = 0.0;
-        yRotation = 0.0;
-        zRotation = 0.0;
-        
-        xScale = 1.0;
-        yScale = 1.0;
-        zScale = 1.0;
+        meshBounds = CGRectZero;
         
         active = NO;
     }
@@ -51,26 +45,26 @@ static CGFloat spinnySquareColors[16] = {
     return self;
 }
 
+- (CGRect)meshBounds {
+    if (CGRectEqualToRect(meshBounds, CGRectZero)) {
+        meshBounds = [AXMesh meshBounds:mesh scale:scale];
+    }
+    
+    return meshBounds;
+}
+
 - (void)awake {
     // called once when object is created
     mesh = [[AXMesh alloc] initWithVertexes:spinnySquareVertices
                                 vertexCount:4
-                                 vertexSize:2
+                                 vertexStride:2
                                 renderStyle:GL_TRIANGLE_STRIP];
     mesh.colors = spinnySquareColors;
-    mesh.colorSize = 4;
+    mesh.colorStride = 4;
 }
 
 - (void)update {
-    // called once every frame
-    NSSet *touches = [[AXSceneController sharedSceneController].inputController touchEvents];
-    for (UITouch *touch in [touches allObjects]) {
-        if (touch.phase == UITouchPhaseEnded) {
-            active = !active;
-        }
-    }
-    
-    if (active) zRotation += 3.0;
+    // overridden by subclasses
 }
 
 - (void)render {
@@ -78,15 +72,15 @@ static CGFloat spinnySquareColors[16] = {
     glLoadIdentity();
     
     // move to my position
-    glTranslatef(x, y, z);
+    glTranslatef(translation.x, translation.y, translation.z);
     
     // rotate
-    glRotatef(xRotation, 1.0f, 0.0f, 0.0f);
-    glRotatef(yRotation, 0.0f, 1.0f, 0.0f);
-    glRotatef(zRotation, 0.0f, 0.0f, 1.0f);
+    glRotatef(rotation.x, 1.0f, 0.0f, 0.0f);
+    glRotatef(rotation.y, 0.0f, 1.0f, 0.0f);
+    glRotatef(rotation.z, 0.0f, 0.0f, 1.0f);
     
     // scale
-    glScalef(xScale, yScale, zScale);
+    glScalef(scale.x, scale.y, scale.z);
     
     [mesh render];
     
