@@ -10,9 +10,17 @@
 
 @interface AXInputViewController : UIViewController {
     NSMutableSet *touchEvents;
+    
+    NSMutableArray *interfaceObjects;
 }
 
 @property (retain) NSMutableSet *touchEvents;
+
+- (void)loadInterface;
+- (void)updateInterface;
+- (void)renderInterface;
+
+- (CGRect)screenRectFromMeshRect:(CGRect)rect atPoint:(CGPoint)meshCenter;
 
 - (BOOL)touchesDidBegin;
 - (void)clearEvents;

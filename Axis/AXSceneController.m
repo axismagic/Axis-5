@@ -33,9 +33,13 @@
     
     // add a single scene object for testing
     AXSceneObject *object = [[AXSceneObject alloc] init];
+    object.scale = AXPointMake(100.0, 100.0, 1.0);
     [object awake];
     [sceneObjects addObject:object];
     [object release];
+    
+    // load interface
+    [inputController loadInterface];
 }
 
 - (void)startScene {
@@ -53,6 +57,8 @@
 }
 
 - (void)updateModel {
+    // call update on all interface objects
+    [inputController updateInterface];
     // call update on all objects
     [sceneObjects makeObjectsPerformSelector:@selector(update)];
     // clear events
@@ -64,6 +70,8 @@
     [openGLView beginDraw];
     // call render on all objects in the scene
     [sceneObjects makeObjectsPerformSelector:@selector(render)];
+    // draw interface on top of everything
+    [inputController renderInterface];
     // finilise frame
     [openGLView finishDraw];
 }
