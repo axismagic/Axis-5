@@ -48,12 +48,14 @@
             [self release];
             return nil;
         }
+        
+        self.multipleTouchEnabled = YES;
     }
     
     return self;
 }
 
-- (void)setupView {
+- (void)setupViewPortrait {
     glViewport(0, 0, backingWidth, backingHeight);
     
     glMatrixMode(GL_PROJECTION);
@@ -62,6 +64,18 @@
     
     glMatrixMode(GL_MODELVIEW);
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+}
+
+- (void)setupViewLandscape {
+    glViewport(0, 0, backingWidth, backingHeight);
+    
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glRotatef(-90.0f, 0.0f, 0.0f, 1.0f);
+    glOrthof(-backingHeight/2.0, backingHeight/2.0, -backingWidth/2.0, backingWidth/2.0, -1.0f, 1.0f);
+    
+    glMatrixMode(GL_MODELVIEW);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 - (void)beginDraw {
@@ -83,7 +97,7 @@
     [EAGLContext setCurrentContext:context];
     [self destroyFrameBuffer];
     [self createFrameBuffer];
-    [self setupView];
+    [self setupViewLandscape];
 }
 
 - (BOOL)createFrameBuffer {

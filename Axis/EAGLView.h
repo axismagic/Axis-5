@@ -27,6 +27,7 @@
 
 - (void)beginDraw;
 - (void)finishDraw;
-- (void)setupView;
+- (void)setupViewPortrait;
+- (void)setupViewLandscape;
 
 @end
