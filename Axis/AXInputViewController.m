@@ -9,10 +9,12 @@
 #import "AXInputViewController.h"
 
 #import "AXButton.h"
+#import "AXArrowButton.h"
 
 @implementation AXInputViewController
 
 @synthesize touchEvents;
+@synthesize forwardMagnitude, leftMagnitude, rightMagnitude, fireMissile;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
@@ -23,6 +25,10 @@
     return self;
 }
 
+- (void)loadView {
+    
+}
+
 #pragma mark Interface
 
 - (void)loadInterface {
@@ -30,37 +36,59 @@
         interfaceObjects = [[NSMutableArray alloc] init];
     
     // right arrow button
-    AXButton *rightButton = [[AXButton alloc] init];
+    AXButton *rightButton = [[AXArrowButton alloc] init];
     rightButton.scale = AXPointMake(50.0, 50.0, 1.0);
     rightButton.translation = AXPointMake(-155.0, -130.0, 0.0);
+    // set actions
+    rightButton.target = self;
+    rightButton.buttonDownAction = @selector(rightButtonDown);
+    rightButton.buttonUpAction = @selector(rightButtonUp);
+    // activate
     rightButton.active = YES;
     [rightButton awake];
     [interfaceObjects addObject:rightButton];
     [rightButton release];
     
     // left arrow button
-    AXButton *leftButton = [[AXButton alloc] init];
+    AXButton *leftButton = [[AXArrowButton alloc] init];
     leftButton.scale = AXPointMake(50.0, 50.0, 1.0);
     leftButton.translation = AXPointMake(-210.0, -130.0, 0.0);
+    leftButton.rotation = AXPointMake(0.0, 0.0, 180.0);
+    // set actions
+    leftButton.target = self;
+    leftButton.buttonDownAction = @selector(leftButtonDown);
+    leftButton.buttonUpAction = @selector(leftButtonUp);
+    // activate
     leftButton.active = YES;
     [leftButton awake];
     [interfaceObjects addObject:leftButton];
     [leftButton release];
     
-    // right arrow button
-    AXButton *forwardButton = [[AXButton alloc] init];
+    // forward arrow button
+    AXButton *forwardButton = [[AXArrowButton alloc] init];
     forwardButton.scale = AXPointMake(50.0, 50.0, 1.0);
     forwardButton.translation = AXPointMake(-185.0, -75.0, 0.0);
+    forwardButton.rotation = AXPointMake(0.0, 0.0, 90.0);
+    // set actions
+    forwardButton.target = self;
+    forwardButton.buttonDownAction = @selector(forwardButtonDown);
+    forwardButton.buttonUpAction = @selector(forwardButtonUp);
+    // activate
     forwardButton.active = YES;
     [forwardButton awake];
     [interfaceObjects addObject:forwardButton];
     [forwardButton release];
     
-    // right arrow button
+    // fire arrow button
     AXButton *fireButton = [[AXButton alloc] init];
     fireButton.scale = AXPointMake(50.0, 50.0, 1.0);
     fireButton.translation = AXPointMake(210.0, -130.0, 0.0);
-    rightButton.active = YES;
+    // set actions
+    fireButton.target = self;
+    fireButton.buttonDownAction = @selector(fireButtonDown);
+    fireButton.buttonUpAction = @selector(fireButtonUp);
+    // activate
+    fireButton.active = YES;
     [fireButton awake];
     [interfaceObjects addObject:fireButton];
     [fireButton release];
@@ -103,6 +131,40 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     [touchEvents addObjectsFromArray:[touches allObjects]];
+}
+
+#pragma mark Input Registers
+
+- (void)fireButtonDown {
+    self.fireMissile = YES;
+}
+
+- (void)fireButtonUp {
+    
+}
+
+- (void)leftButtonDown {
+    self.leftMagnitude = 1.0;
+}
+
+- (void)leftButtonUp {
+    self.leftMagnitude = 0.0;
+}
+
+- (void)rightButtonDown {
+    self.rightMagnitude = 1.0;
+}
+
+- (void)rightButtonUp {
+    self.rightMagnitude = 0.0;
+}
+
+- (void)forwardButtonDown {
+    self.forwardMagnitude = 1.0;
+}
+
+- (void)forwardButtonUp {
+    self.forwardMagnitude = 1.0;
 }
 
 #pragma mark Unload, Dealloc

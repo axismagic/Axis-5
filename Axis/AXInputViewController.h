@@ -12,9 +12,19 @@
     NSMutableSet *touchEvents;
     
     NSMutableArray *interfaceObjects;
+    
+    CGFloat forwardMagnitude;
+    CGFloat rightMagnitude;
+    CGFloat leftMagnitude;
+    BOOL fireMissile;
 }
 
 @property (retain) NSMutableSet *touchEvents;
+
+@property (assign) CGFloat forwardMagnitude;
+@property (assign) CGFloat rightMagnitude;
+@property (assign) CGFloat leftMagnitude;
+@property (assign) BOOL fireMissile;
 
 - (void)loadInterface;
 - (void)updateInterface;
@@ -22,7 +32,6 @@
 
 - (CGRect)screenRectFromMeshRect:(CGRect)rect atPoint:(CGPoint)meshCenter;
 
-- (BOOL)touchesDidBegin;
 - (void)clearEvents;
 - (void)didReceiveMemoryWarning;
 - (void)loadView;
