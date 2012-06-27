@@ -26,6 +26,14 @@
 		C50DF7FF1591D72100BBB433 /* AXSceneObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF7FE1591D72100BBB433 /* AXSceneObject.m */; };
 		C50DF8011591DFF800BBB433 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C50DF8001591DFF800BBB433 /* QuartzCore.framework */; };
 		C50DF8031591E12200BBB433 /* MainWindow_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = C50DF8021591E12200BBB433 /* MainWindow_iPhone.xib */; };
+		C50DF80D15923A8E00BBB433 /* AXButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF80C15923A8E00BBB433 /* AXButton.m */; };
+		C5293AD9159B481800B6E6FA /* AXMissile.m in Sources */ = {isa = PBXBuildFile; fileRef = C5293AD8159B481800B6E6FA /* AXMissile.m */; };
+		C5293AE1159B4A6900B6E6FA /* AXArrowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C5293AE0159B4A6900B6E6FA /* AXArrowButton.m */; };
+		C5841CDF159B6E6600B6CC3E /* AXCollider.m in Sources */ = {isa = PBXBuildFile; fileRef = C5841CDE159B6E6600B6CC3E /* AXCollider.m */; };
+		C5841CE7159B710400B6CC3E /* AXCollisionController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5841CE6159B710400B6CC3E /* AXCollisionController.m */; };
+		C5D3245E159323B90001C2D0 /* AXMobileObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D3245D159323B90001C2D0 /* AXMobileObject.m */; };
+		C5D324621593245E0001C2D0 /* AXSpaceShip.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D324611593245E0001C2D0 /* AXSpaceShip.m */; };
+		C5D32467159333750001C2D0 /* AXRock.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D32466159333750001C2D0 /* AXRock.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +77,24 @@
 		C50DF7FE1591D72100BBB433 /* AXSceneObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXSceneObject.m; path = Objects/AXSceneObject.m; sourceTree = "<group>"; };
 		C50DF8001591DFF800BBB433 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C50DF8021591E12200BBB433 /* MainWindow_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainWindow_iPhone.xib; path = Interface/MainWindow_iPhone.xib; sourceTree = "<group>"; };
+		C50DF809159238A600BBB433 /* AXPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXPoint.h; sourceTree = "<group>"; };
+		C50DF80B15923A8E00BBB433 /* AXButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXButton.h; path = "Game Files/AXButton.h"; sourceTree = "<group>"; };
+		C50DF80C15923A8E00BBB433 /* AXButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXButton.m; path = "Game Files/AXButton.m"; sourceTree = "<group>"; };
+		C5293AD7159B481800B6E6FA /* AXMissile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXMissile.h; path = "Game Files/AXMissile.h"; sourceTree = "<group>"; };
+		C5293AD8159B481800B6E6FA /* AXMissile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXMissile.m; path = "Game Files/AXMissile.m"; sourceTree = "<group>"; };
+		C5293ADF159B4A6900B6E6FA /* AXArrowButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXArrowButton.h; path = "Game Files/AXArrowButton.h"; sourceTree = "<group>"; };
+		C5293AE0159B4A6900B6E6FA /* AXArrowButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXArrowButton.m; path = "Game Files/AXArrowButton.m"; sourceTree = "<group>"; };
+		C5841CDD159B6E6600B6CC3E /* AXCollider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXCollider.h; path = Objects/AXCollider.h; sourceTree = "<group>"; };
+		C5841CDE159B6E6600B6CC3E /* AXCollider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXCollider.m; path = Objects/AXCollider.m; sourceTree = "<group>"; };
+		C5841CE5159B710400B6CC3E /* AXCollisionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXCollisionController.h; sourceTree = "<group>"; };
+		C5841CE6159B710400B6CC3E /* AXCollisionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXCollisionController.m; sourceTree = "<group>"; };
+		C5D3245C159323B90001C2D0 /* AXMobileObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXMobileObject.h; path = Objects/AXMobileObject.h; sourceTree = "<group>"; };
+		C5D3245D159323B90001C2D0 /* AXMobileObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXMobileObject.m; path = Objects/AXMobileObject.m; sourceTree = "<group>"; };
+		C5D324601593245E0001C2D0 /* AXSpaceShip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXSpaceShip.h; path = "Game Files/AXSpaceShip.h"; sourceTree = "<group>"; };
+		C5D324611593245E0001C2D0 /* AXSpaceShip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXSpaceShip.m; path = "Game Files/AXSpaceShip.m"; sourceTree = "<group>"; };
+		C5D324641593266E0001C2D0 /* AXConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXConfiguration.h; sourceTree = "<group>"; };
+		C5D32465159333750001C2D0 /* AXRock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXRock.h; path = "Game Files/AXRock.h"; sourceTree = "<group>"; };
+		C5D32466159333750001C2D0 /* AXRock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXRock.m; path = "Game Files/AXRock.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,10 +167,11 @@
 				C50DF7EF1591C8EE00BBB433 /* AXInputViewController.m */,
 				C50DF7F71591D44F00BBB433 /* AXSceneController.h */,
 				C50DF7F81591D44F00BBB433 /* AXSceneController.m */,
-				C50DF7FD1591D72100BBB433 /* AXSceneObject.h */,
-				C50DF7FE1591D72100BBB433 /* AXSceneObject.m */,
-				C50DF7FA1591D58800BBB433 /* AXMesh.h */,
-				C50DF7FB1591D58800BBB433 /* AXMesh.m */,
+				C5841CE5159B710400B6CC3E /* AXCollisionController.h */,
+				C5841CE6159B710400B6CC3E /* AXCollisionController.m */,
+				C50DF80A15923A3C00BBB433 /* Game Files */,
+				C50DF8051592372D00BBB433 /* Engine Support */,
+				C50DF8041592372700BBB433 /* Objects */,
 				C50DF8021591E12200BBB433 /* MainWindow_iPhone.xib */,
 				C50DF7B81591C5D100BBB433 /* Supporting Files */,
 			);
@@ -179,6 +206,47 @@
 				C50DF7DF1591C5D200BBB433 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C50DF8041592372700BBB433 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				C5D3245C159323B90001C2D0 /* AXMobileObject.h */,
+				C5D3245D159323B90001C2D0 /* AXMobileObject.m */,
+				C50DF7FD1591D72100BBB433 /* AXSceneObject.h */,
+				C50DF7FE1591D72100BBB433 /* AXSceneObject.m */,
+				C50DF7FA1591D58800BBB433 /* AXMesh.h */,
+				C50DF7FB1591D58800BBB433 /* AXMesh.m */,
+				C5841CDD159B6E6600B6CC3E /* AXCollider.h */,
+				C5841CDE159B6E6600B6CC3E /* AXCollider.m */,
+			);
+			name = Objects;
+			sourceTree = "<group>";
+		};
+		C50DF8051592372D00BBB433 /* Engine Support */ = {
+			isa = PBXGroup;
+			children = (
+				C50DF809159238A600BBB433 /* AXPoint.h */,
+				C5D324641593266E0001C2D0 /* AXConfiguration.h */,
+			);
+			name = "Engine Support";
+			sourceTree = "<group>";
+		};
+		C50DF80A15923A3C00BBB433 /* Game Files */ = {
+			isa = PBXGroup;
+			children = (
+				C50DF80B15923A8E00BBB433 /* AXButton.h */,
+				C50DF80C15923A8E00BBB433 /* AXButton.m */,
+				C5293ADF159B4A6900B6E6FA /* AXArrowButton.h */,
+				C5293AE0159B4A6900B6E6FA /* AXArrowButton.m */,
+				C5D324601593245E0001C2D0 /* AXSpaceShip.h */,
+				C5D324611593245E0001C2D0 /* AXSpaceShip.m */,
+				C5D32465159333750001C2D0 /* AXRock.h */,
+				C5D32466159333750001C2D0 /* AXRock.m */,
+				C5293AD7159B481800B6E6FA /* AXMissile.h */,
+				C5293AD8159B481800B6E6FA /* AXMissile.m */,
+			);
+			name = "Game Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -295,6 +363,14 @@
 				C50DF7F91591D44F00BBB433 /* AXSceneController.m in Sources */,
 				C50DF7FC1591D58800BBB433 /* AXMesh.m in Sources */,
 				C50DF7FF1591D72100BBB433 /* AXSceneObject.m in Sources */,
+				C50DF80D15923A8E00BBB433 /* AXButton.m in Sources */,
+				C5D3245E159323B90001C2D0 /* AXMobileObject.m in Sources */,
+				C5D324621593245E0001C2D0 /* AXSpaceShip.m in Sources */,
+				C5D32467159333750001C2D0 /* AXRock.m in Sources */,
+				C5293AD9159B481800B6E6FA /* AXMissile.m in Sources */,
+				C5293AE1159B4A6900B6E6FA /* AXArrowButton.m in Sources */,
+				C5841CDF159B6E6600B6CC3E /* AXCollider.m in Sources */,
+				C5841CE7159B710400B6CC3E /* AXCollisionController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,6 +534,7 @@
 				C50DF7E91591C5D200BBB433 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C50DF7EA1591C5D200BBB433 /* Build configuration list for PBXNativeTarget "AxisTests" */ = {
 			isa = XCConfigurationList;
@@ -466,6 +543,7 @@
 				C50DF7EC1591C5D200BBB433 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
