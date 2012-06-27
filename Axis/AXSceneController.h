@@ -9,13 +9,18 @@
 #import <Foundation/Foundation.h>
 
 @class AXInputViewController;
+@class AXCollisionController;
 @class EAGLView;
+@class AXSceneObject;
 
 @interface AXSceneController : NSObject {
     NSMutableArray *sceneObjects;
+    NSMutableArray *objectsToAdd;
+    NSMutableArray *objectsToRemove;
     
-    AXInputViewController *inputController;
     EAGLView *openGLView;
+    AXInputViewController *inputController;
+    AXCollisionController *collisionController;
     
     NSTimer *animationTimer;
     NSTimeInterval animationInterval;
@@ -38,5 +43,11 @@
 - (void)startAnimation;
 - (void)stopAnimation;
 - (void)updateModel;
+
+- (void)addObjectToScene:(AXSceneObject*)sceneObject;
+- (void)removeObjectFromScene:(AXSceneObject*)sceneObject;
+
+// game specific
+- (void)generateRocks;
 
 @end
