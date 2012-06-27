@@ -22,6 +22,9 @@
     NSInteger vertexCount;
     NSInteger vertexStride;
     NSInteger colorStride;
+    
+    AXPoint centroid;
+    CGFloat radius;
 }
 
 @property (assign) NSInteger vertexCount;
@@ -32,11 +35,17 @@
 @property (assign) GLfloat *vertexes;
 @property (assign) GLfloat *colors;
 
+@property (assign) AXPoint centroid;
+@property (assign) CGFloat radius;
+
 - (id)initWithVertexes:(CGFloat*)verts
            vertexCount:(NSInteger)vertCount
           vertexStride:(NSInteger)vertStride
            renderStyle:(GLenum)style;
 + (CGRect)meshBounds:(AXMesh*)mesh scale:(AXPoint)scale;
+
+- (AXPoint)calculateCentroid;
+- (CGFloat)calculateRadius;
 
 - (void)render;
 

@@ -16,6 +16,9 @@
 #import "AXMesh.h"
 #import "AXInputViewController.h"
 #import "AXSceneController.h"
+#import "AXConfiguration.h"
+
+@class AXCollider;
 
 @interface AXSceneObject : NSObject {
     AXPoint translation;
@@ -24,12 +27,18 @@
     
     AXMesh *mesh;
     
+    CGFloat *matrix;
+    
     CGRect meshBounds;
+    
+    AXCollider *collider;
     
     BOOL active;
 }
 
 @property (retain) AXMesh *mesh;
+@property (assign) CGFloat *matrix;
+@property (retain) AXCollider *collider;
 
 @property (assign) CGRect meshBounds;
 

@@ -10,7 +10,7 @@
 
 @implementation AXMesh
 
-@synthesize vertexCount, vertexStride, colorStride, renderStyle, vertexes, colors;
+@synthesize vertexCount, vertexStride, colorStride, renderStyle, vertexes, colors, centroid, radius;
 
 - (id)initWithVertexes:(CGFloat *)verts
            vertexCount:(NSInteger)vertCount
@@ -23,6 +23,8 @@
         self.vertexCount = vertCount;
         self.vertexStride = vertStride;
         self.renderStyle = style;
+        self.centroid = [self calculateCentroid];
+        self.radius = [self calculateRadius];
     }
     return self;
 }
@@ -55,6 +57,45 @@
         meshBounds.size.height = 1.0;
     
     return meshBounds;
+}
+
+- (AXPoint)calculateCentroid {
+    CGFloat xTotal = 0;
+    CGFloat yTotal = 0;
+    CGFloat zTotal = 0;
+    
+    // add the vertexes
+    NSInteger index;
+    for (index = 0; index < vertexCount; index++) {
+        NSInteger position = index * vertexStride;
+        xTotal += vertexes[position];
+        yTotal += vertexes[position + 1];
+        if (vertexStride > 2) zTotal += vertexes[position + 2];
+    }
+    
+    // average each total
+    return AXPointMake(xTotal/(CGFloat)vertexCount, yTotal/(CGFloat)vertexCount, zTotal/(CGFloat)vertexCount);
+}
+
+- (CGFloat)calculateRadius {
+    CGFloat rad = 0.0;
+    NSInteger index;
+    
+    for (index = 0; index < vertexCount; index++) {
+        NSInteger position = index * vertexStride;
+        AXPoint vert;
+        if (vertexStride > 2) {
+            vert = AXPointMake(vertexes[position], vertexes[position + 1], vertexes[position + 2]);
+        } else {
+            vert = AXPointMake(vertexes[position], vertexes[position + 1], 0.0);
+        }
+        
+        CGFloat thisRadius = AXPointDistance(centroid, vert);
+        if (rad < thisRadius)
+            rad = thisRadius;
+    }
+    
+    return rad;
 }
 
 - (void)render {

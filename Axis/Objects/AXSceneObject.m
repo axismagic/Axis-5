@@ -9,7 +9,7 @@
 #import "AXSceneObject.h"
 #import "AXSceneController.h"
 #import "AXInputViewController.h"
-#import "AXMesh.h"
+#import "AXCollider.h"
 
 #pragma mark Spinny Square mesh
 static CGFloat spinnySquareVertices[8] = {
@@ -28,7 +28,7 @@ static CGFloat spinnySquareColors[16] = {
 
 @implementation AXSceneObject
 
-@synthesize translation, rotation, scale, active, mesh, meshBounds;
+@synthesize translation, rotation, scale, active, mesh, meshBounds, matrix, collider;
 
 - (id)init {
     self = [super init];
@@ -36,6 +36,9 @@ static CGFloat spinnySquareColors[16] = {
         translation = AXPointMake(0.0, 0.0, 0.0);
         rotation = AXPointMake(0.0, 0.0, 0.0);
         scale = AXPointMake(1.0, 1.0, 1.0);
+        
+        matrix = (CGFloat*) malloc(16 * sizeof(CGFloat));
+        self.collider = nil;
         
         meshBounds = CGRectZero;
         
@@ -64,10 +67,6 @@ static CGFloat spinnySquareColors[16] = {
 }
 
 - (void)update {
-    // overridden by subclasses
-}
-
-- (void)render {
     glPushMatrix();
     glLoadIdentity();
     
@@ -82,6 +81,24 @@ static CGFloat spinnySquareColors[16] = {
     // scale
     glScalef(scale.x, scale.y, scale.z);
     
+    // save matrix
+    glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
+    // restore matrix
+    glPopMatrix();
+    
+    if (collider != nil)
+        [collider updateCollider:self];
+}
+
+- (void)render {
+    if (!mesh || !active)
+        return;
+    
+    glPushMatrix();
+    glLoadIdentity();
+    
+    glMultMatrixf(matrix);
+    
     [mesh render];
     
     // restore the matrix
@@ -89,6 +106,9 @@ static CGFloat spinnySquareColors[16] = {
 }
 
 - (void)dealloc {
+    [mesh release];
+    [collider release];
+    free(matrix);
     [super dealloc];
 }
 
