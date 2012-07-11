@@ -114,6 +114,7 @@
 		C5D324641593266E0001C2D0 /* AXConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXConfiguration.h; sourceTree = "<group>"; };
 		C5D32465159333750001C2D0 /* AXRock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXRock.h; path = "Game Files/AXRock.h"; sourceTree = "<group>"; };
 		C5D32466159333750001C2D0 /* AXRock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXRock.m; path = "Game Files/AXRock.m"; sourceTree = "<group>"; };
+		C5EEFF2615AD879100FF320B /* Axis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Axis.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,6 +255,7 @@
 		C50DF8051592372D00BBB433 /* Engine Support */ = {
 			isa = PBXGroup;
 			children = (
+				C5EEFF2615AD879100FF320B /* Axis.h */,
 				C50DF809159238A600BBB433 /* AXPoint.h */,
 				C5D324641593266E0001C2D0 /* AXConfiguration.h */,
 			);
@@ -296,9 +298,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C50DF7E71591C5D200BBB433 /* Build configuration list for PBXNativeTarget "Axis" */;
 			buildPhases = (
+				C5EEFF2415AD861500FF320B /* ShellScript */,
 				C50DF7A51591C5D100BBB433 /* Sources */,
 				C50DF7A61591C5D100BBB433 /* Frameworks */,
-				C5EEFF2415AD861500FF320B /* ShellScript */,
 				C50DF7A71591C5D100BBB433 /* Resources */,
 			);
 			buildRules = (

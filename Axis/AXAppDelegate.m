@@ -11,12 +11,21 @@
 #import "AXInputViewController.h"
 #import "EAGLView.h"
 #import "AXSceneController.h"
+#import "Axis.h"
+#import "AXConfiguration.h"
 
 @implementation AXAppDelegate
 
 @synthesize window;
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
+    // Display Versioning Information in the console.
+    if (AXIS_VERSION_TYPE != @"Public")
+        NSLog(@"Axis: The Game Engine - %@'s %@", AXIS_VERSION_NAME, AXIS_VERSION_NAME_ADDITION);
+    else
+        NSLog(@"Axis: The Game Engine - %@ %@", AXIS_VERSION_NAME, AXIS_VERSION_NAME_ADDITION);
+    NSLog(@"%@ Engine %@ %@ build %@", AXIS_VERSION_FORM, AXIS_VERSION_TYPE, [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]);
+    
     AXSceneController *sceneController = [AXSceneController sharedSceneController];
     
     // make a new input view controller, save it
