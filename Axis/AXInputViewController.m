@@ -10,6 +10,7 @@
 
 #import "AXButton.h"
 #import "AXArrowButton.h"
+#import "AXTexturedButton.h"
 
 @implementation AXInputViewController
 
@@ -20,6 +21,9 @@
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
         // initialise touch storage set
         touchEvents = [[NSMutableSet alloc] init];
+        forwardMagnitude = 0.0;
+        leftMagnitude = 0.0;
+        rightMagnitude = 0.0;
     }
     
     return self;
@@ -36,7 +40,8 @@
         interfaceObjects = [[NSMutableArray alloc] init];
     
     // right arrow button
-    AXButton *rightButton = [[AXArrowButton alloc] init];
+    // OLD AXButton *rightButton = [[AXArrowButton alloc] init];
+    AXTexturedButton *rightButton = [[AXTexturedButton alloc] initWithUpKey:@"rightUp" downKey:@"rightDown"];
     rightButton.scale = AXPointMake(50.0, 50.0, 1.0);
     rightButton.translation = AXPointMake(-155.0, -130.0, 0.0);
     // set actions
@@ -50,10 +55,11 @@
     [rightButton release];
     
     // left arrow button
-    AXButton *leftButton = [[AXArrowButton alloc] init];
+    // OLD AXButton *leftButton = [[AXArrowButton alloc] init];
+    AXTexturedButton *leftButton = [[AXTexturedButton alloc] initWithUpKey:@"leftUp" downKey:@"leftDown"];
     leftButton.scale = AXPointMake(50.0, 50.0, 1.0);
     leftButton.translation = AXPointMake(-210.0, -130.0, 0.0);
-    leftButton.rotation = AXPointMake(0.0, 0.0, 180.0);
+    //leftButton.rotation = AXPointMake(0.0, 0.0, 180.0);
     // set actions
     leftButton.target = self;
     leftButton.buttonDownAction = @selector(leftButtonDown);
@@ -65,10 +71,11 @@
     [leftButton release];
     
     // forward arrow button
-    AXButton *forwardButton = [[AXArrowButton alloc] init];
+    // OLD AXButton *forwardButton = [[AXArrowButton alloc] init];
+    AXTexturedButton *forwardButton = [[AXTexturedButton alloc] initWithUpKey:@"thrustUp" downKey:@"thrustDown"];
     forwardButton.scale = AXPointMake(50.0, 50.0, 1.0);
     forwardButton.translation = AXPointMake(-185.0, -75.0, 0.0);
-    forwardButton.rotation = AXPointMake(0.0, 0.0, 90.0);
+    //forwardButton.rotation = AXPointMake(0.0, 0.0, 90.0);
     // set actions
     forwardButton.target = self;
     forwardButton.buttonDownAction = @selector(forwardButtonDown);
@@ -80,7 +87,8 @@
     [forwardButton release];
     
     // fire arrow button
-    AXButton *fireButton = [[AXButton alloc] init];
+    // OLD AXButton *fireButton = [[AXButton alloc] init];
+    AXTexturedButton *fireButton = [[AXTexturedButton alloc] initWithUpKey:@"fireUp" downKey:@"fireDown"];
     fireButton.scale = AXPointMake(50.0, 50.0, 1.0);
     fireButton.translation = AXPointMake(210.0, -130.0, 0.0);
     // set actions
@@ -164,7 +172,7 @@
 }
 
 - (void)forwardButtonUp {
-    self.forwardMagnitude = 1.0;
+    self.forwardMagnitude = 0.0;
 }
 
 #pragma mark Unload, Dealloc

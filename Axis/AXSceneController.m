@@ -7,18 +7,18 @@
 //
 
 #import "AXSceneController.h"
+#import "AXConfiguration.h"
 #import "AXInputViewController.h"
 #import "AXCollisionController.h"
 #import "EAGLView.h"
-#import "AXSceneObject.h"
-
 #import "AXSpaceShip.h"
 #import "AXRock.h"
 
 @implementation AXSceneController
 
 @synthesize inputController, openGLView;
-@synthesize  animationTimer, animationInterval;
+@synthesize animationTimer, animationInterval;
+@synthesize levelStartDate, deltaTime;
 
 + (AXSceneController*)sharedSceneController {
     static AXSceneController *sharedSceneController;
@@ -40,7 +40,7 @@
     
     // create the ship
     AXSpaceShip *ship = [[AXSpaceShip alloc] init];
-    ship.scale = AXPointMake(2.5, 2.5, 1.0);
+    //ship.scale = AXPointMake(2.5, 2.5, 1.0);
     [self addObjectToScene:ship];
     [ship release];
     
@@ -50,7 +50,7 @@
     // load collisionController
     collisionController = [[AXCollisionController alloc] init];
     collisionController.sceneObjects = sceneObjects;
-    if (DEBUG_DRAW_COLLIDERS)
+    if (AX_DEBUG_DRAW_COLLIDERS)
         [self addObjectToScene:collisionController];
     
     // load interface
@@ -60,12 +60,16 @@
 - (void)startScene {
     self.animationInterval = 1.0/60.0;
     [self startAnimation];
+    
+    // reset clock
+    self.levelStartDate = [NSDate date];
+    lastFrameStartTime = 0;
 }
 
 #pragma mark Game Specific
 
 - (void)generateRocks {
-    NSInteger rockCount = 10;
+    NSInteger rockCount = 20;
     NSInteger index;
     for (index = 0; index < rockCount; index++) {
         [self addObjectToScene:[AXRock randomRock]];
@@ -77,6 +81,27 @@
 - (void)gameLoop {
     // autorelease pool
     NSAutoreleasePool *apool = [[NSAutoreleasePool alloc] init];
+    
+    thisFrameStartTime = [levelStartDate timeIntervalSinceNow];
+    deltaTime = lastFrameStartTime - thisFrameStartTime;
+    lastFrameStartTime = thisFrameStartTime;
+    
+    // current frame rate
+    if (AX_CONSOLE_DISPLAY_ALL_FRAME_RATES) {
+        // display with warnings highlighted
+        if (AX_CONSOLE_LOW_FRAME_RATE_WARNING) {
+            // warning format or not for this frame
+            if (1.0/deltaTime < AX_CONSOLE_LOW_FRAME_RATE_WARNING_MARK)                NSLog(@"Current Frame Rate LOW: %f", 1.0/deltaTime);
+            else
+                NSLog(@"Current Frame Rate: %f", 1.0/deltaTime);
+        } else
+            // display all in normal format, no warnings
+            NSLog(@"Current Frame Rate: %f", 1.0/deltaTime); 
+    } else if (AX_CONSOLE_LOW_FRAME_RATE_WARNING) {
+        // only warnings
+        if (1.0/deltaTime < AX_CONSOLE_LOW_FRAME_RATE_WARNING_MARK)
+            NSLog(@"Current Frame Rate LOW: %f", 1.0/deltaTime);
+    }
     
     // add queued scene objects
     if ([objectsToAdd count] > 0) {
@@ -138,11 +163,29 @@
 #pragma mark Animation Timer
 
 - (void)startAnimation {
+    if (AX_USE_DISPLAY_LINK) {
+        NSLog(@"Using Display Link");
+        if (displayLink)
+            return;
+        
+        displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(gameLoop)];
+        [displayLink retain];
+        displayLink.frameInterval = 1;
+        [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    } else {
+        NSLog(@"Using Animation Timer");
+    }
     self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:animationInterval target:self selector:@selector(gameLoop) userInfo:nil repeats:YES];
 }
 
 - (void)stopAnimation {
-    self.animationTimer = nil;
+    if (AX_USE_DISPLAY_LINK) {
+        [displayLink invalidate];
+        [displayLink release];
+        displayLink = nil;
+    } else {
+        self.animationTimer = nil;
+    }
 }
 
 - (void)setAnimationTimer:(NSTimer *)newTimer {
@@ -162,6 +205,13 @@
 
 - (void)dealloc {
     [self stopAnimation];
+    
+    [sceneObjects release];
+    [objectsToAdd release];
+    [objectsToRemove release];
+    [inputController release];
+    [openGLView release];
+    [collisionController release];
     [super dealloc];
 }
 

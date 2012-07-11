@@ -22,14 +22,24 @@
     AXInputViewController *inputController;
     AXCollisionController *collisionController;
     
+    CADisplayLink *displayLink;
+    
     NSTimer *animationTimer;
     NSTimeInterval animationInterval;
+    
+    NSDate *levelStartDate;
+    
+    NSTimeInterval deltaTime;
+    NSTimeInterval lastFrameStartTime;
+    NSTimeInterval thisFrameStartTime;
 }
 
 @property (retain) AXInputViewController *inputController;
 @property (retain) EAGLView *openGLView;
 
+@property (retain) NSDate *levelStartDate;
 @property NSTimeInterval animationInterval;
+@property NSTimeInterval deltaTime;
 @property (nonatomic, assign) NSTimer *animationTimer;
 
 + (AXSceneController*)sharedSceneController;
