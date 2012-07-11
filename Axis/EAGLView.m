@@ -10,6 +10,7 @@
 #import <OpenGLES/EAGLDrawable.h>
 
 #import "EAGLView.h"
+#import "AXConfiguration.h"
 
 #define USE_DEPTH_BUFFER 0
 
@@ -50,6 +51,16 @@
         }
         
         self.multipleTouchEnabled = YES;
+        
+        if (AX_ENABLE_RETINA_DISPLAY) {
+            self.contentScaleFactor = [[UIScreen mainScreen] scale];
+            
+            if (self.contentScaleFactor == 2.0)
+                NSLog(@"Retina Display Active");
+            else
+                NSLog(@"Retina Display Not Available");
+        }
+        
     }
     
     return self;
@@ -72,13 +83,22 @@
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glRotatef(-90.0f, 0.0f, 0.0f, 1.0f);
-    glOrthof(-backingHeight/2.0, backingHeight/2.0, -backingWidth/2.0, backingWidth/2.0, -1.0f, 1.0f);
+    if (self.contentScaleFactor == 2.0)
+        glOrthof(-backingHeight/4.0, backingHeight/4.0, -backingWidth/4.0, backingWidth/4.0, -1.0f, 1.0f);
+    else
+        glOrthof(-backingHeight/2.0, backingHeight/2.0, -backingWidth/2.0, backingWidth/2.0, -1.0f, 1.0f);
     
     glMatrixMode(GL_MODELVIEW);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 - (void)beginDraw {
+    // face culling
+    /*
+     glEnable(GL_CULL_FACE);
+	 glCullFace(GL_BACK);
+    */
+    
     [EAGLContext setCurrentContext:context];
     glBindFramebufferOES(GL_FRAMEBUFFER_OES, viewFramebuffer);
     
