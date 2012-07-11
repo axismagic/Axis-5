@@ -99,6 +99,9 @@
 }
 
 - (void)render {
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisable(GL_TEXTURE_2D);
+    // load arrays
     glVertexPointer(vertexStride, GL_FLOAT, 0, vertexes);
     glEnableClientState(GL_VERTEX_ARRAY);
     glColorPointer(colorStride, GL_FLOAT, 0, colors);
