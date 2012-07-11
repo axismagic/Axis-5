@@ -17,6 +17,9 @@
 #import "AXInputViewController.h"
 #import "AXSceneController.h"
 #import "AXConfiguration.h"
+#import "AXMaterialController.h"
+#import "AXTexturedQuad.h"
+#import "AXAnimatedQuad.h"
 
 @class AXCollider;
 

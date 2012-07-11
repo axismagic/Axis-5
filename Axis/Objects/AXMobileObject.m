@@ -13,13 +13,24 @@
 @synthesize speed, rotationalSpeed;
 
 - (void)update {
-    translation.x += speed.x;
-    translation.y += speed.y;
-    translation.z += speed.z;
+    CGFloat deltaTime = [[AXSceneController sharedSceneController] deltaTime];
+    /* Investigate
+     translation.x += speed.x * deltaTime * 60;
+    */
     
-    rotation.x += rotationalSpeed.x;
-    rotation.y += rotationalSpeed.y;
-    rotation.z += rotationalSpeed.z;
+    int multiplier;
+    if (AX_USE_POINT_PER_SECOND)
+        multiplier = 1;
+    else
+        multiplier = 60;
+    
+    translation.x += speed.x * deltaTime * multiplier;
+    translation.y += speed.y * deltaTime * multiplier;
+    translation.z += speed.z * deltaTime * multiplier;
+    
+    rotation.x += rotationalSpeed.x * deltaTime * multiplier;
+    rotation.y += rotationalSpeed.y * deltaTime * multiplier;
+    rotation.z += rotationalSpeed.z * deltaTime * multiplier;
     
     [self checkArenaBounds];
     [super update];

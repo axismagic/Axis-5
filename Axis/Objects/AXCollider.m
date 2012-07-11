@@ -30,7 +30,7 @@ static CGFloat BBCircleColorValues[80] =
 
 + (AXCollider*)collider {
     AXCollider *collider = [[AXCollider alloc] init];
-    if (DEBUG_DRAW_COLLIDERS) {
+    if (AX_DEBUG_DRAW_COLLIDERS) {
         collider.active = YES;
         [collider awake];
     }
@@ -53,7 +53,8 @@ static CGFloat BBCircleColorValues[80] =
     maxRadius *= [sceneObject mesh].radius;
     
     // scene object iVars
-    scale = AXPointMake([sceneObject mesh].radius * sceneObject.scale.x, [sceneObject mesh].radius * sceneObject.scale.y, 0.0);
+    scale = AXPointMake(maxRadius, maxRadius, 1.0);
+    //scale = AXPointMake([sceneObject mesh].radius * sceneObject.scale.x, [sceneObject mesh].radius * sceneObject.scale.y, 0.0);
 }
 
 - (BOOL)doesCollideWithCollider:(AXCollider*)aCollider {

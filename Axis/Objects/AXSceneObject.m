@@ -11,7 +11,7 @@
 #import "AXInputViewController.h"
 #import "AXCollider.h"
 
-#pragma mark Spinny Square mesh
+/* #pragma mark Spinny Square mesh
 static CGFloat spinnySquareVertices[8] = {
     -0.5f, -0.5f,
     0.5f,  -0.5f,
@@ -24,7 +24,7 @@ static CGFloat spinnySquareColors[16] = {
     0,   1.0, 1.0, 1.0,
     0,     0,   0,   0,
     1.0,   0, 1.0, 1.0,
-};
+}; */
 
 @implementation AXSceneObject
 
@@ -57,13 +57,13 @@ static CGFloat spinnySquareColors[16] = {
 }
 
 - (void)awake {
-    // called once when object is created
+    /*// called once when object is created
     mesh = [[AXMesh alloc] initWithVertexes:spinnySquareVertices
                                 vertexCount:4
                                  vertexStride:2
                                 renderStyle:GL_TRIANGLE_STRIP];
     mesh.colors = spinnySquareColors;
-    mesh.colorStride = 4;
+    mesh.colorStride = 4;*/
 }
 
 - (void)update {
