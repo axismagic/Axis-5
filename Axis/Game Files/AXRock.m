@@ -8,12 +8,13 @@
 
 #import "AXRock.h"
 #import "AXCollider.h"
+#import "AXAnimation.h"
 
 #pragma mark Rocks Mesh
 
 static NSInteger BBRockVertexStride = 2;
 static NSInteger BBRockColorStride = 4;
-static NSInteger BBRockOutlineVertexesCount = 16;
+// static NSInteger BBRockOutlineVertexesCount = 16;
 
 @implementation AXRock
 
@@ -29,7 +30,8 @@ static NSInteger BBRockOutlineVertexesCount = 16;
 }
 
 + (AXRock*)randomRock {
-    return [AXRock randomRockWithScale:NSMakeRange(15, 20)];
+    // return [AXRock randomRockWithScale:NSMakeRange(15, 20)];
+    return [AXRock randomRockWithScale:NSMakeRange(35, 55)];
 }
 
 + (AXRock*)randomRockWithScale:(NSRange)scaleRange {
@@ -60,7 +62,8 @@ static NSInteger BBRockOutlineVertexesCount = 16;
 }
 
 - (void)awake {
-    NSInteger myVertexCount = RANDOM_INT(8, BBRockOutlineVertexesCount);
+    /* Old Vertex Rocks
+     NSInteger myVertexCount = RANDOM_INT(8, BBRockOutlineVertexesCount);
     
     // malloc memory for vertexes and colors
     verts = (CGFloat *) malloc(myVertexCount * BBRockVertexStride * sizeof(CGFloat));
@@ -88,13 +91,50 @@ static NSInteger BBRockOutlineVertexesCount = 16;
     mesh.colors = colors;
     mesh.colorStride = BBRockColorStride;
     
+    self.collider = [AXCollider collider]; */
+    
+    // new quad for mesh
+    self.mesh = [[AXMaterialController sharedMaterialController] quadFromAtlasKey:@"rockTexture"];
+    
+    // malloc memory for vertexes and colors
+    verts = (CGFloat*) malloc(4 * BBRockVertexStride * sizeof(CGFloat));
+    colors = (CGFloat*) malloc(4 * BBRockColorStride * sizeof(CGFloat));
+    
+    // random colors
+    CGFloat r = (CGFloat)RANDOM_INT(1, 100)/100;
+    CGFloat g = (CGFloat)RANDOM_INT(1, 100)/100;
+    CGFloat b = (CGFloat)RANDOM_INT(1, 100)/100;
+    
+    NSInteger vertexIndex = 0;
+    for (vertexIndex = 0; vertexIndex < 16; vertexIndex += 4) {
+        colors[vertexIndex] = r;
+        colors[vertexIndex + 1] = g;
+        colors[vertexIndex + 2] = b;
+        colors[vertexIndex + 3] = 1.0;
+    }
+    
     self.collider = [AXCollider collider];
+}
+
+- (void)render {
+    mesh.colors = colors;
+    mesh.colorStride = 4;
+    
+    [super render];
 }
 
 - (void)smash {
     smashCount++;
     // queue for removal
     [[AXSceneController sharedSceneController] removeObjectFromScene:self];
+    
+    // explosion animation
+    AXAnimation *explosion = [[AXAnimation alloc] initWithAtlasKeys:[NSArray arrayWithObjects:@"bang1", @"bang2", @"bang3", nil] loops:NO speed:6];
+    explosion.active = YES;
+    explosion.translation = self.translation;
+    explosion.scale = self.scale;
+    [[AXSceneController sharedSceneController] addObjectToScene:explosion];
+    [explosion release];
     
     if (smashCount >= 2)
         return;

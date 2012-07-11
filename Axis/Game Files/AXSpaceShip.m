@@ -14,26 +14,31 @@
 
 #pragma mark Space Ship
 
-static NSInteger BBSpaceShipVertexStride = 2;
-static NSInteger BBSpaceShipColorStride = 4;
+/*
+ static NSInteger BBSpaceShipVertexStride = 2;
+ static NSInteger BBSpaceShipColorStride = 4;
 
-static NSInteger BBSpaceShipOutlineVertexesCount = 5;
-static CGFloat BBSpaceShipOutlineVertexes[10] = 
-{0.0, 4.0,    3.0, -4.0,
+ static NSInteger BBSpaceShipOutlineVertexesCount = 5;
+ static CGFloat BBSpaceShipOutlineVertexes[10] = {0.0, 4.0,    3.0, -4.0,
     1.0, -2.0,   -1.0, -2.0,
     -3.0, -4.0};
 
-static CGFloat BBSpaceShipColorValues[20] = 
-{1.0,1.0,1.0,1.0, 1.0,1.0,1.0,1.0, 
+ static CGFloat BBSpaceShipColorValues[20] = {1.0,1.0,1.0,1.0, 1.0,1.0,1.0,1.0, 
     1.0,1.0,1.0,1.0, 1.0,1.0,1.0,1.0,
     1.0,1.0,1.0,1.0};
+*/
 
 @implementation AXSpaceShip
 
 - (void)awake {
-    mesh = [[AXMesh alloc] initWithVertexes:BBSpaceShipOutlineVertexes vertexCount:BBSpaceShipOutlineVertexesCount vertexStride:BBSpaceShipVertexStride renderStyle:GL_LINE_LOOP];
-    mesh.colors = BBSpaceShipColorValues;
-    mesh.colorStride = BBSpaceShipColorStride;
+    /*
+     mesh = [[AXMesh alloc] initWithVertexes:BBSpaceShipOutlineVertexes vertexCount:BBSpaceShipOutlineVertexesCount vertexStride:BBSpaceShipVertexStride renderStyle:GL_LINE_LOOP];
+     mesh.colors = BBSpaceShipColorValues;
+     mesh.colorStride = BBSpaceShipColorStride;
+    */
+    
+    self.mesh = [[AXMaterialController sharedMaterialController] quadFromAtlasKey:@"ship"];
+    self.scale = AXPointMake(40, 40, 1.0);
     
     self.collider = [AXCollider collider];
     [self.collider setCheckForCollisions:YES];
@@ -52,24 +57,26 @@ static CGFloat BBSpaceShipColorValues[20] =
     CGFloat forwardMag = [[AXSceneController sharedSceneController].inputController forwardMagnitude] * THRUST_SPEED_FACTOR;
     if (forwardMag <= 0.0001) return;
     
-    CGFloat radians = rotation.z/BBRADIANS_TO_DEGREES;
+    CGFloat radians = rotation.z/AX_CALC_RADIANS_TO_DEGREES;
     speed.x += sinf(radians) * -forwardMag;
     speed.y += cosf(radians) * forwardMag;
 }
 
 - (void)fireMissile {
     AXMissile *missile = [[AXMissile alloc] init];
-    missile.scale = AXPointMake(5.0, 5.0, 1.0);
+    //missile.scale = AXPointMake(5.0, 5.0, 1.0);
     // position at tip of ship
-    CGFloat radians = rotation.z/BBRADIANS_TO_DEGREES;
+    CGFloat radians = rotation.z/AX_CALC_RADIANS_TO_DEGREES;
     CGFloat speedX = -sinf(radians) * 3.0;
     CGFloat speedY = cosf(radians) * 3.0;
     
     missile.speed = AXPointMake(speedX, speedY, 0.0);
-    missile.translation = AXPointMake(translation.x + missile.speed.x * 3.0, translation.y + missile.speed.y * 3.0, 0.0);
+    // missile.translation = AXPointMake(translation.x + missile.speed.x * 3.0, translation.y + missile.speed.y * 3.0, 0.0);
+    missile.translation = AXPointMatrixMultiply(AXPointMake(0.0, 0.5, 0.0), matrix);
     missile.rotation = AXPointMake(0.0, 0.0, self.rotation.z);
     
     [[AXSceneController sharedSceneController] addObjectToScene:missile];
+    [missile release];
     
     [[AXSceneController sharedSceneController].inputController setFireMissile:NO];
 }
