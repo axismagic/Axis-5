@@ -114,8 +114,12 @@
     CGPoint screenCenter = CGPointZero;
     CGPoint rectOrigin = CGPointZero;
     // since view is rotated, x and y are flipped
-    screenCenter.x = meshCenter.y + 160.0;
-    screenCenter.y = meshCenter.x + 240.0;
+    // *****
+    CGFloat vWidth = [AXSceneController sharedSceneController].viewSize.width;
+    CGFloat vHeight = [AXSceneController sharedSceneController].viewSize.height;
+    
+    screenCenter.x = meshCenter.y + vWidth/2;
+    screenCenter.y = meshCenter.x + vHeight/2;
     
     rectOrigin.x = screenCenter.x - (CGRectGetHeight(rect)/2.0);
     rectOrigin.y = screenCenter.y - (CGRectGetWidth(rect)/2.0);

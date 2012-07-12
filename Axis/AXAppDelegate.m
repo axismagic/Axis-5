@@ -43,6 +43,9 @@
     [window addSubview:sceneController.inputController.view];
     [window makeKeyAndVisible];
     
+    // ***** Warning, views flipped due to sideways openGL View
+    sceneController.viewSize = window.screen.bounds.size;
+    
     // begin the game
     [sceneController loadScene];
     [sceneController startScene];

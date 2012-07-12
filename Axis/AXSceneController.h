@@ -22,6 +22,8 @@
     AXInputViewController *inputController;
     AXCollisionController *collisionController;
     
+    CGSize viewSize;
+    
     CADisplayLink *displayLink;
     
     NSTimer *animationTimer;
@@ -36,6 +38,8 @@
 
 @property (retain) AXInputViewController *inputController;
 @property (retain) EAGLView *openGLView;
+
+@property (assign) CGSize viewSize;
 
 @property (retain) NSDate *levelStartDate;
 @property NSTimeInterval animationInterval;

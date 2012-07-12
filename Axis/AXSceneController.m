@@ -13,12 +13,14 @@
 #import "EAGLView.h"
 #import "AXSpaceShip.h"
 #import "AXRock.h"
+#import "AXParticleEmitter.h"
 
 @implementation AXSceneController
 
 @synthesize inputController, openGLView;
 @synthesize animationTimer, animationInterval;
 @synthesize levelStartDate, deltaTime;
+@synthesize viewSize;
 
 + (AXSceneController*)sharedSceneController {
     static AXSceneController *sharedSceneController;
