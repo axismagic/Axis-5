@@ -41,6 +41,12 @@
 		C5D3245E159323B90001C2D0 /* AXMobileObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D3245D159323B90001C2D0 /* AXMobileObject.m */; };
 		C5D324621593245E0001C2D0 /* AXSpaceShip.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D324611593245E0001C2D0 /* AXSpaceShip.m */; };
 		C5D32467159333750001C2D0 /* AXRock.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D32466159333750001C2D0 /* AXRock.m */; };
+		C5D7622515AED8B700939700 /* AXParticle.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D7622415AED8B700939700 /* AXParticle.m */; };
+		C5D7622815AED9C800939700 /* AXParticleEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D7622715AED9C800939700 /* AXParticleEmitter.m */; };
+		C5D7622B15AEE28200939700 /* particleAtlas.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5D7622915AEE28200939700 /* particleAtlas.plist */; };
+		C5D7622C15AEE28200939700 /* particleAtlas.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D7622A15AEE28200939700 /* particleAtlas.png */; };
+		C5EEFF2815AD8CD600FF320B /* MainWindow_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5EEFF2715AD8CD600FF320B /* MainWindow_iPad.xib */; };
+		C5EEFF2A15AD8E9000FF320B /* iPad_Window.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5EEFF2915AD8E9000FF320B /* iPad_Window.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,7 +120,15 @@
 		C5D324641593266E0001C2D0 /* AXConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXConfiguration.h; sourceTree = "<group>"; };
 		C5D32465159333750001C2D0 /* AXRock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXRock.h; path = "Game Files/AXRock.h"; sourceTree = "<group>"; };
 		C5D32466159333750001C2D0 /* AXRock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXRock.m; path = "Game Files/AXRock.m"; sourceTree = "<group>"; };
+		C5D7622315AED8B700939700 /* AXParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXParticle.h; path = "Objects/Particle Emitter/AXParticle.h"; sourceTree = "<group>"; };
+		C5D7622415AED8B700939700 /* AXParticle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXParticle.m; path = "Objects/Particle Emitter/AXParticle.m"; sourceTree = "<group>"; };
+		C5D7622615AED9C800939700 /* AXParticleEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXParticleEmitter.h; path = "Objects/Particle Emitter/AXParticleEmitter.h"; sourceTree = "<group>"; };
+		C5D7622715AED9C800939700 /* AXParticleEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXParticleEmitter.m; path = "Objects/Particle Emitter/AXParticleEmitter.m"; sourceTree = "<group>"; };
+		C5D7622915AEE28200939700 /* particleAtlas.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = particleAtlas.plist; sourceTree = "<group>"; };
+		C5D7622A15AEE28200939700 /* particleAtlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particleAtlas.png; sourceTree = "<group>"; };
 		C5EEFF2615AD879100FF320B /* Axis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Axis.h; sourceTree = "<group>"; };
+		C5EEFF2715AD8CD600FF320B /* MainWindow_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainWindow_iPad.xib; path = Interface/MainWindow_iPad.xib; sourceTree = "<group>"; };
+		C5EEFF2915AD8E9000FF320B /* iPad_Window.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPad_Window.xib; path = Interface/iPad_Window.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +210,8 @@
 				C50DF80A15923A3C00BBB433 /* Game Files */,
 				C50DF8041592372700BBB433 /* Objects */,
 				C50DF8021591E12200BBB433 /* MainWindow_iPhone.xib */,
+				C5EEFF2915AD8E9000FF320B /* iPad_Window.xib */,
+				C5EEFF2715AD8CD600FF320B /* MainWindow_iPad.xib */,
 				C50DF7B81591C5D100BBB433 /* Supporting Files */,
 			);
 			path = Axis;
@@ -248,6 +264,7 @@
 				C50DF7FB1591D58800BBB433 /* AXMesh.m */,
 				C5841CDD159B6E6600B6CC3E /* AXCollider.h */,
 				C5841CDE159B6E6600B6CC3E /* AXCollider.m */,
+				C5D7622115AED88900939700 /* Particle Emitter */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -284,11 +301,24 @@
 		C59B331F159F892500F634F4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C5D7622915AEE28200939700 /* particleAtlas.plist */,
+				C5D7622A15AEE28200939700 /* particleAtlas.png */,
 				C59B3325159F894A00F634F4 /* SpaceRocksAtlas.plist */,
 				C59B3326159F894A00F634F4 /* SpaceRocksAtlas.png */,
 			);
 			name = Resources;
 			path = Axis;
+			sourceTree = "<group>";
+		};
+		C5D7622115AED88900939700 /* Particle Emitter */ = {
+			isa = PBXGroup;
+			children = (
+				C5D7622315AED8B700939700 /* AXParticle.h */,
+				C5D7622415AED8B700939700 /* AXParticle.m */,
+				C5D7622615AED9C800939700 /* AXParticleEmitter.h */,
+				C5D7622715AED9C800939700 /* AXParticleEmitter.m */,
+			);
+			name = "Particle Emitter";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -367,6 +397,10 @@
 				C50DF8031591E12200BBB433 /* MainWindow_iPhone.xib in Resources */,
 				C59B3327159F894A00F634F4 /* SpaceRocksAtlas.plist in Resources */,
 				C59B3328159F894A00F634F4 /* SpaceRocksAtlas.png in Resources */,
+				C5EEFF2815AD8CD600FF320B /* MainWindow_iPad.xib in Resources */,
+				C5EEFF2A15AD8E9000FF320B /* iPad_Window.xib in Resources */,
+				C5D7622B15AEE28200939700 /* particleAtlas.plist in Resources */,
+				C5D7622C15AEE28200939700 /* particleAtlas.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,6 +469,8 @@
 				C59B333A15A0799300F634F4 /* AXTexturedButton.m in Sources */,
 				C52CF44415A3062F0050C1C0 /* AXAnimatedQuad.m in Sources */,
 				C52CF44715A30F9D0050C1C0 /* AXAnimation.m in Sources */,
+				C5D7622515AED8B700939700 /* AXParticle.m in Sources */,
+				C5D7622815AED9C800939700 /* AXParticleEmitter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
