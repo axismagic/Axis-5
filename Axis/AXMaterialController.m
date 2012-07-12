@@ -29,6 +29,7 @@
     self = [super init];
     if (self != nil) {
         [self loadAtlasData:@"SpaceRocksAtlas"];
+        [self loadAtlasData:@"particleAtlas"];
     }
     
     return self;
