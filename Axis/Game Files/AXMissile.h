@@ -8,6 +8,14 @@
 
 #import "AXMobileObject.h"
 
-@interface AXMissile : AXMobileObject
+@class AXParticleEmitter;
+
+@interface AXMissile : AXMobileObject {
+    AXParticleEmitter *particleEmitter;
+    AXPoint emitterOffset;
+    BOOL destroyed;
+}
+
+- (void)handleCollision;
 
 @end

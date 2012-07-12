@@ -12,6 +12,8 @@
 #import "AXCollider.h"
 #import "AXAnimatedQuad.h"
 
+#import "AXParticleEmitter.h"
+
 #pragma mark Missile mesh
 
 /*
@@ -48,12 +50,45 @@
     mesh.radius = 0.35;
     self.collider = [AXCollider collider];
     [self.collider setCheckForCollisions:YES];
+    
+    // particle emitter
+    particleEmitter = [[AXParticleEmitter alloc] init];
+    particleEmitter.emissionRange = AXRangeMake(3.0, 0.0);
+    particleEmitter.sizeRange = AXRangeMake(8.0, 1.0);
+    particleEmitter.growRange = AXRangeMake(-0.8, 0.5);
+    
+    particleEmitter.xVelocityRange = AXRangeMake(-0.5, 1.0);
+    particleEmitter.yVelocityRange = AXRangeMake(-0.5, 1.0);
+    
+    particleEmitter.lifeRange = AXRangeMake(0.0, 2.5);
+    particleEmitter.decayRange = AXRangeMake(0.03, 0.05);
+    
+    [particleEmitter setParticle:@"redBlur"];
+    particleEmitter.emit = NO;
+    
+    destroyed = NO;
+    
+    emitterOffset = AXPointMake(0.0, -2.0, 0.0);
 }
 
 - (void)update {
+    if (destroyed) {
+        if ((particleEmitter.emitCounter <= 0) && (![particleEmitter activeParticles])) {
+            [[AXSceneController sharedSceneController] removeObjectFromScene:self];
+        }
+        return;
+    }
+    particleEmitter.translation = AXPointMatrixMultiply(emitterOffset, matrix);
+    
     [super update];
     if ([mesh isKindOfClass:[AXAnimatedQuad class]])
         [(AXAnimatedQuad*)mesh updateAnimation];
+    
+    // if not emitting and are active, start emitting
+    if (!particleEmitter.emit && active && !destroyed) {
+        [[AXSceneController sharedSceneController] addObjectToScene:particleEmitter];
+        particleEmitter.emit = YES;
+    }
 }
 
 - (void)checkArenaBounds {
@@ -79,9 +114,29 @@
         return;
     if (![sceneObject.collider doesCollideWithMesh:self])
         return;
+    
+    // smash the rock
     [(AXRock*)sceneObject smash];
-    // destroy ship
+    // remove self
     [[AXSceneController sharedSceneController] removeObjectFromScene:self];
+    
+    // destroy ourselves
+    [self handleCollision];
+}
+
+- (void)handleCollision {
+    self.active = NO;
+    particleEmitter.emit = NO;
+    destroyed = YES;
+    self.collider = nil;
+}
+
+- (void)dealloc {
+    if (particleEmitter != nil)
+        [[AXSceneController sharedSceneController] removeObjectFromScene:particleEmitter];
+    
+    [particleEmitter release];
+    [super dealloc];
 }
 
 @end
