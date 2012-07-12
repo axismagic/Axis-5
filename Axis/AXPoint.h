@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
+#pragma mark AXPoint
+
 // 3D Point
 
 typedef struct {
@@ -30,4 +32,25 @@ static inline AXPoint AXPointMatrixMultiply(AXPoint p, CGFloat *m) {
     CGFloat z = (p.x*m[2]) + (p.x*m[6]) + (p.x*m[10]) + m[14];
     
     return (AXPoint) {x, y, z};
+}
+
+#pragma mark AXRange
+
+typedef struct {
+    CGFloat start, length;
+} AXRange;
+
+static inline AXRange AXRangeMake(CGFloat start, CGFloat len) {
+    return (AXRange) {start, len};
+}
+
+static inline NSString *NSStringFromAXRange(AXRange p) {
+    return  [NSString stringWithFormat:@"{%3.2f, %3.2f}", p.start, p.length];
+}
+
+static inline CGFloat AXRandomFloat(AXRange range) {
+    // retrn a random float in the range
+    CGFloat randPercent = ((CGFloat)(random() % 1001))/1000.0;
+    CGFloat offset = randPercent * range.length;
+    return  offset + range.start;
 }

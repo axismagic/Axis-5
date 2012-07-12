@@ -27,6 +27,10 @@
 // a handy constant to keep around
 #define AX_CALC_RADIANS_TO_DEGREES 57.2958
 
+// Particles
+// ***** will be removed for custom number
+#define AX_MAX_PARTICLES 100
+
 // Game Constants
 
 // the explosive force applied to the smaller rocks after a big rock has been smashed
