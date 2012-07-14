@@ -8,11 +8,13 @@
 
 #import "AXAppDelegate.h"
 
-#import "AXInputViewController.h"
-#import "EAGLView.h"
-#import "AXSceneController.h"
 #import "Axis.h"
 #import "AXConfiguration.h"
+
+#import "EAGLView.h"
+#import "AXDirector.h"
+#import "AXSceneController.h"
+#import "AXInputViewController.h"
 
 @implementation AXAppDelegate
 
@@ -46,9 +48,38 @@
     // ***** Warning, views flipped due to sideways openGL View
     sceneController.viewSize = window.screen.bounds.size;
     
+    // tell the director to continue setup
+    [[AXDirector sharedDirector] setupEngine];
+    //[sceneController loadScene];
+    //[sceneController startScene];
+    
+    /* Original
+    
+    AXSceneController *sceneController = [AXSceneController sharedSceneController];
+    
+    // make a new input view controller, save it
+    AXInputViewController *anInputController = [[AXInputViewController alloc] initWithNibName:nil bundle:nil];
+    sceneController.inputController = anInputController;
+    [anInputController release];
+    
+    // initialise main EAGLView with window bounds
+    EAGLView *glView = [[EAGLView alloc] initWithFrame:window.bounds];
+    sceneController.inputController.view = glView;
+    sceneController.openGLView = glView;
+    [glView release];
+    
+    // set our view as the first window view
+    [window addSubview:sceneController.inputController.view];
+    [window makeKeyAndVisible];
+    
+    // ***** Warning, views flipped due to sideways openGL View
+    sceneController.viewSize = window.screen.bounds.size;
+    
     // begin the game
     [sceneController loadScene];
     [sceneController startScene];
+     
+     */
 }
 
 /* Original
