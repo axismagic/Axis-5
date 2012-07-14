@@ -33,6 +33,9 @@
 		C52CF44715A30F9D0050C1C0 /* AXAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = C52CF44615A30F9D0050C1C0 /* AXAnimation.m */; };
 		C5841CDF159B6E6600B6CC3E /* AXCollider.m in Sources */ = {isa = PBXBuildFile; fileRef = C5841CDE159B6E6600B6CC3E /* AXCollider.m */; };
 		C5841CE7159B710400B6CC3E /* AXCollisionController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5841CE6159B710400B6CC3E /* AXCollisionController.m */; };
+		C587F0D915B1E1FF00F21A57 /* AXOldSceneController.m in Sources */ = {isa = PBXBuildFile; fileRef = C587F0D815B1E1FF00F21A57 /* AXOldSceneController.m */; };
+		C587F0DD15B200CA00F21A57 /* AXInterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = C587F0DC15B200C900F21A57 /* AXInterfaceController.m */; };
+		C587F0E015B20B2A00F21A57 /* AXNewScene.m in Sources */ = {isa = PBXBuildFile; fileRef = C587F0DF15B20B2A00F21A57 /* AXNewScene.m */; };
 		C59B3327159F894A00F634F4 /* SpaceRocksAtlas.plist in Resources */ = {isa = PBXBuildFile; fileRef = C59B3325159F894A00F634F4 /* SpaceRocksAtlas.plist */; };
 		C59B3328159F894A00F634F4 /* SpaceRocksAtlas.png in Resources */ = {isa = PBXBuildFile; fileRef = C59B3326159F894A00F634F4 /* SpaceRocksAtlas.png */; };
 		C59B332F159F8A1100F634F4 /* AXMaterialController.m in Sources */ = {isa = PBXBuildFile; fileRef = C59B332E159F8A1100F634F4 /* AXMaterialController.m */; };
@@ -45,7 +48,9 @@
 		C5D7622815AED9C800939700 /* AXParticleEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D7622715AED9C800939700 /* AXParticleEmitter.m */; };
 		C5D7622B15AEE28200939700 /* particleAtlas.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5D7622915AEE28200939700 /* particleAtlas.plist */; };
 		C5D7622C15AEE28200939700 /* particleAtlas.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D7622A15AEE28200939700 /* particleAtlas.png */; };
+		C5D7623015AEFFCA00939700 /* AXDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D7622F15AEFFCA00939700 /* AXDirector.m */; };
 		C5EEFF2A15AD8E9000FF320B /* iPad_Window.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5EEFF2915AD8E9000FF320B /* iPad_Window.xib */; };
+		C5FC047E15AF3B1A00000508 /* AXScene.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FC047D15AF3B1A00000508 /* AXScene.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +109,12 @@
 		C5841CDE159B6E6600B6CC3E /* AXCollider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXCollider.m; path = Objects/AXCollider.m; sourceTree = "<group>"; };
 		C5841CE5159B710400B6CC3E /* AXCollisionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXCollisionController.h; sourceTree = "<group>"; };
 		C5841CE6159B710400B6CC3E /* AXCollisionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXCollisionController.m; sourceTree = "<group>"; };
+		C587F0D715B1E1FF00F21A57 /* AXOldSceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXOldSceneController.h; sourceTree = "<group>"; };
+		C587F0D815B1E1FF00F21A57 /* AXOldSceneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXOldSceneController.m; sourceTree = "<group>"; };
+		C587F0DB15B200C900F21A57 /* AXInterfaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXInterfaceController.h; sourceTree = "<group>"; };
+		C587F0DC15B200C900F21A57 /* AXInterfaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXInterfaceController.m; sourceTree = "<group>"; };
+		C587F0DE15B20B2900F21A57 /* AXNewScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXNewScene.h; sourceTree = "<group>"; };
+		C587F0DF15B20B2A00F21A57 /* AXNewScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXNewScene.m; sourceTree = "<group>"; };
 		C59B3325159F894A00F634F4 /* SpaceRocksAtlas.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SpaceRocksAtlas.plist; sourceTree = "<group>"; };
 		C59B3326159F894A00F634F4 /* SpaceRocksAtlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SpaceRocksAtlas.png; sourceTree = "<group>"; };
 		C59B332D159F8A1100F634F4 /* AXMaterialController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXMaterialController.h; sourceTree = "<group>"; };
@@ -125,8 +136,12 @@
 		C5D7622715AED9C800939700 /* AXParticleEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXParticleEmitter.m; path = "Objects/Particle Emitter/AXParticleEmitter.m"; sourceTree = "<group>"; };
 		C5D7622915AEE28200939700 /* particleAtlas.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = particleAtlas.plist; sourceTree = "<group>"; };
 		C5D7622A15AEE28200939700 /* particleAtlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particleAtlas.png; sourceTree = "<group>"; };
+		C5D7622E15AEFFC900939700 /* AXDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXDirector.h; sourceTree = "<group>"; };
+		C5D7622F15AEFFCA00939700 /* AXDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXDirector.m; sourceTree = "<group>"; };
 		C5EEFF2615AD879100FF320B /* Axis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Axis.h; sourceTree = "<group>"; };
 		C5EEFF2915AD8E9000FF320B /* iPad_Window.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPad_Window.xib; path = Interface/iPad_Window.xib; sourceTree = "<group>"; };
+		C5FC047C15AF3B1A00000508 /* AXScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXScene.h; sourceTree = "<group>"; };
+		C5FC047D15AF3B1A00000508 /* AXScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXScene.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,10 +212,20 @@
 				C50DF7C11591C5D100BBB433 /* AXAppDelegate.m */,
 				C50DF7F41591CBC100BBB433 /* EAGLView.h */,
 				C50DF7F51591CBC200BBB433 /* EAGLView.m */,
-				C50DF7EE1591C8EE00BBB433 /* AXInputViewController.h */,
-				C50DF7EF1591C8EE00BBB433 /* AXInputViewController.m */,
+				C5D7622E15AEFFC900939700 /* AXDirector.h */,
+				C5D7622F15AEFFCA00939700 /* AXDirector.m */,
 				C50DF7F71591D44F00BBB433 /* AXSceneController.h */,
 				C50DF7F81591D44F00BBB433 /* AXSceneController.m */,
+				C5FC047C15AF3B1A00000508 /* AXScene.h */,
+				C5FC047D15AF3B1A00000508 /* AXScene.m */,
+				C587F0DE15B20B2900F21A57 /* AXNewScene.h */,
+				C587F0DF15B20B2A00F21A57 /* AXNewScene.m */,
+				C587F0D715B1E1FF00F21A57 /* AXOldSceneController.h */,
+				C587F0D815B1E1FF00F21A57 /* AXOldSceneController.m */,
+				C50DF7EE1591C8EE00BBB433 /* AXInputViewController.h */,
+				C50DF7EF1591C8EE00BBB433 /* AXInputViewController.m */,
+				C587F0DB15B200C900F21A57 /* AXInterfaceController.h */,
+				C587F0DC15B200C900F21A57 /* AXInterfaceController.m */,
 				C5841CE5159B710400B6CC3E /* AXCollisionController.h */,
 				C5841CE6159B710400B6CC3E /* AXCollisionController.m */,
 				C59B332D159F8A1100F634F4 /* AXMaterialController.h */,
@@ -467,6 +492,11 @@
 				C52CF44715A30F9D0050C1C0 /* AXAnimation.m in Sources */,
 				C5D7622515AED8B700939700 /* AXParticle.m in Sources */,
 				C5D7622815AED9C800939700 /* AXParticleEmitter.m in Sources */,
+				C5D7623015AEFFCA00939700 /* AXDirector.m in Sources */,
+				C5FC047E15AF3B1A00000508 /* AXScene.m in Sources */,
+				C587F0D915B1E1FF00F21A57 /* AXOldSceneController.m in Sources */,
+				C587F0DD15B200CA00F21A57 /* AXInterfaceController.m in Sources */,
+				C587F0E015B20B2A00F21A57 /* AXNewScene.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
