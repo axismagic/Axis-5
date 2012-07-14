@@ -12,28 +12,48 @@
 @class AXCollisionController;
 @class EAGLView;
 @class AXSceneObject;
+@class AXScene;
 
 @interface AXSceneController : NSObject {
-    NSMutableArray *sceneObjects;
-    NSMutableArray *objectsToAdd;
-    NSMutableArray *objectsToRemove;
     
+    NSMutableArray *scenes;
+    
+    // OpenGL View
     EAGLView *openGLView;
+    // Input Controller
     AXInputViewController *inputController;
+    // Collision Controller ***** should move to scene?
+    /*
+     To avoid all sceneObjects from all scenes being checked when only one is active, collisions should be moved to individual scenes.
+     Should same happen for inputController? No, active BOOL stops scenes from doing anything with touches. Should.
+    */
     AXCollisionController *collisionController;
     
-    CGSize viewSize;
-    
+    // Loop tracking
     CADisplayLink *displayLink;
     
     NSTimer *animationTimer;
     NSTimeInterval animationInterval;
     
-    NSDate *levelStartDate;
+    NSDate *startDate;
     
     NSTimeInterval deltaTime;
     NSTimeInterval lastFrameStartTime;
     NSTimeInterval thisFrameStartTime;
+    
+    NSMutableArray *scenesToAdd;
+    NSMutableArray *scenesToRemove;
+    
+    //
+    
+    
+    /*NSMutableArray *sceneObjects;
+    NSMutableArray *objectsToAdd;
+    NSMutableArray *objectsToRemove;
+    
+    CGSize viewSize;*/
+    
+    
 }
 
 @property (retain) AXInputViewController *inputController;
@@ -41,7 +61,7 @@
 
 @property (assign) CGSize viewSize;
 
-@property (retain) NSDate *levelStartDate;
+@property (retain) NSDate *startDate;
 @property NSTimeInterval animationInterval;
 @property NSTimeInterval deltaTime;
 @property (nonatomic, assign) NSTimer *animationTimer;
@@ -58,6 +78,11 @@
 - (void)stopAnimation;
 - (void)updateModel;
 
+- (void)loadScene:(AXScene*)scene activate:(BOOL)activate;
+
+- (void)loop;
+- (void)startLoop;
+- (void)stopLoop;
 - (void)addObjectToScene:(AXSceneObject*)sceneObject;
 - (void)removeObjectFromScene:(AXSceneObject*)sceneObject;
 
