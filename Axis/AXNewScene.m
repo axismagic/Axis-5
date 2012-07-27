@@ -8,6 +8,7 @@
 
 #import "AXNewScene.h"
 #import "AXRock.h"
+#import "AXSpaceShip.h"
 
 @implementation AXNewScene
 
@@ -20,6 +21,10 @@
     rock.translation = AXPointMake(0.0, 0.0, 0.0);
     rock.speed = AXPointMake(0.0, 0.0, 0.0);
     [self addObjectToScene:rock];
+    
+    AXSpaceShip *ship = [[AXSpaceShip alloc] init];
+    ship.translation = AXPointMake(-100.0, 0.0, 0.0);
+    [self addObjectToScene:ship];
 }
 
 @end

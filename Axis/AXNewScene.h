@@ -8,6 +8,8 @@
 
 #import "AXScene.h"
 
-@interface AXNewScene : AXScene
+@interface AXNewScene : AXScene {
+    
+}
 
 @end
