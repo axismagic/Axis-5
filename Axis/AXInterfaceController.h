@@ -10,7 +10,15 @@
 
 @interface AXInterfaceController : NSObject {
     NSMutableArray *interfaceObjects;
+    
+    CGFloat forwardMagnitude;
+    CGFloat rightMagnitude;
+    CGFloat leftMagnitude;
 }
+
+@property (assign) CGFloat forwardMagnitude;
+@property (assign) CGFloat rightMagnitude;
+@property (assign) CGFloat leftMagnitude;
 
 - (void)loadInterface;
 - (void)updateInterface;

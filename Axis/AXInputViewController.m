@@ -152,7 +152,6 @@
 }
 
 - (void)fireButtonUp {
-    
 }
 
 - (void)leftButtonDown {
