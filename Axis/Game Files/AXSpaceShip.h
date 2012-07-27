@@ -8,7 +8,9 @@
 
 #import "AXMobileObject.h"
 
-@interface AXSpaceShip : AXMobileObject
+@interface AXSpaceShip : AXMobileObject {
+    
+}
 
 - (void)fireMissile;
 

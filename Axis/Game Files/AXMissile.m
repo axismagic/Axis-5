@@ -81,6 +81,7 @@
     particleEmitter.translation = AXPointMatrixMultiply(emitterOffset, matrix);
     
     [super update];
+    
     if ([mesh isKindOfClass:[AXAnimatedQuad class]])
         [(AXAnimatedQuad*)mesh updateAnimation];
     
