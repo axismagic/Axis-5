@@ -18,8 +18,6 @@
     @synchronized(self) {
         if (!sharedMaterialController)
             sharedMaterialController = [[AXMaterialController alloc] init];
-        
-        // return sharedMaterialController;
     }
     
     return sharedMaterialController;
