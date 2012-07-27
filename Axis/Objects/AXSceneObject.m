@@ -29,10 +29,16 @@ static CGFloat spinnySquareColors[16] = {
 @implementation AXSceneObject
 
 @synthesize translation, rotation, scale, active, mesh, meshBounds, matrix, collider;
+@synthesize hasChildren, isChild;
+@synthesize worldPosition, vectorFromParent;
+@synthesize delegate = _delegate;
 
 - (id)init {
     self = [super init];
     if (self != nil) {
+        worldPosition = AXPointMake(0.0, 0.0, 0.0);
+        vectorFromParent = AXPointMake(0.0, 0.0, 0.0);
+        
         translation = AXPointMake(0.0, 0.0, 0.0);
         rotation = AXPointMake(0.0, 0.0, 0.0);
         scale = AXPointMake(1.0, 1.0, 1.0);
@@ -42,7 +48,12 @@ static CGFloat spinnySquareColors[16] = {
         
         meshBounds = CGRectZero;
         
+        hasChildren = NO;
+        isChild = NO;
+        
         active = NO;
+        
+        self.delegate = nil;
     }
     
     return self;
@@ -66,7 +77,56 @@ static CGFloat spinnySquareColors[16] = {
     mesh.colorStride = 4;*/
 }
 
+- (void)addChild:(AXSceneObject *)child {
+    // initialise children array
+    if (children == nil)
+        children = [[NSMutableArray alloc] init];
+    
+    // if child is not already a child, add new child.
+    if (!child.isChild) {
+        // set child
+        child.active = YES;
+        [child awake];
+        
+        // add as child
+        child.isChild = YES;
+        [children addObject:child];
+        
+        // set child delegate
+        child.delegate = _delegate;
+        
+        [child finalAwake];
+        
+        // if has no children already, set yes
+        if (!hasChildren)
+            hasChildren = YES;
+    } else
+        return;
+}
+
+// ***** method for removing children required
+
 - (void)update {
+    // update self, used in subclasses
+    [self updateBeginningPhase];
+    
+    // work out relative position of children (offset)
+    if (hasChildren) {
+        // loop through children and work out relative position
+        for (AXSceneObject *child in children) {
+            // work out relative position
+            AXPoint childRelativePosition = AXPointMake(child.translation.x - self.translation.x,
+                                                        child.translation.y - self.translation.y,
+                                                        child.translation.z - self.translation.z);
+            // give child new relative position
+            child.vectorFromParent = childRelativePosition;
+        }
+    }
+    
+    // update self, used in subclasses
+    [self updateMiddlePhase];
+    
+    // update openGL on self
     glPushMatrix();
     glLoadIdentity();
     
@@ -86,8 +146,39 @@ static CGFloat spinnySquareColors[16] = {
     // restore matrix
     glPopMatrix();
     
+    // update collider
     if (collider != nil)
         [collider updateCollider:self];
+    
+    if (hasChildren) {
+        // update children positions
+        for (AXSceneObject *child in children) {
+            // tell child of new position
+            AXPoint childNewPosition = AXPointMake(self.translation.x + child.vectorFromParent.x,
+                                                   self.translation.y + child.vectorFromParent.y,
+                                                   self.translation.z + child.vectorFromParent.z);
+            
+            child.translation = childNewPosition;
+        }
+        
+        // update all children
+        [children makeObjectsPerformSelector:@selector(update)];
+    }
+    
+    // update self, used in subclasses
+    [self updateEndPhase];
+}
+
+- (void)updateBeginningPhase {
+    
+}
+
+- (void)updateMiddlePhase {
+    
+}
+
+- (void)updateEndPhase {
+    
 }
 
 - (void)render {
@@ -103,9 +194,25 @@ static CGFloat spinnySquareColors[16] = {
     
     // restore the matrix
     glPopMatrix();
+    
+    // render children
+    if (hasChildren) {
+        [children makeObjectsPerformSelector:@selector(render)];
+        //NSLog(@"Did render Child");
+    }
+    
+    if (isChild) {
+        //NSLog(@"Child Did Render");
+    }
+}
+
+- (void)finalAwake {
+    [_delegate submitForEvaluation:self];
 }
 
 - (void)dealloc {
+    self.delegate = nil;
+    
     [mesh release];
     [collider release];
     free(matrix);
