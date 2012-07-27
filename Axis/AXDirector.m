@@ -17,8 +17,8 @@
 @implementation AXDirector
 
 @synthesize inputController, openGLView;
-@synthesize animationTimer, animationInterval;
-@synthesize levelStartDate, deltaTime;
+/*@synthesize animationTimer, animationInterval;
+@synthesize levelStartDate, deltaTime;*/
 @synthesize viewSize;
 
 + (AXDirector*)sharedDirector {
@@ -42,7 +42,8 @@
      sets up sceneController with other basic settings
     */
     AXScene *scene = [[AXScene alloc] init];
-    [sceneController loadScene:scene activate:YES]; // change to loadScene:(AXScene*)scene;
+    [sceneController loadScene:scene forKey:@"shipScene" activate:YES];
+    // change to loadScene:(AXScene*)scene;
     [scene release];
     // starts scene once ready
     // ***** [sceneController startScene];
@@ -54,6 +55,10 @@
      
      CONSIDER - loadScene:(AXScene*)scene activate:(BOOL)activate
     */
+}
+
+- (void)dealloc {
+    [super dealloc];
 }
 
 @end

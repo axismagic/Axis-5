@@ -30,7 +30,7 @@
     // display and animation variables
     
     // ***** for sceneController
-    CADisplayLink *displayLink;
+    /*CADisplayLink *displayLink;
     
     NSTimer *animationTimer;
     NSTimeInterval animationInterval;
@@ -39,7 +39,7 @@
     
     NSTimeInterval deltaTime;
     NSTimeInterval lastFrameStartTime;
-    NSTimeInterval thisFrameStartTime;
+    NSTimeInterval thisFrameStartTime;*/
     
     //
 }
@@ -50,31 +50,23 @@
 
 @property (assign) CGSize viewSize;
 
-@property (retain) NSDate *levelStartDate;
+/*@property (retain) NSDate *levelStartDate;
 @property NSTimeInterval animationInterval;
 @property NSTimeInterval deltaTime;
-@property (nonatomic, assign) NSTimer *animationTimer;
+@property (nonatomic, assign) NSTimer *animationTimer;*/
 
 /*- (void)loadScene;
 - (void)startScene;
 - (void)gameLoop;
-- (void)renderScene;*/
+- (void)renderScene;
 - (void)setAnimationInterval:(NSTimeInterval)interval;
 - (void)setAnimationTimer:(NSTimer*)newTimer;
 - (void)startAnimation;
-- (void)stopAnimation;
+- (void)stopAnimation;*/
 
 //
 
 + (AXDirector*)sharedDirector;
 - (void)setupEngine;
-
-
-// job for sceneController
-- (void)addScene;
-- (void)removeScene;
-- (void)showScene;
-
-- (void)dealloc;
 
 @end
