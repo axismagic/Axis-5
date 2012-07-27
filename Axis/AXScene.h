@@ -7,15 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AXSceneObject.h"
 
 @class AXInterfaceController;
-@class AXSceneObject;
+@class AXCollisionController;
 
-@interface AXScene : NSObject {
+@interface AXScene : NSObject <sceneObjectOwnership> {
     // should update, even when not active?
-    BOOL shouldUpdate;
-    // is active?
-    BOOL active;
+    BOOL updates;
     
     // scene object management
     NSMutableArray *sceneObjects;
@@ -24,16 +23,18 @@
     
     // interfaceController
     AXInterfaceController *interfaceController;
+    // collisionController
+    AXCollisionController *collisionController;
 }
 
-@property (assign) BOOL shouldUpdate;
-@property (assign) BOOL active;
+@property (assign) BOOL updates;
 
 @property (retain) AXInterfaceController *interfaceController;
+@property (retain) AXCollisionController *collisionController;
 
 - (void)loadScene;
 
-- (void)updateModel;
+- (void)updateScene;
 - (void)renderScene;
 
 - (void)addObjectToScene:(AXSceneObject*)sceneObject;

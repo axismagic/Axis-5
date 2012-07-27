@@ -16,7 +16,12 @@
 
 @interface AXSceneController : NSObject {
     
-    NSMutableArray *scenes;
+    // all scenes
+    NSMutableDictionary *scenes;
+    // scene keys for scenes to update
+    NSMutableArray *updatingSceneKeys;
+    // key for active, rendering scene
+    NSString *activeSceneKey;
     
     // OpenGL View
     EAGLView *openGLView;
@@ -41,7 +46,7 @@
     NSTimeInterval lastFrameStartTime;
     NSTimeInterval thisFrameStartTime;
     
-    NSMutableArray *scenesToAdd;
+    NSMutableDictionary *scenesToAdd;
     NSMutableArray *scenesToRemove;
     
     //
@@ -59,6 +64,8 @@
 @property (retain) AXInputViewController *inputController;
 @property (retain) EAGLView *openGLView;
 
+@property (retain) NSString *activeSceneKey;
+
 @property (assign) CGSize viewSize;
 
 @property (retain) NSDate *startDate;
@@ -68,21 +75,23 @@
 
 + (AXSceneController*)sharedSceneController;
 - (void)dealloc;
-- (void)loadScene;
-- (void)startScene;
-- (void)gameLoop;
-- (void)renderScene;
 - (void)setAnimationInterval:(NSTimeInterval)interval;
 - (void)setAnimationTimer:(NSTimer*)newTimer;
 - (void)startAnimation;
 - (void)stopAnimation;
-- (void)updateModel;
 
-- (void)loadScene:(AXScene*)scene activate:(BOOL)activate;
+- (void)loadScene;
+- (void)loadScene:(AXScene*)scene forKey:(NSString*)sceneKey activate:(BOOL)activate;
+- (void)activateScene:(NSString*)sceneKey;
+- (void)deactivateScene:(NSString*)sceneKey;
+- (void)deactivateScenesExcept:(NSString*)sceneKey;
+- (void)updateSceneBehindTheScenes:(NSString*)sceneKey;
 
 - (void)loop;
 - (void)startLoop;
 - (void)stopLoop;
+
+// ***** needs to be removed
 - (void)addObjectToScene:(AXSceneObject*)sceneObject;
 - (void)removeObjectFromScene:(AXSceneObject*)sceneObject;
 

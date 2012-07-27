@@ -27,6 +27,8 @@
 @synthesize startDate, deltaTime;
 @synthesize viewSize;
 
+@synthesize activeSceneKey;
+
 + (AXSceneController*)sharedSceneController {
     static AXSceneController *sharedSceneController;
     @synchronized(self) {
@@ -37,37 +39,86 @@
     return sharedSceneController;
 }
 
+- (id)init {
+    self = [super init];
+    if (self != nil) {
+        self.activeSceneKey = [[NSString alloc] initWithString:@"NO_SCENE"];
+        
+        RANDOM_SEED();
+    }
+    
+    return self;
+}
+
 #pragma  mark Scene Management
 
-- (void)loadScene:(AXScene*)scene activate:(BOOL)activate {
+- (void)loadScene:(AXScene*)scene forKey:(NSString*)sceneKey activate:(BOOL)activate {
     // ***** use keys to id scenes
     if (scenes == nil)
-        scenes = [[NSMutableArray alloc] init];
+        scenes = [[NSMutableDictionary alloc] init];
+    if (updatingSceneKeys == nil)
+        updatingSceneKeys = [[NSMutableArray alloc] init];
     
-    [scenes addObject:scene];
+    [scenes setObject:scene forKey:sceneKey];
     // tell scene to load itself
     [scene loadScene];
     
-    if (activate) {
-        // ***** run activate method for possible transitions and deactivate other scenes
-        for (AXScene *scene in scenes) {
-            scene.shouldUpdate = NO;
-            scene.active = NO;
-        }
-        scene.shouldUpdate = YES;
-        scene.active = YES;
-    } else {
-        scene.shouldUpdate = NO;
-        scene.active = NO;
+    if (activate)
+        [self activateScene:sceneKey];
+    else
+        [self deactivateScene:sceneKey];
+}
+
+- (void)removeSceneForKey:(NSString*)sceneKey {
+    NSAssert(activeSceneKey != sceneKey, @"Scene must not be active");
+    
+    [self deactivateScene:sceneKey];
+    [scenes removeObjectForKey:sceneKey];
+}
+
+- (void)activateScene:(NSString*)sceneKey {
+    // get scene
+    AXScene *scene = [scenes objectForKey:sceneKey];
+    //activate scene
+    [scene setUpdates:YES];
+    // add scene key to updating keys array
+    [updatingSceneKeys addObject:sceneKey];
+    
+    // set active scene key
+    self.activeSceneKey = sceneKey;
+    
+    // deactivate current scene
+    if (![activeSceneKey isEqualToString:@"NO_SCENE"]) {
+        NSLog(@"Did try to deactivate current scene");
+        [self deactivateScene:activeSceneKey];
     }
 }
 
-- (void)activateScene:(AXScene*)scene {
-    
+- (void)deactivateScene:(NSString*)sceneKey {
+    AXScene *scene = [scenes objectForKey:sceneKey];
+    // deactivate scene
+    [scene setUpdates:NO];
+    // remove scene from updating scene keys
+    [updatingSceneKeys removeObject:sceneKey];
 }
 
-- (void)setScene:(AXScene*)scene shouldUpdate:(BOOL)shouldUpdate {
-    
+- (void)deactivateScenesExcept:(NSString*)sceneKey {
+    for (NSString *key in scenes) {
+        if (![key isEqualToString:sceneKey]) {
+            /*AXScene *scene = [scenes objectForKey:sceneKey];
+            [scene setUpdates:NO];*/
+            [updatingSceneKeys removeObject:key];
+        }
+    }
+}
+
+- (void)updateSceneBehindTheScenes:(NSString*)sceneKey {
+    for (NSString *key in scenes) {
+        if ([key isEqualToString:sceneKey]) {
+            AXScene *scene = [scenes objectForKey:sceneKey];
+            [scene setUpdates:NO];
+        }
+    }
 }
 
 - (void)loadScene {
@@ -75,11 +126,10 @@
     AXScene *scene = [[AXScene alloc] init];
     
     if (scenes == nil)
-        scenes = [[NSMutableArray alloc] init];
+        scenes = [[NSMutableDictionary alloc] init];
     
-    [scenes addObject:scene];
-    scene.shouldUpdate = YES;
-    scene.active = YES;
+    [scenes setObject:scene forKey:@"DEFAULT_SCENE_KEY"];
+    [scene setUpdates:YES];
     
     [scene loadScene];
     
@@ -118,7 +168,7 @@
     [inputController loadInterface];*/
 }
 
-- (void)removeScene {
+- (void)removeScene:(AXScene*)scene {
     // ***** remove specific scenes
 }
 
@@ -162,20 +212,26 @@
             NSLog(@"Current Frame Rate LOW: %f", 1.0/deltaTime);
     }
     
+    // add scenes to updating array
+    
     // add scenes
-    if ([scenesToAdd count] > 0) {
-        [scenes addObjectsFromArray:scenesToAdd];
+    /*if ([scenesToAdd count] > 0) {
+        [scenes addEntriesFromDictionary:scenesToAdd];
+        //[scenes addObjectsFromArray:scenesToAdd];
         [scenesToAdd removeAllObjects];
-    }
+    }*/
     
     [self updateScenes];
     [self renderScenes];
     
+    // remove scenes from updating array
+    
     // remove scenes
-    if ([scenesToRemove count] > 0) {
-        [scenes removeObjectsInArray:scenesToRemove];
+    /*if ([scenesToRemove count] > 0) {
+        [scenes removeObjectsForKeys:];
+        //[scenes removeObjectsInArray:scenesToRemove];
         [scenesToRemove removeAllObjects];
-    }
+    }*/
     
     [aPool release];
 }
@@ -196,7 +252,7 @@
 #pragma mark Animation Management
 
 - (void)startAnimation {
-    if (AX_USE_DISPLAY_LINK) {
+    if (AX_ENABLE_DISPLAY_LINK) {
         NSLog(@"Using Display Link");
         
         if (displayLink)
@@ -214,7 +270,7 @@
 }
 
 - (void)stopAnimation {
-    if (AX_USE_DISPLAY_LINK) {
+    if (AX_ENABLE_DISPLAY_LINK) {
         [displayLink invalidate];
         [displayLink release];
         displayLink = nil;
@@ -241,13 +297,36 @@
 #pragma mark Update Model
 
 - (void)updateScenes {
+    /* ***** updating behind the scenes
+    for (NSString *searchKey in scenes) {
+        AXScene *scene = [scenes objectForKey:searchKey];
+        if (scene.updates)
+            [scene updateModel];
+    }*/
+    
+    if (AX_ENABLE_MULTI_SCENE_MODE) {
+        // multi scene mode enabled
+        // iterate over updating scenes
+        for (NSString *searchKey in updatingSceneKeys) {
+            AXScene *scene = [scenes objectForKey:searchKey];
+            [scene updateScene];
+        }
+    } else {
+        // single scene mode
+        // only the scene that renders will update
+        AXScene *scene = [scenes objectForKey:activeSceneKey];
+        [scene updateScene];
+    }
+    /*AXScene *scene = [scenes objectForKey:activeSceneKey];
+    [scene updateScene];
+    */
     // loop through scenes, update them
     // ***** investigate performance
-    for (AXScene *scene in scenes) {
+    /*for (AXScene *scene in scenes) {
         // update scenes
-        if (scene.shouldUpdate)
+        if (scene.updates)
             [scene updateModel];
-    }
+    }*/
 }
 
 #pragma mark Render Scene
@@ -258,11 +337,8 @@
     
     // render active scene(s)
     // ***** investigate performance
-    for (AXScene *scene in scenes) {
-        // render active scene
-        if (scene.active)
-            [scene renderScene];
-    }
+    AXScene *scene = [scenes objectForKey:activeSceneKey];
+    [scene renderScene];
     
     // finialse frame
     [openGLView finishDraw];
