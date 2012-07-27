@@ -17,6 +17,9 @@
 @property (retain) NSArray *sceneObjects;
 
 - (void)handleCollisions;
+
+- (void)addObject:(AXSceneObject*)sceneObject;
+
 - (void)awake;
 - (void)render;
 - (void)update;
