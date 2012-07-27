@@ -177,7 +177,7 @@
 #pragma mark Animation Timer
 
 - (void)startAnimation {
-    if (AX_USE_DISPLAY_LINK) {
+    if (AX_ENABLE_DISPLAY_LINK) {
         NSLog(@"Using Display Link");
         if (displayLink)
             return;
@@ -193,7 +193,7 @@
 }
 
 - (void)stopAnimation {
-    if (AX_USE_DISPLAY_LINK) {
+    if (AX_ENABLE_DISPLAY_LINK) {
         [displayLink invalidate];
         [displayLink release];
         displayLink = nil;
