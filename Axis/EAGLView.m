@@ -93,12 +93,6 @@
 }
 
 - (void)beginDraw {
-    // face culling
-    /*
-     glEnable(GL_CULL_FACE);
-	 glCullFace(GL_BACK);
-    */
-    
     [EAGLContext setCurrentContext:context];
     glBindFramebufferOES(GL_FRAMEBUFFER_OES, viewFramebuffer);
     
