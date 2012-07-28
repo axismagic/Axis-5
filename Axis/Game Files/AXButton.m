@@ -25,14 +25,14 @@ static CGFloat BBSquareFillVertexes[8] = {-0.5,-0.5, 0.5,-0.5, -0.5,0.5, 0.5,0.5
 
 - (void)awake {
     pressed = NO;
-    mesh = [[AXMesh alloc] initWithVertexes:BBSquareOutlineVertexes
+    self.mesh = [[AXMesh alloc] initWithVertexes:BBSquareOutlineVertexes
                                 vertexCount:BBSquareOutlineVertexesCount
                                  vertexStride:BBSquareVertexStride
                                 renderStyle:BBSquareOutlineRenderStyle];
-    mesh.colors = BBSquareOutlineColorValues;
-    mesh.colorStride = BBSquareColorStride;
+    self.mesh.colors = BBSquareOutlineColorValues;
+    self.mesh.colorStride = BBSquareColorStride;
     
-    screenRect = [[AXSceneController sharedSceneController].inputController screenRectFromMeshRect:self.meshBounds atPoint:CGPointMake(translation.x, translation.y)];
+    screenRect = [[AXSceneController sharedSceneController].inputController screenRectFromMeshRect:self.meshBounds atPoint:CGPointMake(_location.x, _location.y)];
     [self setNotPressedVertexes];
 }
 
@@ -77,17 +77,17 @@ static CGFloat BBSquareFillVertexes[8] = {-0.5,-0.5, 0.5,-0.5, -0.5,0.5, 0.5,0.5
 }
 
 - (void)setPressedVertexes {
-    mesh.vertexes = BBSquareFillVertexes;
-    mesh.renderStyle = BBSquareFillRenderStyle;
-    mesh.vertexCount = BBSquareFillVertexesCount;
-    mesh.colors = BBSquareOutlineColorValues;
+    self.mesh.vertexes = BBSquareFillVertexes;
+    self.mesh.renderStyle = BBSquareFillRenderStyle;
+    self.mesh.vertexCount = BBSquareFillVertexesCount;
+    self.mesh.colors = BBSquareOutlineColorValues;
 }
 
 - (void)setNotPressedVertexes {
-    mesh.vertexes = BBSquareOutlineVertexes;
-    mesh.renderStyle = BBSquareOutlineRenderStyle;
-    mesh.vertexCount = BBSquareOutlineVertexesCount;
-    mesh.colors = BBSquareOutlineColorValues;
+    self.mesh.vertexes = BBSquareOutlineVertexes;
+    self.mesh.renderStyle = BBSquareOutlineRenderStyle;
+    self.mesh.vertexCount = BBSquareOutlineVertexesCount;
+    self.mesh.colors = BBSquareOutlineColorValues;
 }
 
 @end

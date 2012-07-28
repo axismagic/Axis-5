@@ -46,8 +46,8 @@
     self.mesh = [[AXMaterialController sharedMaterialController] animationFromAtlasKeys:[NSArray arrayWithObjects:@"missile1", @"missile2", @"missile3", nil]];
     self.scale = AXPointMake(12, 31, 1.0);
     
-    [(AXAnimatedQuad*)mesh setLoops:YES];
-    mesh.radius = 0.35;
+    [(AXAnimatedQuad*)_mesh setLoops:YES];
+    _mesh.radius = 0.35;
     self.collider = [AXCollider collider];
     [self.collider setCheckForCollisions:YES];
     
@@ -78,15 +78,15 @@
         }
         return;
     }
-    particleEmitter.translation = AXPointMatrixMultiply(emitterOffset, matrix);
+    particleEmitter.location = AXPointMatrixMultiply(emitterOffset, _matrix);
     
     [super update];
     
-    if ([mesh isKindOfClass:[AXAnimatedQuad class]])
-        [(AXAnimatedQuad*)mesh updateAnimation];
+    if ([_mesh isKindOfClass:[AXAnimatedQuad class]])
+        [(AXAnimatedQuad*)_mesh updateAnimation];
     
     // if not emitting and are active, start emitting
-    if (!particleEmitter.emit && active && !destroyed) {
+    if (!particleEmitter.emit && _active && !destroyed) {
         [[AXSceneController sharedSceneController] addObjectToScene:particleEmitter];
         particleEmitter.emit = YES;
     }
@@ -95,14 +95,14 @@
 - (void)checkArenaBounds {
     BOOL outOfArena = NO;
     
-    if (translation.x > (240.0 + CGRectGetWidth(self.meshBounds)/2.0))
+    if (_location.x > (240.0 + CGRectGetWidth(self.meshBounds)/2.0))
         outOfArena = YES;
-    if (translation.x < (-240.0 - CGRectGetWidth(self.meshBounds)/2.0))
+    if (_location.x < (-240.0 - CGRectGetWidth(self.meshBounds)/2.0))
         outOfArena = YES;
     
-    if (translation.y > (160.0 + CGRectGetWidth(self.meshBounds)/2.0))
+    if (_location.y > (160.0 + CGRectGetWidth(self.meshBounds)/2.0))
         outOfArena = YES;
-    if (translation.y < (-160.0 - CGRectGetWidth(self.meshBounds)/2.0))
+    if (_location.y < (-160.0 - CGRectGetWidth(self.meshBounds)/2.0))
         outOfArena = YES;
     
     if (outOfArena) {
@@ -110,7 +110,7 @@
     }
 }
 
-- (void)didCollideWith:(AXSceneObject*)sceneObject {
+- (void)didCollideWith:(AXSprite*)sceneObject {
     if (![sceneObject isKindOfClass:[AXRock class]])
         return;
     if (![sceneObject.collider doesCollideWithMesh:self])

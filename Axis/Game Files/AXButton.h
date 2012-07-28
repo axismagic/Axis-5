@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "AXSceneObject.h"
+#import "AXSprite.h"
 
-@interface AXButton : AXSceneObject {
+@interface AXButton : AXSprite {
     BOOL pressed;
     id target;
     SEL buttonDownAction;

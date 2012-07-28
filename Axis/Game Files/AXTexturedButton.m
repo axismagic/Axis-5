@@ -25,7 +25,7 @@
 
 - (void)awake {
     [self setNotPressedVertexes];
-    screenRect = [[AXSceneController sharedSceneController].inputController screenRectFromMeshRect:self.meshBounds atPoint:CGPointMake(translation.x, translation.y)];
+    screenRect = [[AXSceneController sharedSceneController].inputController screenRectFromMeshRect:self.meshBounds atPoint:CGPointMake(_location.x, _location.y)];
 }
 
 - (void)setNotPressedVertexes {

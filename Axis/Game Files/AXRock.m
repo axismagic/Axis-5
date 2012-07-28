@@ -43,7 +43,7 @@ static NSInteger BBRockColorStride = 4;
     if (flipX <= 5)
         x *= -1.0;
     CGFloat y = RANDOM_INT(0, 320) - 160;
-    rock.translation = AXPointMake(x, y, 0.0);
+    rock.location = AXPointMake(x, y, 0.0);
     
     // moving up or down the y axis
     CGFloat speed = RANDOM_INT(1, 100)/100.0;
@@ -113,12 +113,15 @@ static NSInteger BBRockColorStride = 4;
         colors[vertexIndex + 3] = 1.0;
     }
     
+    // ***** build into sprite with autoCollider BOOL
     self.collider = [AXCollider collider];
+    
+    [super awake];
 }
 
 - (void)render {
-    mesh.colors = colors;
-    mesh.colorStride = 4;
+    self.mesh.colors = colors;
+    self.mesh.colorStride = 4;
     
     [super render];
 }
@@ -131,20 +134,20 @@ static NSInteger BBRockColorStride = 4;
     // explosion animation
     AXAnimation *explosion = [[AXAnimation alloc] initWithAtlasKeys:[NSArray arrayWithObjects:@"bang1", @"bang2", @"bang3", nil] loops:NO speed:6];
     explosion.active = YES;
-    explosion.translation = self.translation;
-    explosion.scale = self.scale;
+    explosion.location = _location;
+    explosion.scale = _scale;
     [[AXSceneController sharedSceneController] addObjectToScene:explosion];
     [explosion release];
     
     if (smashCount >= 2)
         return;
     
-    NSInteger smallRockScale = scale.x / 3.0;
+    NSInteger smallRockScale = _scale.x / 3.0;
     
     AXRock *newRock = [[AXRock alloc] init];
     newRock.scale = AXPointMake(smallRockScale, smallRockScale, 1.0);
     AXPoint position = AXPointMake(0.0, 5.0, 0.0);
-    newRock.translation = AXPointMatrixMultiply(position, matrix);
+    newRock.location = AXPointMatrixMultiply(position, _matrix);
     newRock.speed = AXPointMake(speed.x + (position.x * SMASH_SPEED_FACTOR), speed.y + (position.y * SMASH_SPEED_FACTOR), 0.0);
     newRock.rotationalSpeed = rotationalSpeed;
     newRock.smashCount = smashCount;
@@ -154,7 +157,7 @@ static NSInteger BBRockColorStride = 4;
     newRock = [[AXRock alloc] init];
     newRock.scale = AXPointMake(smallRockScale, smallRockScale, 1.0);
     position = AXPointMake(0.35, -0.35, 0.0);
-    newRock.translation = AXPointMatrixMultiply(position, matrix);
+    newRock.location = AXPointMatrixMultiply(position, _matrix);
     newRock.speed = AXPointMake(speed.x + (position.x * SMASH_SPEED_FACTOR), speed.y + (position.y * SMASH_SPEED_FACTOR), 0.0);
     newRock.rotationalSpeed = rotationalSpeed;
     newRock.smashCount = smashCount;
@@ -164,7 +167,7 @@ static NSInteger BBRockColorStride = 4;
     newRock = [[AXRock alloc] init];
     newRock.scale = AXPointMake(smallRockScale, smallRockScale, 1.0);
     position = AXPointMake(-0.35, -0.35, 0.0);
-    newRock.translation = AXPointMatrixMultiply(position, matrix);
+    newRock.location = AXPointMatrixMultiply(position, _matrix);
     newRock.speed = AXPointMake(speed.x + (position.x * SMASH_SPEED_FACTOR), speed.y + (position.y * SMASH_SPEED_FACTOR), 0.0);
     newRock.rotationalSpeed = rotationalSpeed;
     newRock.smashCount = smashCount;

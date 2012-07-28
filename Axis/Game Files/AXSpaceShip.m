@@ -42,6 +42,8 @@
     
     self.collider = [AXCollider collider];
     [self.collider setCheckForCollisions:YES];
+    
+    [super awake];
 }
 
 - (void)update {
@@ -50,14 +52,14 @@
     CGFloat rightTurn = [[AXSceneController sharedSceneController].inputController rightMagnitude];
     CGFloat leftTurn = [[AXSceneController sharedSceneController].inputController leftMagnitude];
     
-    rotation.z += ((rightTurn * -1.0) + leftTurn) * TURN_SPEED_FACTOR;
+    _rotation.z += ((rightTurn * -1.0) + leftTurn) * TURN_SPEED_FACTOR;
     
     if ([[AXSceneController sharedSceneController].inputController fireMissile]) [self fireMissile];
     
     CGFloat forwardMag = [[AXSceneController sharedSceneController].inputController forwardMagnitude] * THRUST_SPEED_FACTOR;
     if (forwardMag <= 0.0001) return;
     
-    CGFloat radians = rotation.z/AX_CALC_RADIANS_TO_DEGREES;
+    CGFloat radians = _rotation.z/AX_CALC_RADIANS_TO_DEGREES;
     speed.x += sinf(radians) * -forwardMag;
     speed.y += cosf(radians) * forwardMag;
 }
@@ -66,13 +68,13 @@
     AXMissile *missile = [[AXMissile alloc] init];
     //missile.scale = AXPointMake(5.0, 5.0, 1.0);
     // position at tip of ship
-    CGFloat radians = rotation.z/AX_CALC_RADIANS_TO_DEGREES;
+    CGFloat radians = _rotation.z/AX_CALC_RADIANS_TO_DEGREES;
     CGFloat speedX = -sinf(radians) * 3.0;
     CGFloat speedY = cosf(radians) * 3.0;
     
     missile.speed = AXPointMake(speedX, speedY, 0.0);
     // missile.translation = AXPointMake(translation.x + missile.speed.x * 3.0, translation.y + missile.speed.y * 3.0, 0.0);
-    missile.translation = AXPointMatrixMultiply(AXPointMake(0.0, 0.5, 0.0), matrix);
+    missile.location = AXPointMatrixMultiply(AXPointMake(0.0, 0.5, 0.0), _matrix);
     missile.rotation = AXPointMake(0.0, 0.0, self.rotation.z);
     
     [[AXSceneController sharedSceneController] addObjectToScene:missile];
@@ -81,7 +83,7 @@
     [[AXSceneController sharedSceneController].inputController setFireMissile:NO];
 }
 
-- (void)didCollideWith:(AXSceneObject*)sceneObject {
+- (void)didCollideWith:(AXSprite*)sceneObject {
     if (![sceneObject isKindOfClass:[AXRock class]])
         return;
     if (![sceneObject.collider doesCollideWithMesh:self])

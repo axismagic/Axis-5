@@ -23,10 +23,10 @@ static CGFloat BBArrowButtonOutlineColorValues[56] =
 @implementation AXArrowButton
 
 - (void)setNotPressedVertexes {
-    mesh.vertexes = BBArrowButtonOutlineVertexes;
-    mesh.vertexCount = BBArrowButtonOutlineVertexesCount;
-    mesh.renderStyle = BBArrowButtonOutlineRenderStyle;
-    mesh.colors = BBArrowButtonOutlineColorValues;
+    self.mesh.vertexes = BBArrowButtonOutlineVertexes;
+    self.mesh.vertexCount = BBArrowButtonOutlineVertexesCount;
+    self.mesh.renderStyle = BBArrowButtonOutlineRenderStyle;
+    self.mesh.colors = BBArrowButtonOutlineColorValues;
 }
 
 @end
