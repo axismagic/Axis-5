@@ -35,14 +35,18 @@
     if (sceneObjects == nil)
         sceneObjects = [[NSMutableArray alloc] init];
     
+    if (children == nil)
+        children = [[NSMutableArray alloc] init];
+    
     // load collisionController
     collisionController = [[AXCollisionController alloc] init];
     if (AX_DEBUG_DRAW_COLLIDERS)
-        [self addObjectToScene:collisionController];
+        //[self addObjectToScene:collisionController];
+        [self addChild:collisionController];
     
     // load interface
-    //interfaceController = [[AXInterfaceController alloc] init];
-    //[interfaceController loadInterface];
+    interfaceController = [[AXInterfaceController alloc] init];
+    [interfaceController loadInterface];
     
     // create the ship
     /*AXSpaceShip *ship = [[AXSpaceShip alloc] init];
@@ -74,7 +78,8 @@
 - (void)updateScene {
     // add new objects
     if ([objectsToAdd count] > 0) {
-        [sceneObjects addObjectsFromArray:objectsToAdd];
+        //[sceneObjects addObjectsFromArray:objectsToAdd];
+        [children addObjectsFromArray:objectsToAdd];
         [objectsToAdd removeAllObjects];
     }
     
@@ -84,7 +89,8 @@
     [interfaceController updateInterface];
     
     // update all objects
-    [sceneObjects makeObjectsPerformSelector:@selector(update)];
+    //[sceneObjects makeObjectsPerformSelector:@selector(update)];
+    [children makeObjectsPerformSelector:@selector(update)];
     
     // handle collisions
     // ***** temp off to prevent crashes [collisionController handleCollisions];
@@ -93,20 +99,45 @@
     
     // remove old objects
     if ([objectsToRemove count] > 0) {
-        [sceneObjects removeObjectsInArray:objectsToRemove];
+        //[sceneObjects removeObjectsInArray:objectsToRemove];
+        [children removeObjectsInArray:objectsToRemove];
         [objectsToRemove removeAllObjects];
     }
 }
 
 - (void)renderScene {
     // render all objects
-    [sceneObjects makeObjectsPerformSelector:@selector(render)];
+    //[sceneObjects makeObjectsPerformSelector:@selector(render)];
+    [children makeObjectsPerformSelector:@selector(render)];
     
     // render interface above the scene
     [interfaceController renderInterface];
 }
 
-- (void)addObjectToScene:(AXSprite*)sceneObject {
+/* custom addChild */
+- (void)addChild:(AXObject *)child {
+    if (objectsToAdd == nil)
+        objectsToAdd = [[NSMutableArray alloc] init];
+    
+    // if child is not already owned, add new child
+    NSAssert(!child.isChild, @"Child must not be owned");
+    
+    // activate ***** consider at end?
+    child.active = YES;
+    child.isChild = YES;
+    if (!_hasChildren)
+        self.hasChildren = YES;
+    
+    // delegate
+    child.objectDelegate = self;
+    
+    // awake child
+    [child awake];
+    // add to children array
+    [objectsToAdd addObject:child];
+}
+
+/*- (void)addObjectToScene:(AXSprite*)sceneObject {
     if (objectsToAdd == nil)
         objectsToAdd = [[NSMutableArray alloc] init];
     
@@ -119,15 +150,15 @@
     // ***** consider re-order
     // ***** delegates
     
-    /*if (sceneObject != collisionController)
-        [collisionController addObject:sceneObject];*/
-}
+    if (sceneObject != collisionController)
+        [collisionController addObject:sceneObject];
+}*/
 
-- (void)removeObjectFromScene:(AXSprite*)sceneObject {
+/*- (void)removeObjectFromScene:(AXSprite*)sceneObject {
     if (objectsToRemove == nil)
         objectsToRemove = [[NSMutableArray alloc] init];
     [objectsToRemove addObject:sceneObject];
-}
+}*/
 
 #pragma mark -
 #pragma mark Scene Object Ownership Delegate Methods

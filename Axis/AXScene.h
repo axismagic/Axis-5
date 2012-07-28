@@ -6,12 +6,12 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "AXObject.h"
 #import "AXSprite.h"
 #import "AXInterfaceController.h"
 #import "AXCollisionController.h"
 
-@interface AXScene : NSObject <AXObjectProtocol> {
+@interface AXScene : AXObject <AXObjectProtocol> {
     // should update, even when not active?
     BOOL updates;
     
@@ -36,7 +36,7 @@
 - (void)updateScene;
 - (void)renderScene;
 
-- (void)addObjectToScene:(AXSprite*)sceneObject;
-- (void)removeObjectFromScene:(AXSprite*)sceneObject;
+//- (void)addObjectToScene:(AXSprite*)sceneObject;
+//- (void)removeObjectFromScene:(AXSprite*)sceneObject;
 
 @end

@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "AXSceneObject.h"
+#import "AXSprite.h"
 
-@interface AXCollisionController : AXSceneObject {
+@interface AXCollisionController : AXSprite {
     NSArray *sceneObjects;
     NSMutableArray *allColliders;
     NSMutableArray *collidersToCheck;
@@ -18,7 +18,7 @@
 
 - (void)handleCollisions;
 
-- (void)addObject:(AXSceneObject*)sceneObject;
+- (void)addObject:(AXSprite*)sceneObject;
 
 - (void)awake;
 - (void)render;

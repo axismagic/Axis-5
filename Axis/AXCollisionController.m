@@ -35,8 +35,8 @@
     }*/
     
     // collisions check
-    for (AXSceneObject *colliderObject in collidersToCheck) {
-        for (AXSceneObject *collideeObject in allColliders) {
+    for (AXSprite *colliderObject in collidersToCheck) {
+        for (AXSprite *collideeObject in allColliders) {
             if (colliderObject == collideeObject)
                 // same object, skip to next loop
                 continue;
@@ -48,7 +48,7 @@
     }
 }
 
-- (void)addObject:(AXSceneObject*)sceneObject {
+- (void)addObject:(AXSprite*)sceneObject {
     // initialise arrays
     if (allColliders == nil)
         allColliders = [[NSMutableArray alloc] init];
@@ -73,11 +73,11 @@
 }
 
 - (void)render {
-    if (!active)
+    if (!_active)
         return;
     glPushMatrix();
     glLoadIdentity();
-    for (AXSceneObject *obj in allColliders) {
+    for (AXSprite *obj in allColliders) {
         [obj.collider render];
     }
     glPopMatrix();
