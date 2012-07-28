@@ -18,7 +18,7 @@
 
 @implementation AXAppDelegate
 
-@synthesize window;
+@synthesize window = _window;
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
     // Display Versioning Information in the console.
@@ -28,58 +28,33 @@
         NSLog(@"Axis: The Game Engine - %@ %@", AXIS_VERSION_NAME, AXIS_VERSION_NAME_ADDITION);
     NSLog(@"%@ Engine %@ %@ build %@", AXIS_VERSION_FORM, AXIS_VERSION_TYPE, [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]);
     
+    NSLog(@"Todo: %@", AXIS_JUST_COMPLETED);
+    NSLog(@"Todo: %@", AXIS_TODO);
+    
+    // Initialise the SceneController
     AXSceneController *sceneController = [AXSceneController sharedSceneController];
     
-    // make a new input view controller, save it
+    // Initialise the Input Controller
     AXInputViewController *anInputController = [[AXInputViewController alloc] initWithNibName:nil bundle:nil];
+    // Give the SceneController the inputController
     sceneController.inputController = anInputController;
     [anInputController release];
     
-    // initialise main EAGLView with window bounds
-    EAGLView *glView = [[EAGLView alloc] initWithFrame:window.bounds];
+    // Initialise main EAGLView with window bounds
+    EAGLView *glView = [[EAGLView alloc] initWithFrame:_window.bounds];
     sceneController.inputController.view = glView;
     sceneController.openGLView = glView;
     [glView release];
     
     // set our view as the first window view
-    [window addSubview:sceneController.inputController.view];
-    [window makeKeyAndVisible];
+    [self.window addSubview:sceneController.inputController.view];
+    [self.window makeKeyAndVisible];
     
     // ***** Warning, views flipped due to sideways openGL View
-    sceneController.viewSize = window.screen.bounds.size;
+    sceneController.viewSize = _window.screen.bounds.size;
     
     // tell the director to continue setup
     [[AXDirector sharedDirector] setupEngine];
-    //[sceneController loadScene];
-    //[sceneController startScene];
-    
-    /* Original
-    
-    AXSceneController *sceneController = [AXSceneController sharedSceneController];
-    
-    // make a new input view controller, save it
-    AXInputViewController *anInputController = [[AXInputViewController alloc] initWithNibName:nil bundle:nil];
-    sceneController.inputController = anInputController;
-    [anInputController release];
-    
-    // initialise main EAGLView with window bounds
-    EAGLView *glView = [[EAGLView alloc] initWithFrame:window.bounds];
-    sceneController.inputController.view = glView;
-    sceneController.openGLView = glView;
-    [glView release];
-    
-    // set our view as the first window view
-    [window addSubview:sceneController.inputController.view];
-    [window makeKeyAndVisible];
-    
-    // ***** Warning, views flipped due to sideways openGL View
-    sceneController.viewSize = window.screen.bounds.size;
-    
-    // begin the game
-    [sceneController loadScene];
-    [sceneController startScene];
-     
-     */
 }
 
 /* Original
@@ -126,7 +101,7 @@
 
 - (void)dealloc
 {
-    [window release];
+    [_window release];
     [super dealloc];
 }
 

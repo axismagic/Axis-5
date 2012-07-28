@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface AXAppDelegate : NSObject <UIApplicationDelegate> {
-    UIWindow *window;
+    UIWindow *_window;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
