@@ -11,6 +11,7 @@
 #define AX_ENABLE_POINT_PER_SECOND 0
 #define AX_ENABLE_RETINA_DISPLAY 1
 #define AX_ENABLE_MULTI_SCENE_MODE 0 // disable for performance
+#define AX_ENABLE_RENDER_CHILDREN_ABOVE 1
 #define AX_USE_CONVERT_IMAGE_LOW_BITMAP 0
 
 // Engine Debug
