@@ -56,7 +56,10 @@
     BOOL hasChildren;
     BOOL isChild;
     
+    // if NO, object is inactive and unusable
     BOOL active;
+    // if NO, object skips render phase
+    BOOL doesRender;
     
     // Delegate used to send messages to the scene from the object
     AXScene <sceneObjectOwnership> *_delegate;

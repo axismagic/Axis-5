@@ -68,6 +68,10 @@ static CGFloat spinnySquareColors[16] = {
 }
 
 - (void)awake {
+    // overridden
+}
+
+//- (void)awake {
     /*// called once when object is created
     mesh = [[AXMesh alloc] initWithVertexes:spinnySquareVertices
                                 vertexCount:4
@@ -75,7 +79,7 @@ static CGFloat spinnySquareColors[16] = {
                                 renderStyle:GL_TRIANGLE_STRIP];
     mesh.colors = spinnySquareColors;
     mesh.colorStride = 4;*/
-}
+//}
 
 - (void)addChild:(AXSceneObject *)child {
     // initialise children array
@@ -182,7 +186,17 @@ static CGFloat spinnySquareColors[16] = {
 }
 
 - (void)render {
-    if (!mesh || !active)
+    // if not active, do not render self or children
+    if (!active)
+        return;
+    
+    // render children
+    if (hasChildren && !AX_ENABLE_RENDER_CHILDREN_ABOVE) {
+        [children makeObjectsPerformSelector:@selector(render)];
+    }
+    
+    // after rendering children, if no mesh, do not render self
+    if (!mesh)
         return;
     
     glPushMatrix();
@@ -196,13 +210,8 @@ static CGFloat spinnySquareColors[16] = {
     glPopMatrix();
     
     // render children
-    if (hasChildren) {
+    if (hasChildren && AX_ENABLE_RENDER_CHILDREN_ABOVE) {
         [children makeObjectsPerformSelector:@selector(render)];
-        //NSLog(@"Did render Child");
-    }
-    
-    if (isChild) {
-        //NSLog(@"Child Did Render");
     }
 }
 
