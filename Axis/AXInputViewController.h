@@ -26,9 +26,9 @@
 @property (assign) CGFloat leftMagnitude;
 @property (assign) BOOL fireMissile;
 
-- (void)loadInterface;
-- (void)updateInterface;
-- (void)renderInterface;
+//- (void)loadInterface;
+//- (void)updateInterface;
+//- (void)renderInterface;
 
 - (CGRect)screenRectFromMeshRect:(CGRect)rect atPoint:(CGPoint)meshCenter;
 

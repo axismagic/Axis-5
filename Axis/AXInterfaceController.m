@@ -31,7 +31,7 @@
     
     AXTexturedButton *rightButton = [[AXTexturedButton alloc] initWithUpKey:@"rightUp" downKey:@"rightDown"];
     rightButton.scale = AXPointMake(50.0, 50.0, 1.0);
-    rightButton.translation = AXPointMake(-155.0, -130.0, 0.0);
+    rightButton.location = AXPointMake(-155.0, -130.0, 0.0);
     // set actions
     rightButton.target = self;
     rightButton.buttonDownAction = @selector(rightButtonDown);
@@ -46,7 +46,7 @@
     // OLD AXButton *leftButton = [[AXArrowButton alloc] init];
     AXTexturedButton *leftButton = [[AXTexturedButton alloc] initWithUpKey:@"leftUp" downKey:@"leftDown"];
     leftButton.scale = AXPointMake(50.0, 50.0, 1.0);
-    leftButton.translation = AXPointMake(-210.0, -130.0, 0.0);
+    leftButton.location = AXPointMake(-210.0, -130.0, 0.0);
     //leftButton.rotation = AXPointMake(0.0, 0.0, 180.0);
     // set actions
     leftButton.target = self;
@@ -62,7 +62,7 @@
     // OLD AXButton *forwardButton = [[AXArrowButton alloc] init];
     AXTexturedButton *forwardButton = [[AXTexturedButton alloc] initWithUpKey:@"thrustUp" downKey:@"thrustDown"];
     forwardButton.scale = AXPointMake(50.0, 50.0, 1.0);
-    forwardButton.translation = AXPointMake(-185.0, -75.0, 0.0);
+    forwardButton.location = AXPointMake(-185.0, -75.0, 0.0);
     //forwardButton.rotation = AXPointMake(0.0, 0.0, 90.0);
     // set actions
     forwardButton.target = self;
@@ -78,7 +78,7 @@
     // OLD AXButton *fireButton = [[AXButton alloc] init];
     AXTexturedButton *fireButton = [[AXTexturedButton alloc] initWithUpKey:@"fireUp" downKey:@"fireDown"];
     fireButton.scale = AXPointMake(50.0, 50.0, 1.0);
-    fireButton.translation = AXPointMake(210.0, -130.0, 0.0);
+    fireButton.location = AXPointMake(210.0, -130.0, 0.0);
     // set actions
     fireButton.target = self;
     fireButton.buttonDownAction = @selector(fireButtonDown);

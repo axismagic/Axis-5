@@ -35,7 +35,7 @@
 
 #pragma mark Interface
 
-- (void)loadInterface {
+/*- (void)loadInterface {
     if (interfaceObjects == nil)
         interfaceObjects = [[NSMutableArray alloc] init];
     
@@ -108,7 +108,7 @@
 
 - (void)renderInterface {
     [interfaceObjects makeObjectsPerformSelector:@selector(render)];
-}
+}*/
 
 - (CGRect)screenRectFromMeshRect:(CGRect)rect atPoint:(CGPoint)meshCenter {
     CGPoint screenCenter = CGPointZero;
@@ -145,7 +145,7 @@
     [touchEvents addObjectsFromArray:[touches allObjects]];
 }
 
-#pragma mark Input Registers
+/*#pragma mark Input Registers
 
 - (void)fireButtonDown {
     self.fireMissile = YES;
@@ -176,7 +176,7 @@
 
 - (void)forwardButtonUp {
     self.forwardMagnitude = 0.0;
-}
+}*/
 
 #pragma mark Unload, Dealloc
 
