@@ -13,7 +13,7 @@
 @class AXMesh;
 @class AXCollider;
 
-@protocol collisionControllerOwnership <NSObject>
+@protocol basecollisionControllerOwnership <NSObject>
 @optional
 
 - (void)submitToCollisionController:(AXSpriteBase*)object;
@@ -22,7 +22,7 @@
 
 @interface AXSpriteBase : AXObject {
     // delegate
-    AXCollisionController <collisionControllerOwnership> *_spriteDelegate;
+    AXCollisionController <basecollisionControllerOwnership> *_spriteDelegate;
     
     // mesh
     AXMesh *_mesh;
@@ -32,7 +32,7 @@
     AXCollider *_collider;
 }
 
-@property (nonatomic, retain) AXCollisionController <collisionControllerOwnership> *spriteDelegate;
+@property (nonatomic, retain) AXCollisionController <basecollisionControllerOwnership> *spriteDelegate;
 
 @property (nonatomic, retain) AXMesh *mesh;
 @property (nonatomic, assign) CGRect meshBounds;
