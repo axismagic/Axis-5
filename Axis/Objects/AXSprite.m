@@ -28,47 +28,89 @@ static CGFloat spinnySquareColors[16] = {
 
 @implementation AXSprite
 
-@synthesize translation, rotation, scale, active, mesh, meshBounds, matrix, collider;
-@synthesize hasChildren, isChild;
-@synthesize worldPosition, vectorFromParent;
-@synthesize delegate = _delegate;
+@synthesize spriteDelegate = _spriteDelegate;
+@synthesize mesh = _mesh, meshBounds = _meshBounds;
+@synthesize collider = _collider;
 
 - (id)init {
     self = [super init];
     if (self != nil) {
-        worldPosition = AXPointMake(0.0, 0.0, 0.0);
-        vectorFromParent = AXPointMake(0.0, 0.0, 0.0);
+        self.vectorFromParent = AXPointMake(0.0, 0.0, 0.0);
         
-        translation = AXPointMake(0.0, 0.0, 0.0);
-        rotation = AXPointMake(0.0, 0.0, 0.0);
-        scale = AXPointMake(1.0, 1.0, 1.0);
+        self.location = AXPointMake(0.0, 0.0, 0.0);
+        self.rotation = AXPointMake(0.0, 0.0, 0.0);
+        self.scale = AXPointMake(1.0, 1.0, 1.0);
         
-        matrix = (CGFloat*) malloc(16 * sizeof(CGFloat));
+        self.matrix = (CGFloat*) malloc(16 * sizeof(CGFloat));
         self.collider = nil;
         
-        meshBounds = CGRectZero;
+        self.meshBounds = CGRectZero;
         
-        hasChildren = NO;
-        isChild = NO;
+        self.hasChildren = NO;
+        self.isChild = NO;
         
-        active = NO;
+        self.active = NO;
         
-        self.delegate = nil;
+        self.spriteDelegate = nil;
     }
     
     return self;
 }
 
 - (CGRect)meshBounds {
-    if (CGRectEqualToRect(meshBounds, CGRectZero)) {
-        meshBounds = [AXMesh meshBounds:mesh scale:scale];
+    if (CGRectEqualToRect(_meshBounds, CGRectZero)) {
+        self.meshBounds = [AXMesh meshBounds:_mesh scale:_scale];
     }
     
-    return meshBounds;
+    return _meshBounds;
 }
 
 - (void)awake {
+    [super awake];
+    // if delegate is set, invoke protocol for collision
+    /*if (_spriteDelegate)
+        [_spriteDelegate submitForEvaluation:self];*/
+    
+    
     // overridden
+}
+
+- (void)postUpdate {
+    if (_collider != nil)
+        [_collider updateCollider:self];
+}
+
+- (void)render {
+    // if not active, do not render self or children
+    if (!_active)
+        return;
+    
+    // render children
+    if (_hasChildren && !AX_ENABLE_RENDER_CHILDREN_ABOVE)
+        [children makeObjectsPerformSelector:@selector(render)];
+    
+    // after rendering children, if no mesh, do not render self
+    if (!_mesh) {
+        // render children in case Renders children above and no mesh
+        if (_hasChildren && AX_ENABLE_RENDER_CHILDREN_ABOVE)
+            [children makeObjectsPerformSelector:@selector(render)];
+        
+        return;
+    }
+    
+    glPushMatrix();
+    glLoadIdentity();
+    
+    glMultMatrixf(self.matrix);
+    
+    [_mesh render];
+    
+    // restore matrix
+    glPopMatrix();
+    
+    // render children
+    if (_hasChildren && AX_ENABLE_RENDER_CHILDREN_ABOVE)
+        [children makeObjectsPerformSelector:@selector(render)];
 }
 
 //- (void)awake {
@@ -81,7 +123,7 @@ static CGFloat spinnySquareColors[16] = {
     mesh.colorStride = 4;*/
 //}
 
-- (void)addChild:(AXSprite *)child {
+/*- (void)addChild:(AXSprite *)child {
     // initialise children array
     if (children == nil)
         children = [[NSMutableArray alloc] init];
@@ -102,20 +144,20 @@ static CGFloat spinnySquareColors[16] = {
         [child finalAwake];
         
         // if has no children already, set yes
-        if (!hasChildren)
-            hasChildren = YES;
+        if (!_hasChildren)
+            self.hasChildren = YES;
     } else
         return;
-}
+}*/
 
 // ***** method for removing children required
 
-- (void)update {
+/*- (void)update {
     // update self, used in subclasses
     [self updateBeginningPhase];
     
     // work out relative position of children (offset)
-    if (hasChildren) {
+    if (_hasChildren) {
         // loop through children and work out relative position
         for (AXSprite *child in children) {
             // work out relative position
@@ -226,6 +268,6 @@ static CGFloat spinnySquareColors[16] = {
     [collider release];
     free(matrix);
     [super dealloc];
-}
+}*/
 
 @end

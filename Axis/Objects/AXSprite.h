@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "AXObject.h"
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
@@ -23,7 +23,7 @@
 
 @class AXCollider;
 
-@protocol sceneObjectOwnership <NSObject>
+@protocol AXSpriteProtocol <NSObject>
 @optional
 
 /*
@@ -31,72 +31,27 @@
 */
 
 // evaluates object, runs checks for collider submission, etc.
-- (void)submitForEvaluation:(AXSprite*)object;
+//- (void)submitForEvaluation:(AXSprite*)object;
 
 @end
 
-@interface AXSprite : NSObject {
-    // new points
-    AXPoint worldPosition;
-    AXPoint vectorFromParent;
+@interface AXSprite : AXObject {
+    // delegate
+    AXScene <AXSpriteProtocol> *_spriteDelegate;
     
-    AXPoint translation;
-    AXPoint rotation;
-    AXPoint scale;
+    // mesh
+    AXMesh *_mesh;
+    CGRect _meshBounds;
     
-    AXMesh *mesh;
-    
-    CGFloat *matrix;
-    
-    CGRect meshBounds;
-    
-    AXCollider *collider;
-    
-    NSMutableArray *children;
-    BOOL hasChildren;
-    BOOL isChild;
-    
-    // if NO, object is inactive and unusable
-    BOOL active;
-    // if NO, object skips render phase
-    BOOL doesRender;
-    
-    // Delegate used to send messages to the scene from the object
-    AXScene <sceneObjectOwnership> *_delegate;
+    // collider
+    AXCollider *_collider;
 }
 
-@property (retain) AXMesh *mesh;
-@property (assign) CGFloat *matrix;
-@property (retain) AXCollider *collider;
+@property (nonatomic, retain) AXScene <AXSpriteProtocol> *spriteDelegate;
 
-@property (assign) CGRect meshBounds;
+@property (nonatomic, retain) AXMesh *mesh;
+@property (nonatomic, assign) CGRect meshBounds;
 
-@property (assign) AXPoint worldPosition;
-@property (assign) AXPoint vectorFromParent;
-
-@property (assign) AXPoint translation;
-@property (assign) AXPoint rotation;
-@property (assign) AXPoint scale;
-
-@property (assign) BOOL hasChildren;
-@property (assign) BOOL isChild;
-
-@property (assign) BOOL active;
-
-@property (nonatomic, retain) AXScene <sceneObjectOwnership> *delegate;
-
-- (id)init;
-- (void)dealloc;
-- (void)awake;
-- (void)render;
-
-- (void)update;
-- (void)updateBeginningPhase;
-- (void)updateMiddlePhase;
-- (void)updateEndPhase;
-
-- (void)addChild:(AXSprite*)child;
-
-- (void)finalAwake;
+@property (nonatomic, retain) AXCollider *collider;
 
 @end
