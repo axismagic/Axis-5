@@ -135,40 +135,9 @@
     
     // release scene
     [scene release];
-    
-    /*sceneObjects = [[NSMutableArray alloc] init];
-    
-    // seed randomiser
-    RANDOM_SEED();
-    
-    // create the ship
-    AXSpaceShip *ship = [[AXSpaceShip alloc] init];
-    //ship.scale = AXPointMake(2.5, 2.5, 1.0);
-    [self addObjectToScene:ship];
-    
-    // create child rock
-    AXRock *rock = [AXRock randomRock];
-    rock.translation = AXPointMake(ship.translation.x, ship.translation.y + 100, 0.0);
-    rock.rotationalSpeed = AXPointMake(0.0, 0.0, 0.0);
-    rock.speed = AXPointMake(0.0, 0.0, 0.0);
-    [ship addChild:rock];
-    
-    [ship release];
-    
-    // load rocks
-    // [self generateRocks];
-    
-    // load collisionController
-    collisionController = [[AXCollisionController alloc] init];
-    collisionController.sceneObjects = sceneObjects;
-    if (AX_DEBUG_DRAW_COLLIDERS)
-        [self addObjectToScene:collisionController];
-    
-    // load interface
-    [inputController loadInterface];*/
 }
 
-- (void)removeScene:(AXScene*)scene {
+- (void)removeScene:(NSString*)sceneKey {
     // ***** remove specific scenes
 }
 

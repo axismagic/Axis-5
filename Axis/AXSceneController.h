@@ -11,7 +11,7 @@
 @class AXInputViewController;
 @class AXCollisionController;
 @class EAGLView;
-@class AXSceneObject;
+@class AXSprite;
 @class AXScene;
 
 @interface AXSceneController : NSObject {
@@ -27,7 +27,6 @@
     EAGLView *openGLView;
     // Input Controller
     AXInputViewController *inputController;
-    // Collision Controller ***** should move to scene?
     /*
      To avoid all sceneObjects from all scenes being checked when only one is active, collisions should be moved to individual scenes.
      Should same happen for inputController? No, active BOOL stops scenes from doing anything with touches. Should.
@@ -48,17 +47,6 @@
     
     NSMutableDictionary *scenesToAdd;
     NSMutableArray *scenesToRemove;
-    
-    //
-    
-    
-    /*NSMutableArray *sceneObjects;
-    NSMutableArray *objectsToAdd;
-    NSMutableArray *objectsToRemove;
-    
-    CGSize viewSize;*/
-    
-    
 }
 
 @property (retain) AXInputViewController *inputController;
@@ -75,27 +63,25 @@
 
 + (AXSceneController*)sharedSceneController;
 - (void)dealloc;
+// animation control
 - (void)setAnimationInterval:(NSTimeInterval)interval;
 - (void)setAnimationTimer:(NSTimer*)newTimer;
 - (void)startAnimation;
 - (void)stopAnimation;
-
-- (void)loadScene;
-- (void)loadScene:(AXScene*)scene forKey:(NSString*)sceneKey activate:(BOOL)activate;
-- (void)activateScene:(NSString*)sceneKey;
-- (void)deactivateScene:(NSString*)sceneKey;
-- (void)deactivateScenesExcept:(NSString*)sceneKey;
-- (void)updateSceneBehindTheScenes:(NSString*)sceneKey;
-
+// loop control
 - (void)loop;
 - (void)startLoop;
 - (void)stopLoop;
 
-// ***** needs to be removed
-- (void)addObjectToScene:(AXSceneObject*)sceneObject;
-- (void)removeObjectFromScene:(AXSceneObject*)sceneObject;
 
-// game specific
-- (void)generateRocks;
+// add and remove scenes
+- (void)loadScene;
+- (void)loadScene:(AXScene*)scene forKey:(NSString*)sceneKey activate:(BOOL)activate;
+- (void)removeScene:(NSString*)sceneKey;
+// scene control
+- (void)activateScene:(NSString*)sceneKey;
+- (void)deactivateScene:(NSString*)sceneKey;
+- (void)deactivateScenesExcept:(NSString*)sceneKey;
+- (void)updateSceneBehindTheScenes:(NSString*)sceneKey;
 
 @end
