@@ -12,14 +12,13 @@
 #import "AXCollisionController.h"
 #import "EAGLView.h"
 
-#import "AXScene.h"
+#import "AXNewScene.h"
 
 @implementation AXDirector
 
-@synthesize inputController, openGLView;
-/*@synthesize animationTimer, animationInterval;
-@synthesize levelStartDate, deltaTime;*/
-@synthesize viewSize;
+//@synthesize openGLView = _openGLView;
+//@synthesize inputController = _inputController;
+@synthesize viewSize = _viewSize;
 
 + (AXDirector*)sharedDirector {
     static AXDirector *sharedDirector;
@@ -35,29 +34,18 @@
     // sets up the Scene Controller and Input Controller
     AXSceneController *sceneController = [AXSceneController sharedSceneController];
     
-    /*
-     *****
-     tells sceneController initial frame rate
-     tells sceneController which scene to load
-     sets up sceneController with other basic settings
-    */
-    AXScene *scene = [[AXScene alloc] init];
-    [sceneController loadScene:scene forKey:@"shipScene" activate:YES];
-    // change to loadScene:(AXScene*)scene;
+    // Create a new scene
+    AXNewScene *scene = [[AXNewScene alloc] init];
+    [sceneController loadScene:scene forKey:@"newScene" activate:YES];
     [scene release];
-    // starts scene once ready
-    // ***** [sceneController startScene];
-    [sceneController startLoop]; // starts the scene loop which updates scenes
-    /* change to
-     sceneController loadScene:firstScene - this loads the scene into the array of scenes NOTE doesn't make it active
-     sceneController activeScene:firstScene - this makes the first scene the active scene which will render
-     sceneController startLoop
-     
-     CONSIDER - loadScene:(AXScene*)scene activate:(BOOL)activate
-    */
+    // Starts the main loop which updates and renders scenes
+    [sceneController startLoop];
 }
 
 - (void)dealloc {
+    //self.openGLView = nil;
+    //self.inputController = nil;
+    self.viewSize = CGSizeZero;
     [super dealloc];
 }
 

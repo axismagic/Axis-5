@@ -14,57 +14,23 @@
 @class EAGLView;
 
 @interface AXDirector : NSObject {
-    NSMutableDictionary *scenes;
+    /*
+     ***** removal?
+     NSMutableDictionary *scenes;
     NSMutableDictionary *scenesToAdd;
     NSMutableDictionary *scenesToRemove;
     
-    EAGLView *openGLView;
-    AXInputViewController *inputController;
-    //AXSceneController *sceneController;
-    // ***** For AXSceneController 
-    // AXCollisionController *collisionController;
+    EAGLView *_openGLView;
+    AXInputViewController *_inputController;*/
     
     // global access
-    CGSize viewSize;
-    
-    // display and animation variables
-    
-    // ***** for sceneController
-    /*CADisplayLink *displayLink;
-    
-    NSTimer *animationTimer;
-    NSTimeInterval animationInterval;
-    
-    NSDate *levelStartDate;
-    
-    NSTimeInterval deltaTime;
-    NSTimeInterval lastFrameStartTime;
-    NSTimeInterval thisFrameStartTime;*/
-    
-    //
+    CGSize _viewSize;
 }
 
-@property (retain) AXInputViewController *inputController;
-//@property (retain) AXSceneController *sceneController;
-@property (retain) EAGLView *openGLView;
+/*@property (nonatomic, retain) EAGLView *openGLView;
+@property (nonatomic, retain) AXInputViewController *inputController;*/
 
-@property (assign) CGSize viewSize;
-
-/*@property (retain) NSDate *levelStartDate;
-@property NSTimeInterval animationInterval;
-@property NSTimeInterval deltaTime;
-@property (nonatomic, assign) NSTimer *animationTimer;*/
-
-/*- (void)loadScene;
-- (void)startScene;
-- (void)gameLoop;
-- (void)renderScene;
-- (void)setAnimationInterval:(NSTimeInterval)interval;
-- (void)setAnimationTimer:(NSTimer*)newTimer;
-- (void)startAnimation;
-- (void)stopAnimation;*/
-
-//
+@property (nonatomic, assign) CGSize viewSize;
 
 + (AXDirector*)sharedDirector;
 - (void)setupEngine;
