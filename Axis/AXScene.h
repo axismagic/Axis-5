@@ -7,12 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AXSceneObject.h"
+#import "AXSprite.h"
+#import "AXInterfaceController.h"
+#import "AXCollisionController.h"
 
-@class AXInterfaceController;
-@class AXCollisionController;
-
-@interface AXScene : NSObject <sceneObjectOwnership> {
+@interface AXScene : NSObject <AXObjectProtocol> {
     // should update, even when not active?
     BOOL updates;
     
@@ -37,7 +36,7 @@
 - (void)updateScene;
 - (void)renderScene;
 
-- (void)addObjectToScene:(AXSceneObject*)sceneObject;
-- (void)removeObjectFromScene:(AXSceneObject*)sceneObject;
+- (void)addObjectToScene:(AXSprite*)sceneObject;
+- (void)removeObjectFromScene:(AXSprite*)sceneObject;
 
 @end

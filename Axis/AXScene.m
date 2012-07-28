@@ -10,7 +10,7 @@
 
 #import "AXInterfaceController.h"
 #import "AXCollisionController.h"
-#import "AXSceneObject.h"
+#import "AXSprite.h"
 
 #import "AXSpaceShip.h"
 #import "AXRock.h"
@@ -40,8 +40,12 @@
     if (AX_DEBUG_DRAW_COLLIDERS)
         [self addObjectToScene:collisionController];
     
+    // load interface
+    //interfaceController = [[AXInterfaceController alloc] init];
+    //[interfaceController loadInterface];
+    
     // create the ship
-    AXSpaceShip *ship = [[AXSpaceShip alloc] init];
+    /*AXSpaceShip *ship = [[AXSpaceShip alloc] init];
     ship.speed = AXPointMake(0.2, 0.2, 0.0);
     ship.rotationalSpeed = AXPointMake(0.0, 0.0, 0.2);
     [self addObjectToScene:ship];
@@ -62,11 +66,7 @@
     [ship addChild:rock];
     
     // release the ship
-    [ship release];
-    
-    // load interface
-    interfaceController = [[AXInterfaceController alloc] init];
-    [interfaceController loadInterface];
+    [ship release];*/
 }
 
 #pragma mark Updates
@@ -87,7 +87,7 @@
     [sceneObjects makeObjectsPerformSelector:@selector(update)];
     
     // handle collisions
-    [collisionController handleCollisions];
+    // ***** temp off to prevent crashes [collisionController handleCollisions];
     
     // ***** render and object remove order?
     
@@ -106,26 +106,24 @@
     [interfaceController renderInterface];
 }
 
-- (void)addObjectToScene:(AXSceneObject*)sceneObject {
+- (void)addObjectToScene:(AXSprite*)sceneObject {
     if (objectsToAdd == nil)
         objectsToAdd = [[NSMutableArray alloc] init];
     
     // activate and wake object
     sceneObject.active = YES;
+    sceneObject.objectDelegate = self;
     [sceneObject awake];
     [objectsToAdd addObject:sceneObject];
     
-    // set object delegate
-    sceneObject.delegate = self;
-    
     // ***** consider re-order
-    [sceneObject finalAwake];
+    // ***** delegates
     
     /*if (sceneObject != collisionController)
         [collisionController addObject:sceneObject];*/
 }
 
-- (void)removeObjectFromScene:(AXSceneObject*)sceneObject {
+- (void)removeObjectFromScene:(AXSprite*)sceneObject {
     if (objectsToRemove == nil)
         objectsToRemove = [[NSMutableArray alloc] init];
     [objectsToRemove addObject:sceneObject];
@@ -137,10 +135,13 @@
 /*
  This method is called by the parent of an object as it adds the object. It evaluates the objects and decides which controllers the scene needs to add it to for tracking and other purposes. Any other features can also take place here. At this moment the object is fully initialised and in use.
 */
-- (void)submitForEvaluation:(AXSceneObject *)object {
+- (void)submitForEvaluation:(AXObject*)object {
+    if (![object isKindOfClass:[AXSprite class]])
+        return;
+    
     // add the object to the collision controller
     if (object != collisionController)
-        [collisionController addObject:object]; 
+        [collisionController addObject:(AXSprite*)object]; 
 }
 
 @end
