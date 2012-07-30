@@ -13,9 +13,6 @@
 @implementation AXNewScene
 
 - (void)loadScene {
-    /*if (sceneObjects == nil)
-        sceneObjects = [[NSMutableArray alloc] init];*/
-    
     [super loadScene];
     
     // create rock
@@ -25,8 +22,8 @@
     [self addChild:rock];
     
     AXSpaceShip *ship = [[AXSpaceShip alloc] init];
-    ship.location = AXPointMake(-100.0, 0.0, 0.0);
-    [rock addChild:ship];
+    ship.location = AXPointMake(0.0, -100.0, 0.0);
+    [self addChild:ship];
 }
 
 @end
