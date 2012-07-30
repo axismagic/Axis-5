@@ -14,8 +14,8 @@
     self = [super init];
     if (self != nil) {
         self.mesh = [[AXMaterialController sharedMaterialController] animationFromAtlasKeys:keys];
-        [(AXAnimatedQuad*)mesh setSpeed:speed];
-        [(AXAnimatedQuad*)mesh setLoops:loops];
+        [(AXAnimatedQuad*)_mesh setSpeed:speed];
+        [(AXAnimatedQuad*)_mesh setLoops:loops];
     }
     
     return self;
@@ -27,9 +27,10 @@
 
 - (void)update {
     [super update];
-    [(AXAnimatedQuad*)mesh updateAnimation];
-    if ([(AXAnimatedQuad*)mesh didFinish])
-        [[AXSceneController sharedSceneController] removeObjectFromScene:self];
+    [(AXAnimatedQuad*)_mesh updateAnimation];
+    if ([(AXAnimatedQuad*)_mesh didFinish])
+        [_parentDelegate removeObjectFromParent:self];
+        //[[AXSceneController sharedSceneController] removeObjectFromScene:self];
 }
 
 @end

@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "AXSceneObject.h"
+#import "AXSprite.h"
 
-@interface AXAnimation : AXSceneObject
+@interface AXAnimation : AXSprite
 
 - (id)initWithAtlasKeys:(NSArray*)keys loops:(BOOL)loops speed:(NSInteger)speed;
 
