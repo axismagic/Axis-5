@@ -185,6 +185,7 @@
         glEnable(GL_BLEND);
     } else {
         NSLog(@"No Texture");
+        [uiImage release];
         return CGSizeZero;
     }
     

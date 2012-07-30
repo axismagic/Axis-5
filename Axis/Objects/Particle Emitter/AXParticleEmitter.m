@@ -136,7 +136,7 @@
 }
 
 - (void)render {
-    if (!active)
+    if (!_active)
         return;
     
     // clear matrix
@@ -178,7 +178,7 @@
         
         // grab premade partcile, set it up
         AXParticle *p = [particlePool lastObject];
-        p.position = self.translation;
+        p.position = _location;
         veloX = AXRandomFloat(xVelocityRange);
         veloY = AXRandomFloat(yVelocityRange);
         p.velocity = AXPointMake(veloX, veloY, 0.0);
@@ -214,7 +214,7 @@
     NSInteger pos = vertexIndex * 3.0;
     vertexes[pos] = x;
     vertexes[pos + 1] = y;
-    vertexes[pos + 2] = self.translation.z;
+    vertexes[pos + 2] = _location.z;
     
     // UV array position
     pos = vertexIndex * 2.0;

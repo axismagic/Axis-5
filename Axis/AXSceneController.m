@@ -22,12 +22,12 @@
 
 @implementation AXSceneController
 
-@synthesize inputController, openGLView;
+@synthesize inputController = _inputController, openGLView = _openGLView;
 @synthesize animationTimer, animationInterval;
-@synthesize startDate, deltaTime;
-@synthesize viewSize;
+@synthesize startDate = _startDate, deltaTime = _deltaTime;
+@synthesize viewSize = _viewSize;
 
-@synthesize activeSceneKey;
+@synthesize activeSceneKey = _activeSceneKey;
 
 + (AXSceneController*)sharedSceneController {
     static AXSceneController *sharedSceneController;
@@ -70,7 +70,7 @@
 }
 
 - (void)removeSceneForKey:(NSString*)sceneKey {
-    NSAssert(activeSceneKey != sceneKey, @"Scene must not be active");
+    NSAssert(_activeSceneKey != sceneKey, @"Scene must not be active");
     
     [self deactivateScene:sceneKey];
     [scenes removeObjectForKey:sceneKey];
@@ -88,9 +88,9 @@
     self.activeSceneKey = sceneKey;
     
     // deactivate current scene
-    if (![activeSceneKey isEqualToString:@"NO_SCENE"]) {
+    if (![_activeSceneKey isEqualToString:@"NO_SCENE"]) {
         NSLog(@"Did try to deactivate current scene");
-        [self deactivateScene:activeSceneKey];
+        [self deactivateScene:_activeSceneKey];
     }
 }
 
@@ -160,8 +160,8 @@
     NSAutoreleasePool *aPool = [[NSAutoreleasePool alloc] init];
     
     // delta information
-    thisFrameStartTime = [startDate timeIntervalSinceNow];
-    deltaTime = lastFrameStartTime - thisFrameStartTime;
+    thisFrameStartTime = [_startDate timeIntervalSinceNow];
+    self.deltaTime = lastFrameStartTime - thisFrameStartTime;
     lastFrameStartTime = thisFrameStartTime;
     
     // current frame rate
@@ -169,16 +169,16 @@
         // display with warnings highlighted
         if (AX_CONSOLE_LOW_FRAME_RATE_WARNING) {
             // warning format or not for this frame
-            if (1.0/deltaTime < AX_CONSOLE_LOW_FRAME_RATE_WARNING_MARK)                NSLog(@"Current Frame Rate LOW: %f", 1.0/deltaTime);
+            if (1.0/_deltaTime < AX_CONSOLE_LOW_FRAME_RATE_WARNING_MARK)                NSLog(@"Current Frame Rate LOW: %f", 1.0/_deltaTime);
             else
-                NSLog(@"Current Frame Rate: %f", 1.0/deltaTime);
+                NSLog(@"Current Frame Rate: %f", 1.0/_deltaTime);
         } else
             // display all in normal format, no warnings
-            NSLog(@"Current Frame Rate: %f", 1.0/deltaTime); 
+            NSLog(@"Current Frame Rate: %f", 1.0/_deltaTime); 
     } else if (AX_CONSOLE_LOW_FRAME_RATE_WARNING) {
         // only warnings
-        if (1.0/deltaTime < AX_CONSOLE_LOW_FRAME_RATE_WARNING_MARK)
-            NSLog(@"Current Frame Rate LOW: %f", 1.0/deltaTime);
+        if (1.0/_deltaTime < AX_CONSOLE_LOW_FRAME_RATE_WARNING_MARK)
+            NSLog(@"Current Frame Rate LOW: %f", 1.0/_deltaTime);
     }
     
     // add scenes to updating array
@@ -283,7 +283,7 @@
     } else {
         // single scene mode
         // only the scene that renders will update
-        AXScene *scene = [scenes objectForKey:activeSceneKey];
+        AXScene *scene = [scenes objectForKey:_activeSceneKey];
         [scene updateScene];
     }
     /*AXScene *scene = [scenes objectForKey:activeSceneKey];
@@ -302,15 +302,15 @@
 
 - (void)renderScenes {
     // active OpenGL
-    [openGLView beginDraw]; // ***** rename beginRenderingFrame
+    [_openGLView beginDraw]; // ***** rename beginRenderingFrame
     
     // render active scene(s)
     // ***** investigate performance
-    AXScene *scene = [scenes objectForKey:activeSceneKey];
+    AXScene *scene = [scenes objectForKey:_activeSceneKey];
     [scene renderScene];
     
     // finialse frame
-    [openGLView finishDraw];
+    [_openGLView finishDraw];
 }
 
 #pragma mark Game Loop
@@ -407,8 +407,8 @@
     [self stopAnimation];
     
     // *****
-    [inputController release];
-    [openGLView release];
+    self.inputController = nil;
+    self.openGLView = nil;
     [collisionController release];
     [super dealloc];
 }

@@ -90,8 +90,8 @@ static CGFloat BBCircleColorValues[80] =
                                 vertexCount:BBCircleOutlineVertexesCount
                                vertexStride:BBCircleVertexStride
                                 renderStyle:GL_LINE_LOOP];
-    self.mesh.colors = BBCircleColorValues;
-    self.mesh.colorStride = BBCircleColorStride;
+    _mesh.colors = BBCircleColorValues;
+    _mesh.colorStride = BBCircleColorStride;
 }
 
 - (void)render {

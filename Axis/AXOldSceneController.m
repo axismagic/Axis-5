@@ -47,7 +47,7 @@
     
     // create child rock
     AXRock *rock = [AXRock randomRock];
-    rock.translation = AXPointMake(ship.translation.x, ship.translation.y + 100, 0.0);
+    rock.location = AXPointMake(ship.location.x, ship.location.y + 100, 0.0);
     rock.rotationalSpeed = AXPointMake(0.0, 0.0, 0.0);
     rock.speed = AXPointMake(0.0, 0.0, 0.0);
     [ship addChild:rock];
@@ -59,7 +59,7 @@
     
     // load collisionController
     collisionController = [[AXCollisionController alloc] init];
-    collisionController.sceneObjects = sceneObjects;
+    // ***** collisionController.sceneObjects = sceneObjects;
     if (AX_DEBUG_DRAW_COLLIDERS)
         [self addObjectToScene:collisionController];
     
@@ -159,7 +159,7 @@
     [openGLView finishDraw];
 }
 
-- (void)addObjectToScene:(AXSceneObject *)sceneObject {
+- (void)addObjectToScene:(AXSprite *)sceneObject {
     if (objectsToAdd == nil)
         objectsToAdd = [[NSMutableArray alloc] init];
     // activate and wake object
@@ -168,7 +168,7 @@
     [objectsToAdd addObject:sceneObject];
 }
 
-- (void)removeObjectFromScene:(AXSceneObject *)sceneObject {
+- (void)removeObjectFromScene:(AXSprite *)sceneObject {
     if (objectsToRemove == nil)
         objectsToRemove = [[NSMutableArray alloc] init];
     [objectsToRemove addObject:sceneObject];

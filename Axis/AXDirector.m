@@ -16,10 +16,6 @@
 
 @implementation AXDirector
 
-//@synthesize openGLView = _openGLView;
-//@synthesize inputController = _inputController;
-@synthesize viewSize = _viewSize;
-
 + (AXDirector*)sharedDirector {
     static AXDirector *sharedDirector;
     @synchronized(self) {
@@ -43,9 +39,6 @@
 }
 
 - (void)dealloc {
-    //self.openGLView = nil;
-    //self.inputController = nil;
-    self.viewSize = CGSizeZero;
     [super dealloc];
 }
 

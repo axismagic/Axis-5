@@ -13,30 +13,22 @@
 
 @interface AXScene : AXObject <AXSceneObjectProtocol> {
     // should update, even when not active?
-    BOOL updates;
-    
-    // scene object management
-    //NSMutableArray *sceneObjects;
-    //NSMutableArray *objectsToAdd;
-    //NSMutableArray *objectsToRemove;
+    BOOL _updates;
     
     // interfaceController
-    AXInterfaceController *interfaceController;
+    AXInterfaceController *_interfaceController;
     // collisionController
-    AXCollisionController *collisionController;
+    AXCollisionController *_collisionController;
 }
 
-@property (assign) BOOL updates;
+@property (nonatomic, assign) BOOL updates;
 
-@property (retain) AXInterfaceController *interfaceController;
-@property (retain) AXCollisionController *collisionController;
+@property (nonatomic, retain) AXInterfaceController *interfaceController;
+@property (nonatomic, retain) AXCollisionController *collisionController;
 
 - (void)loadScene;
 
 - (void)updateScene;
 - (void)renderScene;
-
-//- (void)addObjectToScene:(AXSprite*)sceneObject;
-//- (void)removeObjectFromScene:(AXSprite*)sceneObject;
 
 @end

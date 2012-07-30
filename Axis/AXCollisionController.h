@@ -9,7 +9,6 @@
 #import "AXSprite.h"
 
 @interface AXCollisionController : AXSprite {
-    //NSArray *sceneObjects;
     NSMutableArray *allColliders;
     NSMutableArray *collidersToCheck;
     
@@ -18,8 +17,6 @@
     NSMutableArray *collidersToCheckToAdd;
     NSMutableArray *collidersToCheckToRemove;
 }
-
-@property (retain) NSArray *sceneObjects;
 
 - (void)handleCollisions;
 

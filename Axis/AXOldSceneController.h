@@ -11,7 +11,7 @@
 @class AXInputViewController;
 @class AXCollisionController;
 @class EAGLView;
-@class AXSceneObject;
+@class AXSprite;
 
 @interface AXOldSceneController : NSObject {
     NSMutableArray *sceneObjects;
@@ -58,8 +58,8 @@
 - (void)stopAnimation;
 - (void)updateModel;
 
-- (void)addObjectToScene:(AXSceneObject*)sceneObject;
-- (void)removeObjectFromScene:(AXSceneObject*)sceneObject;
+- (void)addObjectToScene:(AXSprite*)sceneObject;
+- (void)removeObjectFromScene:(AXSprite*)sceneObject;
 
 // game specific
 - (void)generateRocks;

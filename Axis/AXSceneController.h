@@ -21,17 +21,19 @@
     // scene keys for scenes to update
     NSMutableArray *updatingSceneKeys;
     // key for active, rendering scene
-    NSString *activeSceneKey;
+    NSString *_activeSceneKey;
     
     // OpenGL View
-    EAGLView *openGLView;
+    EAGLView *_openGLView;
     // Input Controller
-    AXInputViewController *inputController;
+    AXInputViewController *_inputController;
     /*
      To avoid all sceneObjects from all scenes being checked when only one is active, collisions should be moved to individual scenes.
      Should same happen for inputController? No, active BOOL stops scenes from doing anything with touches. Should.
     */
     AXCollisionController *collisionController;
+    
+    CGSize _viewSize;
     
     // Loop tracking
     CADisplayLink *displayLink;
@@ -39,9 +41,9 @@
     NSTimer *animationTimer;
     NSTimeInterval animationInterval;
     
-    NSDate *startDate;
+    NSDate *_startDate;
     
-    NSTimeInterval deltaTime;
+    NSTimeInterval _deltaTime;
     NSTimeInterval lastFrameStartTime;
     NSTimeInterval thisFrameStartTime;
     
@@ -49,16 +51,16 @@
     NSMutableArray *scenesToRemove;
 }
 
-@property (retain) AXInputViewController *inputController;
 @property (retain) EAGLView *openGLView;
+@property (retain) AXInputViewController *inputController;
 
 @property (retain) NSString *activeSceneKey;
 
 @property (assign) CGSize viewSize;
 
 @property (retain) NSDate *startDate;
-@property NSTimeInterval animationInterval;
 @property NSTimeInterval deltaTime;
+@property NSTimeInterval animationInterval;
 @property (nonatomic, assign) NSTimer *animationTimer;
 
 + (AXSceneController*)sharedSceneController;

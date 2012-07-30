@@ -12,8 +12,6 @@
 
 @implementation AXCollisionController
 
-@synthesize sceneObjects;
-
 - (void)handleCollisions {
     
     /* rather than collision controller getting the objects, objects are submitted to the controller by their parent object
@@ -63,14 +61,10 @@
     
     // remove old colliders
     if ([allCollidersToRemove count] > 0) {
-        if (allColliders == nil)
-            allColliders = [[NSMutableArray alloc] init];
         [allColliders removeObjectsInArray:allCollidersToRemove];
         [allCollidersToRemove removeAllObjects];
     }
     if ([collidersToCheckToRemove count] > 0) {
-        if (collidersToCheck == nil)
-            collidersToCheck = [[NSMutableArray alloc] init];
         [collidersToCheck removeObjectsInArray:collidersToCheckToRemove];
         [collidersToCheckToRemove removeAllObjects];
     }

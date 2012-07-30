@@ -17,8 +17,14 @@
 
 @implementation AXScene
 
-@synthesize updates;
-@synthesize interfaceController, collisionController;
+@synthesize updates = _updates;
+@synthesize interfaceController = _interfaceController, collisionController = _collisionController;
+
+- (void)dealloc {
+    self.collisionController = nil;
+    self.interfaceController = nil;
+    [super dealloc];
+}
 
 #pragma mark Load
 
@@ -40,14 +46,19 @@
     self.parentDelegate = self;
     
     // load collisionController
-    collisionController = [[AXCollisionController alloc] init];
+    AXCollisionController *aCollisionController = [[AXCollisionController alloc] init];
+    self.collisionController = aCollisionController;
+    [aCollisionController release];
+    
     if (AX_DEBUG_DRAW_COLLIDERS)
         //[self addObjectToScene:collisionController];
-        [self addChild:collisionController];
+        [self addChild:_collisionController];
     
     // load interface
-    interfaceController = [[AXInterfaceController alloc] init];
-    [interfaceController loadInterface];
+    AXInterfaceController *anInterfaceController = [[AXInterfaceController alloc] init];
+    self.interfaceController = anInterfaceController;
+    [anInterfaceController release];
+    [_interfaceController loadInterface];
     
     // create the ship
     /*AXSpaceShip *ship = [[AXSpaceShip alloc] init];
@@ -87,25 +98,21 @@
     // update interface
     // ***** only if is active?
     // if (active)
-    [interfaceController updateInterface];
+    [_interfaceController updateInterface];
     
     // update all objects
     //[sceneObjects makeObjectsPerformSelector:@selector(update)];
     [children makeObjectsPerformSelector:@selector(update)];
     
     // handle collisions
-    [collisionController handleCollisions];
+    [_collisionController handleCollisions];
     
     // ***** render and object remove order?
     
     // remove old objects
     if ([childrenToRemove count] > 0) {
-        NSLog(@"children: %d toRemove: %d", [children count], [childrenToRemove count]);
-        //[sceneObjects removeObjectsInArray:objectsToRemove];
         [children removeObjectsInArray:childrenToRemove];
         [childrenToRemove removeAllObjects];
-        
-        NSLog(@"children: %d toRemove: %d", [children count], [childrenToRemove count]);
     }
 }
 
@@ -115,7 +122,7 @@
     [children makeObjectsPerformSelector:@selector(render)];
     
     // render interface above the scene
-    [interfaceController renderInterface];
+    [_interfaceController renderInterface];
 }
 
 #pragma mark Child Control
@@ -144,36 +151,9 @@
     [childrenToAdd addObject:child];
 }
 
-- (void)removeChild:(AXObject *)object {
-    [super removeChild:object];
-}
-
 /* 
  No need to override removeChild:(AXObject*)object
  */
-
-/*- (void)addObjectToScene:(AXSprite*)sceneObject {
-    if (objectsToAdd == nil)
-        objectsToAdd = [[NSMutableArray alloc] init];
-    
-    // activate and wake object
-    sceneObject.active = YES;
-    sceneObject.objectDelegate = self;
-    [sceneObject awake];
-    [objectsToAdd addObject:sceneObject];
-    
-    // ***** consider re-order
-    // ***** delegates
-    
-    if (sceneObject != collisionController)
-        [collisionController addObject:sceneObject];
-}*/
-
-/*- (void)removeObjectFromScene:(AXSprite*)sceneObject {
-    if (objectsToRemove == nil)
-        objectsToRemove = [[NSMutableArray alloc] init];
-    [objectsToRemove addObject:sceneObject];
-}*/
 
 #pragma mark -
 #pragma mark Scene Object Ownership Delegate Methods
@@ -186,16 +166,16 @@
         return;
     
     // add the object to the collision controller
-    if (object != collisionController)
-        [collisionController addObject:(AXSprite*)object]; 
+    if (object != _collisionController)
+        [_collisionController addObject:(AXSprite*)object]; 
 }
 
 - (void)removeObjectCollider:(AXObject*)object {
     if (![object isKindOfClass:[AXSprite class]])
         return;
     
-    if (object != collisionController)
-        [collisionController removeObject:(AXSprite*)object];
+    if (object != _collisionController)
+        [_collisionController removeObject:(AXSprite*)object];
 }
 
 // used to add or remove things directly to the scene

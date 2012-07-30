@@ -19,11 +19,12 @@
     AXRock *rock = [AXRock randomRock];
     rock.location = AXPointMake(0.0, 0.0, 0.0);
     rock.speed = AXPointMake(0.0, -0.2, 0.0);
-    [self addChild:rock];
+    [self addChild:rock]; // rock is autoreleased
     
     AXSpaceShip *ship = [[AXSpaceShip alloc] init];
     ship.location = AXPointMake(0.0, -100.0, 0.0);
     [self addChild:ship];
+    [ship release];
 }
 
 @end

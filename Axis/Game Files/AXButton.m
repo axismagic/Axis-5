@@ -29,8 +29,8 @@ static CGFloat BBSquareFillVertexes[8] = {-0.5,-0.5, 0.5,-0.5, -0.5,0.5, 0.5,0.5
                                 vertexCount:BBSquareOutlineVertexesCount
                                  vertexStride:BBSquareVertexStride
                                 renderStyle:BBSquareOutlineRenderStyle];
-    self.mesh.colors = BBSquareOutlineColorValues;
-    self.mesh.colorStride = BBSquareColorStride;
+    _mesh.colors = BBSquareOutlineColorValues;
+    _mesh.colorStride = BBSquareColorStride;
     
     screenRect = [[AXSceneController sharedSceneController].inputController screenRectFromMeshRect:self.meshBounds atPoint:CGPointMake(_location.x, _location.y)];
     [self setNotPressedVertexes];

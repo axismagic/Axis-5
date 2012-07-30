@@ -6,12 +6,12 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "AXSceneObject.h"
+#import "AXSprite.h"
 #import "AXPoint.h"
 
 @class AXParticle;
 
-@interface AXParticleEmitter : AXSceneObject {
+@interface AXParticleEmitter : AXSprite {
     NSMutableArray *activeParticles;
     NSMutableArray *objectsToRemove;
     NSMutableArray *particlePool;
