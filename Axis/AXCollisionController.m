@@ -34,6 +34,20 @@
         }
     }*/
     
+    // add new colliders
+    if ([allCollidersToAdd count] > 0) {
+        if (allColliders == nil)
+            allColliders = [[NSMutableArray alloc] init];
+        [allColliders addObjectsFromArray:allCollidersToAdd];
+        [allCollidersToAdd removeAllObjects];
+    }
+    if ([collidersToCheckToAdd count] > 0) {
+        if (collidersToCheck == nil)
+            collidersToCheck = [[NSMutableArray alloc] init];
+        [collidersToCheck addObjectsFromArray:collidersToCheckToAdd];
+        [collidersToCheckToAdd removeAllObjects];
+    }
+    
     // collisions check
     for (AXSprite *colliderObject in collidersToCheck) {
         for (AXSprite *collideeObject in allColliders) {
@@ -46,21 +60,51 @@
             }
         }
     }
+    
+    // remove old colliders
+    if ([allCollidersToRemove count] > 0) {
+        if (allColliders == nil)
+            allColliders = [[NSMutableArray alloc] init];
+        [allColliders removeObjectsInArray:allCollidersToRemove];
+        [allCollidersToRemove removeAllObjects];
+    }
+    if ([collidersToCheckToRemove count] > 0) {
+        if (collidersToCheck == nil)
+            collidersToCheck = [[NSMutableArray alloc] init];
+        [collidersToCheck removeObjectsInArray:collidersToCheckToRemove];
+        [collidersToCheckToRemove removeAllObjects];
+    }
 }
 
-- (void)addObject:(AXSprite*)sceneObject {
+- (void)addObject:(AXSprite*)object {
     // initialise arrays
-    if (allColliders == nil)
-        allColliders = [[NSMutableArray alloc] init];
-    if (collidersToCheck == nil)
-        collidersToCheck = [[NSMutableArray alloc] init];
+    if (allCollidersToAdd == nil)
+        allCollidersToAdd = [[NSMutableArray alloc] init];
+    if (collidersToCheckToAdd == nil)
+        collidersToCheckToAdd = [[NSMutableArray alloc] init];
     
-    if (sceneObject.collider != nil) {
+    if (object.collider != nil) {
         // if has collider, add to allColliders
-        [allColliders addObject:sceneObject];
-        if (sceneObject.collider.checkForCollisions)
+        [allCollidersToAdd addObject:object];
+        if (object.collider.checkForCollisions)
             // if collider needs checking, add to check
-            [collidersToCheck addObject:sceneObject];
+            [collidersToCheckToAdd addObject:object];
+    }
+}
+
+- (void)removeObject:(AXSprite*)object {
+    // initialise arrays
+    if (allCollidersToRemove == nil)
+        allCollidersToRemove = [[NSMutableArray alloc] init];
+    if (collidersToCheckToRemove == nil)
+        collidersToCheckToRemove = [[NSMutableArray alloc] init];
+    
+    if (object.collider != nil) {
+        // if object has collider, remove it
+        [allCollidersToRemove addObject:object];
+        if (object.collider.checkForCollisions)
+            // if collider needs checking, remove that too
+            [collidersToCheckToRemove addObject:object];
     }
 }
 
