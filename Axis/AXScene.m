@@ -32,11 +32,12 @@
 }
 
 - (void)loadScene {
-    if (sceneObjects == nil)
-        sceneObjects = [[NSMutableArray alloc] init];
-    
     if (children == nil)
         children = [[NSMutableArray alloc] init];
+    
+    // set delegates
+    self.sceneDelegate = self;
+    self.parentDelegate = self;
     
     // load collisionController
     collisionController = [[AXCollisionController alloc] init];
@@ -77,10 +78,10 @@
 
 - (void)updateScene {
     // add new objects
-    if ([objectsToAdd count] > 0) {
+    if ([childrenToAdd count] > 0) {
         //[sceneObjects addObjectsFromArray:objectsToAdd];
-        [children addObjectsFromArray:objectsToAdd];
-        [objectsToAdd removeAllObjects];
+        [children addObjectsFromArray:childrenToAdd];
+        [childrenToAdd removeAllObjects];
     }
     
     // update interface
@@ -93,15 +94,18 @@
     [children makeObjectsPerformSelector:@selector(update)];
     
     // handle collisions
-    // ***** temp off to prevent crashes [collisionController handleCollisions];
+    [collisionController handleCollisions];
     
     // ***** render and object remove order?
     
     // remove old objects
-    if ([objectsToRemove count] > 0) {
+    if ([childrenToRemove count] > 0) {
+        NSLog(@"children: %d toRemove: %d", [children count], [childrenToRemove count]);
         //[sceneObjects removeObjectsInArray:objectsToRemove];
-        [children removeObjectsInArray:objectsToRemove];
-        [objectsToRemove removeAllObjects];
+        [children removeObjectsInArray:childrenToRemove];
+        [childrenToRemove removeAllObjects];
+        
+        NSLog(@"children: %d toRemove: %d", [children count], [childrenToRemove count]);
     }
 }
 
@@ -114,10 +118,12 @@
     [interfaceController renderInterface];
 }
 
-/* custom addChild */
+#pragma mark Child Control
+
+/* Overridden addChild to ensure sceneDelegate is correct */
 - (void)addChild:(AXObject *)child {
-    if (objectsToAdd == nil)
-        objectsToAdd = [[NSMutableArray alloc] init];
+    if (childrenToAdd == nil)
+        childrenToAdd = [[NSMutableArray alloc] init];
     
     // if child is not already owned, add new child
     NSAssert(!child.isChild, @"Child must not be owned");
@@ -129,13 +135,22 @@
         self.hasChildren = YES;
     
     // delegate
-    child.objectDelegate = self;
+    child.sceneDelegate = self; // difference between normal and overridden.
+    child.parentDelegate = self;
     
     // awake child
     [child awake];
     // add to children array
-    [objectsToAdd addObject:child];
+    [childrenToAdd addObject:child];
 }
+
+- (void)removeChild:(AXObject *)object {
+    [super removeChild:object];
+}
+
+/* 
+ No need to override removeChild:(AXObject*)object
+ */
 
 /*- (void)addObjectToScene:(AXSprite*)sceneObject {
     if (objectsToAdd == nil)
@@ -166,13 +181,30 @@
 /*
  This method is called by the parent of an object as it adds the object. It evaluates the objects and decides which controllers the scene needs to add it to for tracking and other purposes. Any other features can also take place here. At this moment the object is fully initialised and in use.
 */
-- (void)submitForEvaluation:(AXObject*)object {
+- (void)addObjectCollider:(AXObject*)object {
     if (![object isKindOfClass:[AXSprite class]])
         return;
     
     // add the object to the collision controller
     if (object != collisionController)
         [collisionController addObject:(AXSprite*)object]; 
+}
+
+- (void)removeObjectCollider:(AXObject*)object {
+    if (![object isKindOfClass:[AXSprite class]])
+        return;
+    
+    if (object != collisionController)
+        [collisionController removeObject:(AXSprite*)object];
+}
+
+// used to add or remove things directly to the scene
+- (void)addObjectToScene:(AXObject *)object {
+    [self addChild:object];
+}
+
+- (void)removeObjectFromScene:(AXObject *)object {
+    [self removeChild:object];
 }
 
 @end

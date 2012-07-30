@@ -11,14 +11,14 @@
 #import "AXInterfaceController.h"
 #import "AXCollisionController.h"
 
-@interface AXScene : AXObject <AXObjectProtocol> {
+@interface AXScene : AXObject <AXSceneObjectProtocol> {
     // should update, even when not active?
     BOOL updates;
     
     // scene object management
-    NSMutableArray *sceneObjects;
-    NSMutableArray *objectsToAdd;
-    NSMutableArray *objectsToRemove;
+    //NSMutableArray *sceneObjects;
+    //NSMutableArray *objectsToAdd;
+    //NSMutableArray *objectsToRemove;
     
     // interfaceController
     AXInterfaceController *interfaceController;
