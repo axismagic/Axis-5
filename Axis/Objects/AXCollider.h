@@ -6,15 +6,15 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "AXSceneObject.h"
+#import "AXSprite.h"
 
 @protocol AXCollisionHandlerProtocol
 
-- (void)didCollideWith:(AXSceneObject*)sceneObject;
+- (void)didCollideWith:(AXSprite*)sceneObject;
 
 @end
 
-@interface AXCollider : AXSceneObject {
+@interface AXCollider : AXSprite {
     AXPoint transformedCentroid;
     BOOL checkForCollisions;
     CGFloat maxRadius;
@@ -24,9 +24,9 @@
 @property (assign) CGFloat maxRadius;
 
 + (AXCollider*)collider;
-- (void)updateCollider:(AXSceneObject*)sceneObject;
+- (void)updateCollider:(AXSprite*)sceneObject;
 - (BOOL)doesCollideWithCollider:(AXCollider*)aCollider;
-- (BOOL)doesCollideWithMesh:(AXSceneObject*)sceneObject;
+- (BOOL)doesCollideWithMesh:(AXSprite*)sceneObject;
 
 - (void)awake;
 - (void)render;

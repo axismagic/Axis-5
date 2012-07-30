@@ -7,7 +7,7 @@
 //
 
 #import "AXCollider.h"
-#import "AXSceneObject.h"
+#import "AXSprite.h"
 #import "AXMesh.h"
 
 #pragma mark circle mesh
@@ -38,12 +38,12 @@ static CGFloat BBCircleColorValues[80] =
     return [collider autorelease];
 }
 
-- (void)updateCollider:(AXSceneObject*)sceneObject {
+- (void)updateCollider:(AXSprite*)sceneObject {
     if (sceneObject == nil)
         return;
     
     transformedCentroid = AXPointMatrixMultiply([sceneObject mesh].centroid, [sceneObject matrix]);
-    translation = transformedCentroid;
+    self.location = transformedCentroid;
     maxRadius = sceneObject.scale.x;
     if (maxRadius < sceneObject.scale.y)
         maxRadius = sceneObject.scale.y;
@@ -53,20 +53,20 @@ static CGFloat BBCircleColorValues[80] =
     maxRadius *= [sceneObject mesh].radius;
     
     // scene object iVars
-    scale = AXPointMake(maxRadius, maxRadius, 1.0);
+    self.scale = AXPointMake(maxRadius, maxRadius, 1.0);
     //scale = AXPointMake([sceneObject mesh].radius * sceneObject.scale.x, [sceneObject mesh].radius * sceneObject.scale.y, 0.0);
 }
 
 - (BOOL)doesCollideWithCollider:(AXCollider*)aCollider {
     CGFloat collisionDistance = self.maxRadius + aCollider.maxRadius;
-    CGFloat objectDistance = AXPointDistance(self.translation, aCollider.translation);
+    CGFloat objectDistance = AXPointDistance(_location, aCollider.location);
     
     if (objectDistance < collisionDistance)
         return YES;
     return NO;
 }
 
-- (BOOL)doesCollideWithMesh:(AXSceneObject*)sceneObject {
+- (BOOL)doesCollideWithMesh:(AXSprite*)sceneObject {
     NSInteger index;
     for (index = 0; index < sceneObject.mesh.vertexCount; index++) {
         NSInteger position = index * sceneObject.mesh.vertexStride;
@@ -78,7 +78,7 @@ static CGFloat BBCircleColorValues[80] =
         }
         
         vert = AXPointMatrixMultiply(vert, [sceneObject matrix]);
-        CGFloat distance = AXPointDistance(self.translation, vert);
+        CGFloat distance = AXPointDistance(_location, vert);
         if (distance < self.maxRadius)
             return YES;
     }
@@ -86,22 +86,22 @@ static CGFloat BBCircleColorValues[80] =
 }
 
 - (void)awake {
-    mesh = [[AXMesh alloc] initWithVertexes:BBCircleOutlineVertexes
+    self.mesh = [[AXMesh alloc] initWithVertexes:BBCircleOutlineVertexes
                                 vertexCount:BBCircleOutlineVertexesCount
                                vertexStride:BBCircleVertexStride
                                 renderStyle:GL_LINE_LOOP];
-    mesh.colors = BBCircleColorValues;
-    mesh.colorStride = BBCircleColorStride;
+    self.mesh.colors = BBCircleColorValues;
+    self.mesh.colorStride = BBCircleColorStride;
 }
 
 - (void)render {
-    if (!mesh || !active)
+    if (!_mesh || !_active)
         return;
     glPushMatrix();
     glLoadIdentity();
-    glTranslatef(translation.x, translation.y, translation.z);
-    glScalef(scale.x, scale.y, scale.z);
-    [mesh render];
+    glTranslatef(self.location.x, self.location.y, self.location.z);
+    glScalef(self.scale.x, self.scale.y, self.scale.z);
+    [self.mesh render];
     glPopMatrix();
 }
 
