@@ -23,7 +23,7 @@
 		C50DF7F61591CBC200BBB433 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF7F51591CBC200BBB433 /* EAGLView.m */; };
 		C50DF7F91591D44F00BBB433 /* AXSceneController.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF7F81591D44F00BBB433 /* AXSceneController.m */; };
 		C50DF7FC1591D58800BBB433 /* AXMesh.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF7FB1591D58800BBB433 /* AXMesh.m */; };
-		C50DF7FF1591D72100BBB433 /* AXSceneObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF7FE1591D72100BBB433 /* AXSceneObject.m */; };
+		C50DF7FF1591D72100BBB433 /* AXSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF7FE1591D72100BBB433 /* AXSprite.m */; };
 		C50DF8011591DFF800BBB433 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C50DF8001591DFF800BBB433 /* QuartzCore.framework */; };
 		C50DF8031591E12200BBB433 /* MainWindow_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = C50DF8021591E12200BBB433 /* MainWindow_iPhone.xib */; };
 		C50DF80D15923A8E00BBB433 /* AXButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF80C15923A8E00BBB433 /* AXButton.m */; };
@@ -31,6 +31,7 @@
 		C5293AE1159B4A6900B6E6FA /* AXArrowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C5293AE0159B4A6900B6E6FA /* AXArrowButton.m */; };
 		C52CF44415A3062F0050C1C0 /* AXAnimatedQuad.m in Sources */ = {isa = PBXBuildFile; fileRef = C52CF44315A3062F0050C1C0 /* AXAnimatedQuad.m */; };
 		C52CF44715A30F9D0050C1C0 /* AXAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = C52CF44615A30F9D0050C1C0 /* AXAnimation.m */; };
+		C560EC1F15C401DF0054F6C0 /* AXSpriteBase.m in Sources */ = {isa = PBXBuildFile; fileRef = C560EC1E15C401DE0054F6C0 /* AXSpriteBase.m */; };
 		C5841CDF159B6E6600B6CC3E /* AXCollider.m in Sources */ = {isa = PBXBuildFile; fileRef = C5841CDE159B6E6600B6CC3E /* AXCollider.m */; };
 		C5841CE7159B710400B6CC3E /* AXCollisionController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5841CE6159B710400B6CC3E /* AXCollisionController.m */; };
 		C587F0D915B1E1FF00F21A57 /* AXOldSceneController.m in Sources */ = {isa = PBXBuildFile; fileRef = C587F0D815B1E1FF00F21A57 /* AXOldSceneController.m */; };
@@ -41,6 +42,7 @@
 		C59B332F159F8A1100F634F4 /* AXMaterialController.m in Sources */ = {isa = PBXBuildFile; fileRef = C59B332E159F8A1100F634F4 /* AXMaterialController.m */; };
 		C59B333315A069E500F634F4 /* AXTexturedQuad.m in Sources */ = {isa = PBXBuildFile; fileRef = C59B333215A069E500F634F4 /* AXTexturedQuad.m */; };
 		C59B333A15A0799300F634F4 /* AXTexturedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C59B333915A0799300F634F4 /* AXTexturedButton.m */; };
+		C5AE346115C353BB006678E3 /* AXObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AE346015C353BB006678E3 /* AXObject.m */; };
 		C5D3245E159323B90001C2D0 /* AXMobileObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D3245D159323B90001C2D0 /* AXMobileObject.m */; };
 		C5D324621593245E0001C2D0 /* AXSpaceShip.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D324611593245E0001C2D0 /* AXSpaceShip.m */; };
 		C5D32467159333750001C2D0 /* AXRock.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D32466159333750001C2D0 /* AXRock.m */; };
@@ -90,8 +92,8 @@
 		C50DF7F81591D44F00BBB433 /* AXSceneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXSceneController.m; sourceTree = "<group>"; };
 		C50DF7FA1591D58800BBB433 /* AXMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXMesh.h; path = Objects/AXMesh.h; sourceTree = "<group>"; };
 		C50DF7FB1591D58800BBB433 /* AXMesh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXMesh.m; path = Objects/AXMesh.m; sourceTree = "<group>"; };
-		C50DF7FD1591D72100BBB433 /* AXSceneObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXSceneObject.h; path = Objects/AXSceneObject.h; sourceTree = "<group>"; };
-		C50DF7FE1591D72100BBB433 /* AXSceneObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXSceneObject.m; path = Objects/AXSceneObject.m; sourceTree = "<group>"; };
+		C50DF7FD1591D72100BBB433 /* AXSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; name = AXSprite.h; path = Objects/AXSprite.h; sourceTree = "<group>"; };
+		C50DF7FE1591D72100BBB433 /* AXSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXSprite.m; path = Objects/AXSprite.m; sourceTree = "<group>"; };
 		C50DF8001591DFF800BBB433 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C50DF8021591E12200BBB433 /* MainWindow_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainWindow_iPhone.xib; path = Interface/MainWindow_iPhone.xib; sourceTree = "<group>"; };
 		C50DF809159238A600BBB433 /* AXPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXPoint.h; sourceTree = "<group>"; };
@@ -105,6 +107,8 @@
 		C52CF44315A3062F0050C1C0 /* AXAnimatedQuad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXAnimatedQuad.m; path = Objects/AXAnimatedQuad.m; sourceTree = "<group>"; };
 		C52CF44515A30F9D0050C1C0 /* AXAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXAnimation.h; path = Objects/AXAnimation.h; sourceTree = "<group>"; };
 		C52CF44615A30F9D0050C1C0 /* AXAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXAnimation.m; path = Objects/AXAnimation.m; sourceTree = "<group>"; };
+		C560EC1D15C401DD0054F6C0 /* AXSpriteBase.h */ = {isa = PBXFileReference; fileEncoding = 4; name = AXSpriteBase.h; path = Objects/AXSpriteBase.h; sourceTree = "<group>"; };
+		C560EC1E15C401DE0054F6C0 /* AXSpriteBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXSpriteBase.m; path = Objects/AXSpriteBase.m; sourceTree = "<group>"; };
 		C5841CDD159B6E6600B6CC3E /* AXCollider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXCollider.h; path = Objects/AXCollider.h; sourceTree = "<group>"; };
 		C5841CDE159B6E6600B6CC3E /* AXCollider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXCollider.m; path = Objects/AXCollider.m; sourceTree = "<group>"; };
 		C5841CE5159B710400B6CC3E /* AXCollisionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXCollisionController.h; sourceTree = "<group>"; };
@@ -123,6 +127,8 @@
 		C59B333215A069E500F634F4 /* AXTexturedQuad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXTexturedQuad.m; path = Objects/AXTexturedQuad.m; sourceTree = "<group>"; };
 		C59B333815A0799300F634F4 /* AXTexturedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXTexturedButton.h; path = "Game Files/AXTexturedButton.h"; sourceTree = "<group>"; };
 		C59B333915A0799300F634F4 /* AXTexturedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXTexturedButton.m; path = "Game Files/AXTexturedButton.m"; sourceTree = "<group>"; };
+		C5AE345F15C353BB006678E3 /* AXObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXObject.h; sourceTree = "<group>"; };
+		C5AE346015C353BB006678E3 /* AXObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXObject.m; sourceTree = "<group>"; };
 		C5D3245C159323B90001C2D0 /* AXMobileObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXMobileObject.h; path = Objects/AXMobileObject.h; sourceTree = "<group>"; };
 		C5D3245D159323B90001C2D0 /* AXMobileObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXMobileObject.m; path = Objects/AXMobileObject.m; sourceTree = "<group>"; };
 		C5D324601593245E0001C2D0 /* AXSpaceShip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXSpaceShip.h; path = "Game Files/AXSpaceShip.h"; sourceTree = "<group>"; };
@@ -274,8 +280,12 @@
 			children = (
 				C5D3245C159323B90001C2D0 /* AXMobileObject.h */,
 				C5D3245D159323B90001C2D0 /* AXMobileObject.m */,
-				C50DF7FD1591D72100BBB433 /* AXSceneObject.h */,
-				C50DF7FE1591D72100BBB433 /* AXSceneObject.m */,
+				C50DF7FD1591D72100BBB433 /* AXSprite.h */,
+				C50DF7FE1591D72100BBB433 /* AXSprite.m */,
+				C560EC1D15C401DD0054F6C0 /* AXSpriteBase.h */,
+				C560EC1E15C401DE0054F6C0 /* AXSpriteBase.m */,
+				C5AE345F15C353BB006678E3 /* AXObject.h */,
+				C5AE346015C353BB006678E3 /* AXObject.m */,
 				C59B333115A069E500F634F4 /* AXTexturedQuad.h */,
 				C59B333215A069E500F634F4 /* AXTexturedQuad.m */,
 				C52CF44215A3062F0050C1C0 /* AXAnimatedQuad.h */,
@@ -476,7 +486,7 @@
 				C50DF7F61591CBC200BBB433 /* EAGLView.m in Sources */,
 				C50DF7F91591D44F00BBB433 /* AXSceneController.m in Sources */,
 				C50DF7FC1591D58800BBB433 /* AXMesh.m in Sources */,
-				C50DF7FF1591D72100BBB433 /* AXSceneObject.m in Sources */,
+				C50DF7FF1591D72100BBB433 /* AXSprite.m in Sources */,
 				C50DF80D15923A8E00BBB433 /* AXButton.m in Sources */,
 				C5D3245E159323B90001C2D0 /* AXMobileObject.m in Sources */,
 				C5D324621593245E0001C2D0 /* AXSpaceShip.m in Sources */,
@@ -497,6 +507,8 @@
 				C587F0D915B1E1FF00F21A57 /* AXOldSceneController.m in Sources */,
 				C587F0DD15B200CA00F21A57 /* AXInterfaceController.m in Sources */,
 				C587F0E015B20B2A00F21A57 /* AXNewScene.m in Sources */,
+				C5AE346115C353BB006678E3 /* AXObject.m in Sources */,
+				C560EC1F15C401DF0054F6C0 /* AXSpriteBase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
