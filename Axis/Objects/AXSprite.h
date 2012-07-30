@@ -23,21 +23,7 @@
 
 @class AXCollider;
 
-@protocol AXSpriteProtocol <NSObject>
-@optional
-
-/*
- Scene ownership protocol allows a scene to take control over all objects, even children of objects, and submit them to high level things such as the Collision Controller
-*/
-
-// evaluates object, runs checks for collider submission, etc.
-//- (void)submitForEvaluation:(AXSprite*)object;
-
-@end
-
 @interface AXSprite : AXObject {
-    // delegate
-    AXScene <AXSpriteProtocol> *_spriteDelegate;
     
     // mesh
     AXMesh *_mesh;
@@ -46,8 +32,6 @@
     // collider
     AXCollider *_collider;
 }
-
-@property (nonatomic, retain) AXScene <AXSpriteProtocol> *spriteDelegate;
 
 @property (nonatomic, retain) AXMesh *mesh;
 @property (nonatomic, assign) CGRect meshBounds;

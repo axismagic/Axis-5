@@ -10,7 +10,7 @@
 
 @implementation AXObject
 
-@synthesize objectDelegate = _objectDelegate;
+@synthesize sceneDelegate = _sceneDelegate, parentDelegate = _parentDelegate;
 @synthesize vectorFromParent = _vectorFromParent;
 @synthesize location = _location, rotation = _rotation, scale = _scale;
 @synthesize matrix = _matrix;
@@ -25,10 +25,20 @@
 
 #pragma mark -
 
+- (id)init {
+    self = [super init];
+    if (self != nil) {
+        self.sceneDelegate = nil;
+        self.parentDelegate = nil;
+    }
+    
+    return self;
+}
+
 - (void)awake {
     // override
-    if (_objectDelegate)
-        [_objectDelegate submitForEvaluation:self];
+    if (_sceneDelegate)
+        [_sceneDelegate addObjectCollider:self];
 }
 
 #pragma mark -
@@ -37,6 +47,15 @@
 - (void)update {
     // preUpdate
     [self preUpdate];
+    
+    // add new objects
+    if ([childrenToAdd count] > 0) {
+        if (children == nil)
+            children = [[NSMutableArray alloc] init];
+        
+        [children addObjectsFromArray:childrenToAdd];
+        [childrenToAdd removeAllObjects];
+    }
     
     // work out relative positions of children (their offset from self)
     if (_hasChildren) {
@@ -91,6 +110,15 @@
         [children makeObjectsPerformSelector:@selector(update)];
     }
     
+    // remove old child objects
+    if ([childrenToRemove count] > 0) {
+        [children removeObjectsInArray:childrenToRemove];
+        [childrenToRemove removeAllObjects];
+        
+        if ([children count] == 0)
+            self.hasChildren = NO;
+    }
+    
     // postUpdate
     [self postUpdate];
 }
@@ -116,12 +144,13 @@
         [children makeObjectsPerformSelector:@selector(render)];
 }
 
+#pragma mark -
 #pragma mark Child Control
 
 // ***** addChild:(AXObject*)child forKey:(NSString*)key
 - (void)addChild:(AXObject *)child {
-    if (children == nil)
-        children = [[NSMutableArray alloc] init];
+    if (childrenToAdd == nil)
+        childrenToAdd = [[NSMutableArray alloc] init];
     
     // if child is not already owned, add new child
     NSAssert(!child.isChild, @"Child must not be owned");
@@ -133,16 +162,38 @@
         self.hasChildren = YES;
     
     // delegate
-    child.objectDelegate = _objectDelegate;
+    child.sceneDelegate = _sceneDelegate;
+    child.parentDelegate = self;
     
     // awake child
     [child awake];
     // add to children array
-    [children addObject:child];
+    [childrenToAdd addObject:child];
 }
 
-- (void)removeChild:(NSString *)childKey {
+- (void)removeChild:(AXObject*)object {
+    if (childrenToRemove == nil)
+        childrenToRemove = [[NSMutableArray alloc] init];
     
+    // object must be child
+    NSAssert(object.isChild, @"Object must be child");
+    
+    // remove collider
+    [object.sceneDelegate removeObjectCollider:object];
+    
+    // remove child
+    [childrenToRemove addObject:object];
+}
+
+#pragma mark Delegate Parent Methods
+/* Messages from child */
+
+- (void)addObjectToParent:(AXObject *)object {
+    [self addChild:object];
+}
+
+- (void)removeObjectFromParent:(AXObject *)object {
+    [self removeChild:object];
 }
 
 @end

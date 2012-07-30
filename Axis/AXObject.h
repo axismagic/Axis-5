@@ -17,16 +17,29 @@
 @class AXScene;
 @class AXObject;
 
-@protocol AXObjectProtocol <NSObject>
-@optional
+@protocol AXSceneObjectProtocol <NSObject>
+/* This protocol is used to send messages directly to the scene. */
 
-- (void)submitForEvaluation:(AXObject*)object;
+- (void)addObjectCollider:(AXObject*)object;
+- (void)removeObjectCollider:(AXObject*)object;
+
+- (void)addObjectToScene:(AXObject*)object;
+- (void)removeObjectFromScene:(AXObject*)object;
 
 @end
 
-@interface AXObject : NSObject {
+@protocol AXParentObjectProtocol <NSObject>
+/* This protocol is used to send messgaes directly to the parent. */
+
+- (void)addObjectToParent:(AXObject*)object;
+- (void)removeObjectFromParent:(AXObject*)object;
+
+@end
+
+@interface AXObject : NSObject <AXParentObjectProtocol> {
     // delegate
-    AXScene <AXObjectProtocol> *_objectDelegate;
+    AXScene <AXSceneObjectProtocol> *_sceneDelegate;
+    AXObject <AXParentObjectProtocol> *_parentDelegate;
     
     // locations
     AXPoint _vectorFromParent;
@@ -40,6 +53,8 @@
     
     // Parent/Child variables
     NSMutableArray *children;
+    NSMutableArray *childrenToAdd;
+    NSMutableArray *childrenToRemove;
     BOOL _hasChildren;
     BOOL _isChild;
     
@@ -47,7 +62,8 @@
     BOOL _active;
 }
 
-@property (nonatomic, retain) AXScene <AXObjectProtocol> *objectDelegate;
+@property (nonatomic, retain) AXScene <AXSceneObjectProtocol> *sceneDelegate;
+@property (nonatomic, retain) AXObject <AXParentObjectProtocol> *parentDelegate;
 
 @property (nonatomic, assign) AXPoint vectorFromParent;
 @property (nonatomic, assign) AXPoint location;
@@ -72,6 +88,6 @@
 
 // add and remove children
 - (void)addChild:(AXObject*)child;
-- (void)removeChild:(NSString*)childKey;
+- (void)removeChild:(AXObject*)object;
 
 @end

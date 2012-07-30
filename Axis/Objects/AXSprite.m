@@ -28,7 +28,6 @@ static CGFloat spinnySquareColors[16] = {
 
 @implementation AXSprite
 
-@synthesize spriteDelegate = _spriteDelegate;
 @synthesize mesh = _mesh, meshBounds = _meshBounds;
 @synthesize collider = _collider;
 
@@ -50,8 +49,6 @@ static CGFloat spinnySquareColors[16] = {
         self.isChild = NO;
         
         self.active = NO;
-        
-        self.spriteDelegate = nil;
     }
     
     return self;
