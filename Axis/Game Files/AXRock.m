@@ -129,14 +129,16 @@ static NSInteger BBRockColorStride = 4;
 - (void)smash {
     smashCount++;
     // queue for removal
-    [[AXSceneController sharedSceneController] removeObjectFromScene:self];
+    //[[AXSceneController sharedSceneController] removeObjectFromScene:self];
+    [_parentDelegate removeObjectFromParent:self];
     
     // explosion animation
     AXAnimation *explosion = [[AXAnimation alloc] initWithAtlasKeys:[NSArray arrayWithObjects:@"bang1", @"bang2", @"bang3", nil] loops:NO speed:6];
     explosion.active = YES;
     explosion.location = _location;
     explosion.scale = _scale;
-    [[AXSceneController sharedSceneController] addObjectToScene:explosion];
+    [_sceneDelegate addObjectToScene:explosion];
+    //[[AXSceneController sharedSceneController] addObjectToScene:explosion];
     [explosion release];
     
     if (smashCount >= 2)
@@ -151,7 +153,8 @@ static NSInteger BBRockColorStride = 4;
     newRock.speed = AXPointMake(speed.x + (position.x * SMASH_SPEED_FACTOR), speed.y + (position.y * SMASH_SPEED_FACTOR), 0.0);
     newRock.rotationalSpeed = rotationalSpeed;
     newRock.smashCount = smashCount;
-    [[AXSceneController sharedSceneController] addObjectToScene:newRock];
+    //[[AXSceneController sharedSceneController] addObjectToScene:newRock];
+    [_sceneDelegate addObjectToScene:newRock];
     [newRock release];
     
     newRock = [[AXRock alloc] init];
@@ -161,7 +164,8 @@ static NSInteger BBRockColorStride = 4;
     newRock.speed = AXPointMake(speed.x + (position.x * SMASH_SPEED_FACTOR), speed.y + (position.y * SMASH_SPEED_FACTOR), 0.0);
     newRock.rotationalSpeed = rotationalSpeed;
     newRock.smashCount = smashCount;
-    [[AXSceneController sharedSceneController] addObjectToScene:newRock];
+    //[[AXSceneController sharedSceneController] addObjectToScene:newRock];
+    [_sceneDelegate addObjectToScene:newRock];
     [newRock release];
     
     newRock = [[AXRock alloc] init];
@@ -171,7 +175,8 @@ static NSInteger BBRockColorStride = 4;
     newRock.speed = AXPointMake(speed.x + (position.x * SMASH_SPEED_FACTOR), speed.y + (position.y * SMASH_SPEED_FACTOR), 0.0);
     newRock.rotationalSpeed = rotationalSpeed;
     newRock.smashCount = smashCount;
-    [[AXSceneController sharedSceneController] addObjectToScene:newRock];
+    //[[AXSceneController sharedSceneController] addObjectToScene:newRock];
+    [_sceneDelegate addObjectToScene:newRock];
     [newRock release];
 }
 

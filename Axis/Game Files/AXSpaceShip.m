@@ -92,7 +92,8 @@
     // Collision successful
     [(AXRock*)sceneObject smash];
     // destroy ship
-    [[AXSceneController sharedSceneController] removeObjectFromScene:self];
+    //[[AXSceneController sharedSceneController] removeObjectFromScene:self];
+    [_parentDelegate removeObjectFromParent:self];
 }
 
 @end
