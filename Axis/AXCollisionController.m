@@ -7,7 +7,6 @@
 //
 
 #import "AXCollisionController.h"
-#import "AXMobileObject.h"
 #import "AXCollider.h"
 
 @implementation AXCollisionController

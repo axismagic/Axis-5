@@ -44,9 +44,14 @@ static CGFloat BBCircleColorValues[80] =
     
     transformedCentroid = AXPointMatrixMultiply([sceneObject mesh].centroid, [sceneObject matrix]);
     self.location = transformedCentroid;
-    maxRadius = sceneObject.scale.x;
+    /*maxRadius = sceneObject.scale.x;
     if (maxRadius < sceneObject.scale.y)
         maxRadius = sceneObject.scale.y;
+    if ((maxRadius < sceneObject.scale.z) && ([sceneObject mesh].vertexStride > 2))
+        maxRadius = sceneObject.scale.z;*/
+    maxRadius = sceneObject.mesh.size.width;
+    if (maxRadius < sceneObject.mesh.size.height)
+        maxRadius = sceneObject.mesh.size.height;
     if ((maxRadius < sceneObject.scale.z) && ([sceneObject mesh].vertexStride > 2))
         maxRadius = sceneObject.scale.z;
     
@@ -92,15 +97,20 @@ static CGFloat BBCircleColorValues[80] =
                                 renderStyle:GL_LINE_LOOP];
     _mesh.colors = BBCircleColorValues;
     _mesh.colorStride = BBCircleColorStride;
+    
+    self.active = YES;
 }
 
 - (void)render {
+    
+    // ***** colliders scale incorectly with sprite
     if (!_mesh || !_active)
         return;
     glPushMatrix();
     glLoadIdentity();
     glTranslatef(self.location.x, self.location.y, self.location.z);
     glScalef(self.scale.x, self.scale.y, self.scale.z);
+    //glScalef(self.mesh.size.width, self.mesh.size.height, 1.0);
     [self.mesh render];
     glPopMatrix();
 }
