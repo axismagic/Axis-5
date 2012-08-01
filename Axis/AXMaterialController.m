@@ -26,8 +26,10 @@
 - (id)init {
     self = [super init];
     if (self != nil) {
-        [self loadAtlasData:@"SpaceRocksAtlas"];
-        [self loadAtlasData:@"particleAtlas"];
+        [self loadAtlasData:@"HeroSpriteSheet"];
+        //[self loadAtlasData:@"Ducks"];
+        //[self loadAtlasData:@"SpaceRocksAtlas"];
+        //[self loadAtlasData:@"particleAtlas"];
     }
     
     return self;
@@ -43,12 +45,25 @@
     
     CGSize atlasSize = [self loadTextureImage:[atlasName stringByAppendingPathExtension:@"png"] materialKey:atlasName];
     
-    NSArray *itemData = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:atlasName ofType:@"plist"]];
+    /*NSArray *itemData = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:atlasName ofType:@"plist"]];
     
     for (NSDictionary *record in itemData) {
         AXTexturedQuad *quad = [self texturedQuadFromAtlasRecord:record atlasSize:atlasSize materialKey:atlasName];
         [quadLibrary setObject:quad forKey:[record objectForKey:@"name"]];
+    }*/
+    
+    //
+    
+    NSDictionary *itemData = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:atlasName ofType:@"plist"]];
+    
+    //for (NSDictionary *record in itemData) {
+    for (NSString *key in itemData) {
+        NSDictionary *record = [itemData objectForKey:key];
+        AXTexturedQuad *quad = [self texturedQuadFromAtlasRecord:record atlasSize:atlasSize materialKey:atlasName];
+        [quadLibrary setObject:quad forKey:key];
     }
+    
+    //
     
     [self bindMaterial:atlasName];
     
@@ -62,6 +77,8 @@
     GLfloat yLocation = [[record objectForKey:@"yLocation"] floatValue];
     GLfloat width = [[record objectForKey:@"width"] floatValue];
     GLfloat height = [[record objectForKey:@"height"] floatValue];
+    
+    quad.size = CGSizeMake(width, height);
     
     // find normalized texture coordinates
     GLfloat uMin = xLocation/atlasSize.width;
