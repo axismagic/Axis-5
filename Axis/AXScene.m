@@ -12,12 +12,8 @@
 #import "AXCollisionController.h"
 #import "AXSprite.h"
 
-#import "AXSpaceShip.h"
-#import "AXRock.h"
-
 @implementation AXScene
 
-@synthesize updates = _updates;
 @synthesize interfaceController = _interfaceController, collisionController = _collisionController;
 
 - (void)dealloc {
@@ -32,6 +28,8 @@
     self = [super init];
     if (self != nil) {
         self.updates = NO;
+        
+        self.sceneDelegate = self;
     }
     
     return self;
@@ -49,16 +47,17 @@
     AXCollisionController *aCollisionController = [[AXCollisionController alloc] init];
     self.collisionController = aCollisionController;
     [aCollisionController release];
+    [self.collisionController activate];
     
     if (AX_DEBUG_DRAW_COLLIDERS)
         //[self addObjectToScene:collisionController];
         [self addChild:_collisionController];
     
     // load interface
-    AXInterfaceController *anInterfaceController = [[AXInterfaceController alloc] init];
-    self.interfaceController = anInterfaceController;
-    [anInterfaceController release];
-    [_interfaceController loadInterface];
+    // AXInterfaceController *anInterfaceController = [[AXInterfaceController alloc] init];
+    // self.interfaceController = anInterfaceController;
+    // [anInterfaceController release];
+    // [_interfaceController loadInterface];
     
     // create the ship
     /*AXSpaceShip *ship = [[AXSpaceShip alloc] init];
@@ -128,7 +127,8 @@
 #pragma mark Child Control
 
 /* Overridden addChild to ensure sceneDelegate is correct */
-- (void)addChild:(AXObject *)child {
+/* ***** no need to override addChild anymore as init method turns _scene delegate to self */
+/*- (void)addChild:(AXObject *)child {
     if (childrenToAdd == nil)
         childrenToAdd = [[NSMutableArray alloc] init];
     
@@ -142,14 +142,14 @@
         self.hasChildren = YES;
     
     // delegate
-    child.sceneDelegate = self; // difference between normal and overridden.
+    child.sceneDelegate = self; // ***** difference between normal and overridden.
     child.parentDelegate = self;
     
     // awake child
     [child awake];
     // add to children array
     [childrenToAdd addObject:child];
-}
+}*/
 
 /* 
  No need to override removeChild:(AXObject*)object

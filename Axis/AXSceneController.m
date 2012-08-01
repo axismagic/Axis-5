@@ -248,10 +248,10 @@
     }
 }
 
-/*- (void)setAnimationTimer:(NSTimer *)newTimer {
+- (void)setAnimationTimer:(NSTimer *)newTimer {
     [animationTimer invalidate];
     animationTimer = newTimer;
-}*/
+}
 
 - (void)setAnimationInterval:(NSTimeInterval)interval {
     // ***** Fix?

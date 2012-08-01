@@ -12,16 +12,11 @@
 #import "AXCollisionController.h"
 
 @interface AXScene : AXObject <AXSceneObjectProtocol> {
-    // should update, even when not active?
-    BOOL _updates;
-    
     // interfaceController
     AXInterfaceController *_interfaceController;
     // collisionController
     AXCollisionController *_collisionController;
 }
-
-@property (nonatomic, assign) BOOL updates;
 
 @property (nonatomic, retain) AXInterfaceController *interfaceController;
 @property (nonatomic, retain) AXCollisionController *collisionController;

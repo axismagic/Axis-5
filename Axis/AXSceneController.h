@@ -60,7 +60,7 @@
 
 @property (retain) NSDate *startDate;
 @property NSTimeInterval deltaTime;
-@property NSTimeInterval animationInterval;
+@property (nonatomic, assign) NSTimeInterval animationInterval;
 @property (nonatomic, assign) NSTimer *animationTimer;
 
 + (AXSceneController*)sharedSceneController;
