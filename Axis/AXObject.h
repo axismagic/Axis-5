@@ -58,8 +58,9 @@
     BOOL _hasChildren;
     BOOL _isChild;
     
-    // updates? ***** check
     BOOL _active;
+    BOOL _updates;
+    BOOL _renders;
 }
 
 @property (nonatomic, retain) AXScene <AXSceneObjectProtocol> *sceneDelegate;
@@ -74,20 +75,27 @@
 
 @property (nonatomic, assign) BOOL hasChildren;
 @property (nonatomic, assign) BOOL isChild;
+
 @property (nonatomic, assign) BOOL active;
+@property (nonatomic, assign) BOOL updates;
+@property (nonatomic, assign) BOOL renders;
 
 // activate & reset
 - (void)awake;
+
+- (void)activate;
+- (void)deactivate;
 
 // update phases and render
 - (void)update;
 - (void)preUpdate;
 - (void)midPhaseUpdate;
+- (void)secondMidPhaseUpdate;
 - (void)postUpdate;
 - (void)render;
 
 // add and remove children
 - (void)addChild:(AXObject*)child;
-- (void)removeChild:(AXObject*)object;
+- (void)removeChild:(AXObject*)child;
 
 @end

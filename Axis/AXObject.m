@@ -15,7 +15,7 @@
 @synthesize location = _location, rotation = _rotation, scale = _scale;
 @synthesize matrix = _matrix;
 @synthesize hasChildren = _hasChildren, isChild = _isChild;
-@synthesize active = _active;
+@synthesize active = _active, updates = _updates, renders = _renders;
 
 - (void)dealloc {
     self.matrix = nil;
@@ -30,9 +30,36 @@
     if (self != nil) {
         self.sceneDelegate = nil;
         self.parentDelegate = nil;
+        
+        self.vectorFromParent = AXPointMake(0.0, 0.0, 0.0);
+        
+        self.location = AXPointMake(0.0, 0.0, 0.0);
+        self.rotation = AXPointMake(0.0, 0.0, 0.0);
+        self.scale = AXPointMake(1.0, 1.0, 1.0);
+        
+        self.matrix = (CGFloat*) malloc(16 * sizeof(CGFloat));
+        
+        self.hasChildren = NO;
+        self.isChild = NO;
+        
+        self.active = NO;
     }
     
     return self;
+}
+
+#pragma mark - Activation
+
+- (void)activate {
+    self.active = YES;
+    self.updates = YES;
+    self.renders = YES;
+}
+
+- (void)deactivate {
+    self.active = NO;
+    self.updates = NO;
+    self.renders = NO;
 }
 
 - (void)awake {
@@ -45,6 +72,10 @@
 #pragma mark Update
 
 - (void)update {
+    // if not active, do not update self or children
+    if (!_active)
+        return;
+    
     // preUpdate
     [self preUpdate];
     
@@ -71,28 +102,33 @@
         }
     }
     
-    // midPhase Updates - used in mobile object
-    [self midPhaseUpdate];
+    if (_updates) {
     
-    // update openGL on self
-    glPushMatrix();
-    glLoadIdentity();
-    
-    // move to my position
-    glTranslatef(self.location.x, self.location.y, self.location.z);
-    
-    // rotate
-    glRotatef(self.rotation.x, 1.0f, 0.0f, 0.0f);
-    glRotatef(self.rotation.y, 0.0f, 1.0f, 0.0f);
-    glRotatef(self.rotation.z, 0.0f, 0.0f, 1.0f);
-    
-    // scale
-    glScalef(self.scale.x, self.scale.y, self.scale.z);
-    
-    // save matrix
-    glGetFloatv(GL_MODELVIEW_MATRIX, self.matrix);
-    // restore matrix
-    glPopMatrix();
+        // midPhase Updates - used in mobile object
+        [self midPhaseUpdate];
+        
+        // update openGL on self
+        glPushMatrix();
+        glLoadIdentity();
+        
+        // move to my position
+        glTranslatef(self.location.x, self.location.y, self.location.z);
+        
+        // rotate
+        glRotatef(self.rotation.x, 1.0f, 0.0f, 0.0f);
+        glRotatef(self.rotation.y, 0.0f, 1.0f, 0.0f);
+        glRotatef(self.rotation.z, 0.0f, 0.0f, 1.0f);
+        
+        [self secondMidPhaseUpdate];
+        
+        // scale
+        glScalef(self.scale.x, self.scale.y, self.scale.z);
+        
+        // save matrix
+        glGetFloatv(GL_MODELVIEW_MATRIX, self.matrix);
+        // restore matrix
+        glPopMatrix();
+    }
     
     // ***** update collider? - perhaps in sprite, moved to postUpdate
     
@@ -131,6 +167,11 @@
     /* Overridden in Mobile object to apply changes before updated by OpenGL */
 }
 
+- (void)secondMidPhaseUpdate {
+    // ***** arrange better?
+    /* Overridden by AXSprite to adjust size */
+}
+
 - (void)postUpdate {
     /* ***** potentially used in sprite to add collider. */
 }
@@ -139,6 +180,10 @@
 
 /* overridden by sprite - this method serves to ensure the object, if used on its own to control children, will render the children. AXScene overrides this to ensure the interface is rendered above everything else. */
 - (void)render {
+    // if not active, do not render children
+    if (!_active)
+        return;
+    
     // render children
     if (_hasChildren)
         [children makeObjectsPerformSelector:@selector(render)];
@@ -155,8 +200,6 @@
     // if child is not already owned, add new child
     NSAssert(!child.isChild, @"Child must not be owned");
     
-    // activate ***** consider at end?
-    child.active = YES;
     child.isChild = YES;
     if (!_hasChildren)
         self.hasChildren = YES;
@@ -165,24 +208,25 @@
     child.sceneDelegate = _sceneDelegate;
     child.parentDelegate = self;
     
-    // awake child
-    [child awake];
     // add to children array
     [childrenToAdd addObject:child];
 }
 
-- (void)removeChild:(AXObject*)object {
+- (void)removeChild:(AXObject*)child {
     if (childrenToRemove == nil)
         childrenToRemove = [[NSMutableArray alloc] init];
     
     // object must be child
-    NSAssert(object.isChild, @"Object must be child");
+    NSAssert(child.isChild, @"Object must be child");
     
     // remove collider
-    [object.sceneDelegate removeObjectCollider:object];
+    // [object.sceneDelegate removeObjectCollider:object];
+    
+    // deactivate object
+    [child deactivate]; 
     
     // remove child
-    [childrenToRemove addObject:object];
+    [childrenToRemove addObject:child];
 }
 
 #pragma mark Delegate Parent Methods

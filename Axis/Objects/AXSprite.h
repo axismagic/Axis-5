@@ -30,12 +30,18 @@
     CGRect _meshBounds;
     
     // collider
+    BOOL _collisionDetection;
     AXCollider *_collider;
 }
 
 @property (nonatomic, retain) AXMesh *mesh;
 @property (nonatomic, assign) CGRect meshBounds;
 
+@property (nonatomic, assign) BOOL collisionDetection;
 @property (nonatomic, retain) AXCollider *collider;
+
+- (id)initWithSpriteImage:(NSString*)spriteName;
+
+- (void)didCollideWith:(AXSprite*)object;
 
 @end

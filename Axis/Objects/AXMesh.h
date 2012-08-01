@@ -25,18 +25,22 @@
     
     AXPoint centroid;
     CGFloat radius;
+    
+    CGSize _size;
 }
 
-@property (assign) NSInteger vertexCount;
-@property (assign) NSInteger vertexStride;
-@property (assign) NSInteger colorStride;
-@property (assign) GLenum renderStyle;
+@property (nonatomic, assign) NSInteger vertexCount;
+@property (nonatomic, assign) NSInteger vertexStride;
+@property (nonatomic, assign) NSInteger colorStride;
+@property (nonatomic, assign) GLenum renderStyle;
 
-@property (assign) GLfloat *vertexes;
-@property (assign) GLfloat *colors;
+@property (nonatomic, assign) GLfloat *vertexes;
+@property (nonatomic, assign) GLfloat *colors;
 
-@property (assign) AXPoint centroid;
-@property (assign) CGFloat radius;
+@property (nonatomic, assign) AXPoint centroid;
+@property (nonatomic, assign) CGFloat radius;
+
+@property (nonatomic, assign) CGSize size;
 
 - (id)initWithVertexes:(CGFloat*)verts
            vertexCount:(NSInteger)vertCount

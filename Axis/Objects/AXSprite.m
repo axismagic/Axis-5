@@ -29,7 +29,9 @@ static CGFloat spinnySquareColors[16] = {
 @implementation AXSprite
 
 @synthesize mesh = _mesh, meshBounds = _meshBounds;
-@synthesize collider = _collider;
+@synthesize collider = _collider, collisionDetection = _collisionDetection;
+
+#pragma mark - Init
 
 - (id)init {
     self = [super init];
@@ -54,12 +56,57 @@ static CGFloat spinnySquareColors[16] = {
     return self;
 }
 
+- (id)initWithSpriteImage:(NSString *)spriteName {
+    self = [super init];
+    if (self != nil) {
+        self.vectorFromParent = AXPointMake(0.0, 0.0, 0.0);
+        
+        self.location = AXPointMake(0.0, 0.0, 0.0);
+        self.rotation = AXPointMake(0.0, 0.0, 0.0);
+        self.scale = AXPointMake(1.0, 1.0, 1.0);
+        
+        self.matrix = (CGFloat*) malloc(16 * sizeof(CGFloat));
+        self.collider = nil;
+        
+        self.meshBounds = CGRectZero;
+        
+        self.hasChildren = NO;
+        self.isChild = NO;
+        
+        self.active = NO;
+        
+        self.mesh = [[AXMaterialController sharedMaterialController] quadFromAtlasKey:spriteName];
+    }
+    
+    return self;
+}
+
 - (CGRect)meshBounds {
     if (CGRectEqualToRect(_meshBounds, CGRectZero)) {
         self.meshBounds = [AXMesh meshBounds:_mesh scale:_scale];
     }
     
     return _meshBounds;
+}
+
+#pragma mark - Activation
+
+- (void)activate {
+    [super activate];
+    
+    if (_collisionDetection) {
+        self.collider = [AXCollider collider];
+        // ***** needs set Yes or No?
+        [self.collider setCheckForCollisions:YES];
+        [_sceneDelegate addObjectCollider:self];
+    }
+}
+
+- (void)deactivate {
+    [super deactivate];
+    
+    self.collisionDetection = NO;
+    [_sceneDelegate removeObjectCollider:self];
 }
 
 - (void)awake {
@@ -70,6 +117,12 @@ static CGFloat spinnySquareColors[16] = {
     
     
     // overridden
+}
+
+#pragma mark - Updates
+
+- (void)secondMidPhaseUpdate {
+    glScalef(self.mesh.size.width, self.mesh.size.height, 1.0);
 }
 
 - (void)postUpdate {
@@ -95,19 +148,29 @@ static CGFloat spinnySquareColors[16] = {
         return;
     }
     
-    glPushMatrix();
-    glLoadIdentity();
-    
-    glMultMatrixf(self.matrix);
-    
-    [_mesh render];
-    
-    // restore matrix
-    glPopMatrix();
+    // if renders, render self
+    if (_renders) {
+        glPushMatrix();
+        glLoadIdentity();
+        
+        glMultMatrixf(self.matrix);
+        
+        [_mesh render];
+        
+        // restore matrix
+        glPopMatrix();
+    }
     
     // render children
     if (_hasChildren && AX_ENABLE_RENDER_CHILDREN_ABOVE)
         [children makeObjectsPerformSelector:@selector(render)];
+}
+
+#pragma mark Collision Detection
+
+
+- (void)didCollideWith:(AXSprite*)object {
+    // do nothing, overridden.
 }
 
 //- (void)awake {

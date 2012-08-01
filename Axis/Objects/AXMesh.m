@@ -11,6 +11,7 @@
 @implementation AXMesh
 
 @synthesize vertexCount, vertexStride, colorStride, renderStyle, vertexes, colors, centroid, radius;
+@synthesize size = _size;
 
 - (id)initWithVertexes:(CGFloat *)verts
            vertexCount:(NSInteger)vertCount
@@ -25,6 +26,8 @@
         self.renderStyle = style;
         self.centroid = [self calculateCentroid];
         self.radius = [self calculateRadius];
+        
+        self.size = CGSizeZero;
     }
     return self;
 }
@@ -39,7 +42,7 @@
     xMin = xMax = mesh.vertexes[0];
     yMin = yMax = mesh.vertexes[1];
     NSInteger index;
-    for (index = 0; index < mesh.vertexCount; index++) {
+    /*for (index = 0; index < mesh.vertexCount; index++) {
         NSInteger position = index * mesh.vertexStride;
         if (xMin > mesh.vertexes[position] * scale.x)
             xMin = mesh.vertexes[position] * scale.x;
@@ -49,7 +52,20 @@
             yMin = mesh.vertexes[position + 1] * scale.y;
         if (yMax < mesh.vertexes[position + 1] * scale.y)
             yMax = mesh.vertexes[position + 1] * scale.y;
+    }*/
+    
+    for (index = 0; index < mesh.vertexCount; index++) {
+        NSInteger position = index * mesh.vertexStride;
+        if (xMin > mesh.vertexes[position] * scale.x * mesh.size.width)
+            xMin = mesh.vertexes[position] * scale.x * mesh.size.width;
+        if (xMax < mesh.vertexes[position] * scale.x * mesh.size.width)
+            xMax = mesh.vertexes[position] * scale.x * mesh.size.width;
+        if (yMin > mesh.vertexes[position + 1] * scale.y * mesh.size.height)
+            yMin = mesh.vertexes[position + 1] * scale.y * mesh.size.height;
+        if (yMax < mesh.vertexes[position + 1] * scale.y * mesh.size.height)
+            yMax = mesh.vertexes[position + 1] * scale.y * mesh.size.height;
     }
+    
     CGRect meshBounds = CGRectMake(xMin, yMin, xMax - xMin, yMax - yMin);
     if (CGRectGetWidth(meshBounds) < 1.0)
         meshBounds.size.width = 1.0;
