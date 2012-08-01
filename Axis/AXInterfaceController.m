@@ -14,7 +14,7 @@
 
 @implementation AXInterfaceController
 
-@synthesize forwardMagnitude, leftMagnitude, rightMagnitude;
+//@synthesize forwardMagnitude, leftMagnitude, rightMagnitude;
 
 - (id)init {
     self = [super init];
@@ -29,7 +29,7 @@
     if (interfaceObjects == nil)
         interfaceObjects = [[NSMutableArray alloc] init];
     
-    AXTexturedButton *rightButton = [[AXTexturedButton alloc] initWithUpKey:@"rightUp" downKey:@"rightDown"];
+    /*AXTexturedButton *rightButton = [[AXTexturedButton alloc] initWithUpKey:@"rightUp" downKey:@"rightDown"];
     rightButton.scale = AXPointMake(50.0, 50.0, 1.0);
     rightButton.location = AXPointMake(-155.0, -130.0, 0.0);
     // set actions
@@ -87,7 +87,7 @@
     fireButton.active = YES;
     [fireButton awake];
     [interfaceObjects addObject:fireButton];
-    [fireButton release];
+    [fireButton release];*/
 }
 
 - (void)updateInterface {
@@ -102,7 +102,7 @@
 
 // ***** should change to delegates?
 
-- (void)fireButtonDown {
+/*- (void)fireButtonDown {
     AXNewScene *newScene = [[AXNewScene alloc] init];
     [[AXSceneController sharedSceneController] loadScene:newScene forKey:@"rockScene" activate:YES];
     [newScene release];
@@ -133,6 +133,6 @@
 
 - (void)forwardButtonUp {
     self.forwardMagnitude = 0.0;
-}
+}*/
 
 @end
