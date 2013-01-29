@@ -29,10 +29,11 @@
     _rotation.y += rotationalSpeed.y * deltaTime * multiplier;
     _rotation.z += rotationalSpeed.z * deltaTime * multiplier;
     
-    [self checkArenaBounds];
+    //[self checkArenaBounds];
 }
 
 - (void)checkArenaBounds {
+    // ***** Bound checking currently broken
     if (_location.x > (240.0 + CGRectGetWidth(self.meshBounds)/2.0))
         _location.x -= 480.0 + CGRectGetWidth(self.meshBounds);
     if (_location.x < (-240.0 - CGRectGetWidth(self.meshBounds)/2.0))

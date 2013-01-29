@@ -63,6 +63,7 @@
 }
 
 - (void)awake {
+    // *R?* remove awake methods
     // override
     if (_sceneDelegate)
         [_sceneDelegate addObjectCollider:self];

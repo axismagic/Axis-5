@@ -105,11 +105,14 @@ static CGFloat spinnySquareColors[16] = {
 - (void)deactivate {
     [super deactivate];
     
-    self.collisionDetection = NO;
-    [_sceneDelegate removeObjectCollider:self];
+    if (_collisionDetection) {
+        self.collisionDetection = NO;
+        [_sceneDelegate removeObjectCollider:self];
+    }
 }
 
 - (void)awake {
+    // *R?*
     [super awake];
     // if delegate is set, invoke protocol for collision
     /*if (_spriteDelegate)
