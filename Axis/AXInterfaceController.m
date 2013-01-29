@@ -8,6 +8,8 @@
 
 #import "AXInterfaceController.h"
 
+#import "AXSceneController.h"
+
 #import "AXTexturedButton.h"
 
 #import "AXNewScene.h"
@@ -91,6 +93,7 @@
 }
 
 - (void)updateInterface {
+    // update interface objects
     [interfaceObjects makeObjectsPerformSelector:@selector(update)];
 }
 

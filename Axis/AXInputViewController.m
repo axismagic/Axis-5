@@ -14,13 +14,15 @@
 
 @implementation AXInputViewController
 
-@synthesize touchEvents;
+@synthesize inputActive = _inputActive;
+
+@synthesize touchEvents = _touchEvents;
 @synthesize forwardMagnitude, leftMagnitude, rightMagnitude, fireMissile;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
         // initialise touch storage set
-        touchEvents = [[NSMutableSet alloc] init];
+        self.touchEvents = [[NSMutableSet alloc] init];
         forwardMagnitude = 0.0;
         leftMagnitude = 0.0;
         rightMagnitude = 0.0;
@@ -129,21 +131,47 @@
 
 #pragma mark Touch Event Handlers
 
-- (void)clearEvents {
-    [touchEvents removeAllObjects];
+- (void)touches:(NSSet *)touches withEvent:(UIEvent *)event touchType:(NSInteger)touchType {
+    // Store touches
+    // ***** Store the touches
+    
+    // temporary
+    [_touchEvents addObjectsFromArray:[touches allObjects]];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [touchEvents addObjectsFromArray:[touches allObjects]];
+    [self touches:touches withEvent:event touchType:kAXTouchBegan];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    [touchEvents addObjectsFromArray:[touches allObjects]];
+    [self touches:touches withEvent:event touchType:kAXTouchMoved];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    [touchEvents addObjectsFromArray:[touches allObjects]];
+    [self touches:touches withEvent:event touchType:kAXTouchEnded];
 }
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self touches:touches withEvent:event touchType:kAXTouchCancelled];
+}
+
+//
+
+- (void)clearEvents {
+    [self.touchEvents removeAllObjects];
+}
+
+/*- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [_touchEvents addObjectsFromArray:[touches allObjects]];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    [_touchEvents addObjectsFromArray:[touches allObjects]];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    [_touchEvents addObjectsFromArray:[touches allObjects]];
+}*/
 
 /*#pragma mark Input Registers
 
