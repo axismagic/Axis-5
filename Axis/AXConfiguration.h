@@ -7,9 +7,9 @@
 //
 
 // Engine Setup
-#define AX_ENABLE_DISPLAY_LINK 1
+#define AX_ENABLE_DISPLAY_LINK 1 // better frame rate performance - available iOS 3.0+
 #define AX_ENABLE_POINT_PER_SECOND 0
-#define AX_ENABLE_RETINA_DISPLAY 1
+#define AX_ENABLE_RETINA_DISPLAY 1 // if on, engine will use retina display if available
 #define AX_ENABLE_MULTI_SCENE_MODE 0 // disable for performance
 #define AX_ENABLE_RENDER_CHILDREN_ABOVE 1
 #define AX_USE_CONVERT_IMAGE_LOW_BITMAP 0
@@ -18,9 +18,9 @@
 #define AX_DEBUG_DRAW_COLLIDERS 1
 
 // Engine Console Debug
-#define AX_CONSOLE_DISPLAY_ALL_FRAME_RATES 0
-#define AX_CONSOLE_LOW_FRAME_RATE_WARNING 0
-#define AX_CONSOLE_LOW_FRAME_RATE_WARNING_MARK 40.0
+#define AX_CONSOLE_LOG_FRAME_RATE 0 // Show Main Frame Rate
+#define AX_CONSOLE_LOG_LOW_FRAME_RATE_WARNING 0 // Highlight Low Frame
+#define AX_CONSOLE_LOG_LOW_FRAME_RATE_WARNING_MARK 40.0 // Low Frame Mark
 
 // Engine Calculus
 #define RANDOM_SEED() srandom(time(NULL))
@@ -34,6 +34,7 @@
 #define AX_MAX_PARTICLES 100
 
 // Game Constants
+// ***** will be removed
 
 // the explosive force applied to the smaller rocks after a big rock has been smashed
 #define SMASH_SPEED_FACTOR 0.75

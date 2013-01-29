@@ -22,14 +22,15 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
     // Display Versioning Information in the console.
-    if (AXIS_VERSION_TYPE != @"Public")
+    if (![AXIS_VERSION_TYPE isEqual: @"Public"])
         NSLog(@"Axis: The Game Engine - %@'s %@", AXIS_VERSION_NAME, AXIS_VERSION_NAME_ADDITION);
     else
         NSLog(@"Axis: The Game Engine - %@ %@", AXIS_VERSION_NAME, AXIS_VERSION_NAME_ADDITION);
     NSLog(@"%@ Engine %@ %@ build %@", AXIS_VERSION_FORM, AXIS_VERSION_TYPE, [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]);
     
-    NSLog(@"Todo: %@", AXIS_JUST_COMPLETED);
-    NSLog(@"Todo: %@", AXIS_TODO);
+    NSLog(@"Juco: %@", AXIS_JUST_COMPLETED);
+    NSLog(@"Todo High Priority: %@", AXIS_TODO_HIGH);
+    NSLog(@"Todo Low Priority: %@", AXIS_TODO_LOW);
     
     // Initialise the SceneController
     AXSceneController *sceneController = [AXSceneController sharedSceneController];

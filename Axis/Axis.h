@@ -15,14 +15,18 @@
  #endif
 */
 
+// ***** Highlighted for attention
+// *R?* Highlighed for potential removal after check
+
 // Names & Versions
 #define AXIS_VERSION_NAME @"Roc"
 #define AXIS_VERSION_NAME_ADDITION @"Egg"
-#define AXIS_VERSION_FORM @"Base"
+#define AXIS_VERSION_FORM @"Milestone I"
 #define AXIS_VERSION_TYPE @"Alpha"
 
-#define AXIS_JUST_COMPLETED @"Parent/Child full support | Started adding AXObject for base child support, May not support."
-#define AXIS_TODO @"Major code cleanup | Multi-scene update support"
+#define AXIS_JUST_COMPLETED @"Major Code Cleanup | "
+#define AXIS_TODO_HIGH @"Touches and input | Auto-Rotation Correction"
+#define AXIS_TODO_LOW @"Movement Actions | Multi-scene update support"
 
 // Support - If set to off, components are not loaded
 #define AXIS_SUPPORT_THE_GAME_ENGINE 1 // The Game Engine. If set to off, Game Engine is not complete
