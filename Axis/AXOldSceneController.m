@@ -97,7 +97,7 @@
     lastFrameStartTime = thisFrameStartTime;
     
     // current frame rate
-    if (AX_CONSOLE_DISPLAY_ALL_FRAME_RATES) {
+    /*if (AX_CONSOLE_DISPLAY_ALL_FRAME_RATES) {
         // display with warnings highlighted
         if (AX_CONSOLE_LOW_FRAME_RATE_WARNING) {
             // warning format or not for this frame
@@ -111,7 +111,7 @@
         // only warnings
         if (1.0/deltaTime < AX_CONSOLE_LOW_FRAME_RATE_WARNING_MARK)
             NSLog(@"Current Frame Rate LOW: %f", 1.0/deltaTime);
-    }
+    }*/
     
     // add queued scene objects
     if ([objectsToAdd count] > 0) {
