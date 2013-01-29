@@ -27,7 +27,8 @@
 
 - (void)beginDraw;
 - (void)finishDraw;
-- (void)setupViewPortrait;
-- (void)setupViewLandscape;
+//- (void)setupViewPortrait;
+//- (void)setupViewLandscape;
+- (void)setupViewType:(NSInteger)viewType;
 
 @end

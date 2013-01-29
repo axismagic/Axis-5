@@ -43,6 +43,8 @@
                                         kEAGLColorFormatRGBA8, 
                                         kEAGLDrawablePropertyColorFormat, nil];
         
+        // ES1
+        // ***** Potential allow for ES2 when init in Third Axis allowed
         context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
         
         if (!context || ![EAGLContext setCurrentContext:context]) {
@@ -50,6 +52,7 @@
             return nil;
         }
         
+        // ***** control mutliple touches?
         self.multipleTouchEnabled = YES;
         
         if (AX_ENABLE_RETINA_DISPLAY) {
@@ -66,7 +69,9 @@
     return self;
 }
 
-- (void)setupViewPortrait {
+
+// *R?*
+/*- (void)setupViewPortrait {
     glViewport(0, 0, backingWidth, backingHeight);
     
     glMatrixMode(GL_PROJECTION);
@@ -87,6 +92,25 @@
         glOrthof(-backingHeight/4.0, backingHeight/4.0, -backingWidth/4.0, backingWidth/4.0, -1.0f, 1.0f);
     else
         glOrthof(-backingHeight/2.0, backingHeight/2.0, -backingWidth/2.0, backingWidth/2.0, -1.0f, 1.0f);
+    
+    glMatrixMode(GL_MODELVIEW);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+}*/
+
+- (void)setupViewType:(NSInteger)viewType {
+    glViewport(0, 0, backingWidth, backingHeight);
+    
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    
+    // opengl origin, bottom left
+    if (viewType == 1) {
+        // view type portrait
+        if (self.contentScaleFactor == 2.0)
+            glOrthof(0, backingWidth/2.0, 0, backingHeight/2.0, -1.0f, 1.0f);
+        else
+            glOrthof(0, backingWidth, 0, backingHeight, -1.0f, 1.0f);
+    }
     
     glMatrixMode(GL_MODELVIEW);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -111,7 +135,8 @@
     [EAGLContext setCurrentContext:context];
     [self destroyFrameBuffer];
     [self createFrameBuffer];
-    [self setupViewLandscape];
+    //[self setupViewLandscape];
+    [self setupViewType:1];
 }
 
 - (BOOL)createFrameBuffer {
