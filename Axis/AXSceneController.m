@@ -42,7 +42,9 @@
 - (id)init {
     self = [super init];
     if (self != nil) {
-        self.activeSceneKey = [[NSString alloc] initWithString:@"NO_SCENE"];
+        NSString *aSceneKey = [[NSString alloc] initWithString:@"NO_SCENE"];
+        self.activeSceneKey = aSceneKey;
+        [aSceneKey release];
         
         RANDOM_SEED();
     }
@@ -52,6 +54,22 @@
 
 #pragma  mark Scene Management
 
+- (void)loadScene {
+    // load the initial scene
+    AXScene *scene = [[AXScene alloc] init];
+    
+    if (scenes == nil)
+        scenes = [[NSMutableDictionary alloc] init];
+    
+    [scenes setObject:scene forKey:@"DEFAULT_SCENE_KEY"];
+    [scene setUpdates:YES];
+    
+    [scene loadScene];
+    
+    // release scene
+    [scene release];
+}
+
 - (void)loadScene:(AXScene*)scene forKey:(NSString*)sceneKey activate:(BOOL)activate {
     // ***** use keys to id scenes
     if (scenes == nil)
@@ -59,6 +77,7 @@
     if (updatingSceneKeys == nil)
         updatingSceneKeys = [[NSMutableArray alloc] init];
     
+    // add scene to dictionary with key
     [scenes setObject:scene forKey:sceneKey];
     // tell scene to load itself
     [scene loadScene];
@@ -74,6 +93,10 @@
     
     [self deactivateScene:sceneKey];
     [scenes removeObjectForKey:sceneKey];
+}
+
+- (void)removeScene:(NSString*)sceneKey {
+    // ***** remove specific scenes
 }
 
 - (void)activateScene:(NSString*)sceneKey {
@@ -121,37 +144,6 @@
     }
 }
 
-- (void)loadScene {
-    // load the initial scene
-    AXScene *scene = [[AXScene alloc] init];
-    
-    if (scenes == nil)
-        scenes = [[NSMutableDictionary alloc] init];
-    
-    [scenes setObject:scene forKey:@"DEFAULT_SCENE_KEY"];
-    [scene setUpdates:YES];
-    
-    [scene loadScene];
-    
-    // release scene
-    [scene release];
-}
-
-- (void)removeScene:(NSString*)sceneKey {
-    // ***** remove specific scenes
-}
-
-#pragma mark Game Specific
-
-/* - (void)generateRocks {
-    NSInteger rockCount = 20;
-    NSInteger index;
-    for (index = 0; index < rockCount; index++) {
-        [self addObjectToScene:[AXRock randomRock]];
-    }
-}
-*/
-
 #pragma mark Loop Management
 
 - (void)loop {
@@ -165,19 +157,20 @@
     lastFrameStartTime = thisFrameStartTime;
     
     // current frame rate
-    if (AX_CONSOLE_DISPLAY_ALL_FRAME_RATES) {
+    if (AX_CONSOLE_LOG_FRAME_RATE) {
         // display with warnings highlighted
-        if (AX_CONSOLE_LOW_FRAME_RATE_WARNING) {
+        if (AX_CONSOLE_LOG_LOW_FRAME_RATE_WARNING) {
             // warning format or not for this frame
-            if (1.0/_deltaTime < AX_CONSOLE_LOW_FRAME_RATE_WARNING_MARK)                NSLog(@"Current Frame Rate LOW: %f", 1.0/_deltaTime);
+            if (1.0/_deltaTime < AX_CONSOLE_LOG_LOW_FRAME_RATE_WARNING_MARK)
+                NSLog(@"Current Frame Rate LOW: %f", 1.0/_deltaTime);
             else
                 NSLog(@"Current Frame Rate: %f", 1.0/_deltaTime);
         } else
             // display all in normal format, no warnings
             NSLog(@"Current Frame Rate: %f", 1.0/_deltaTime); 
-    } else if (AX_CONSOLE_LOW_FRAME_RATE_WARNING) {
+    } else if (AX_CONSOLE_LOG_LOW_FRAME_RATE_WARNING) {
         // only warnings
-        if (1.0/_deltaTime < AX_CONSOLE_LOW_FRAME_RATE_WARNING_MARK)
+        if (1.0/_deltaTime < AX_CONSOLE_LOG_LOW_FRAME_RATE_WARNING_MARK)
             NSLog(@"Current Frame Rate LOW: %f", 1.0/_deltaTime);
     }
     
@@ -192,6 +185,8 @@
     
     [self updateScenes];
     [self renderScenes];
+    
+    [_inputController clearEvents];
     
     // remove scenes from updating array
     
@@ -283,8 +278,9 @@
     } else {
         // single scene mode
         // only the scene that renders will update
-        AXScene *scene = [scenes objectForKey:_activeSceneKey];
-        [scene updateScene];
+        //AXScene *scene = [scenes objectForKey:_activeSceneKey];
+        [[scenes objectForKey:_activeSceneKey] updateScene];
+        //[scene updateScene];
     }
     /*AXScene *scene = [scenes objectForKey:activeSceneKey];
     [scene updateScene];
@@ -302,15 +298,15 @@
 
 - (void)renderScenes {
     // active OpenGL
-    [_openGLView beginDraw]; // ***** rename beginRenderingFrame
+    [_openGLView beginDraw]; // ***** rename renderFrameSetup
     
-    // render active scene(s)
+    // render active scene(s)?
     // ***** investigate performance
     AXScene *scene = [scenes objectForKey:_activeSceneKey];
     [scene renderScene];
     
     // finialse frame
-    [_openGLView finishDraw];
+    [_openGLView finishDraw]; // ***** rename renderFrame
 }
 
 #pragma mark Game Loop
