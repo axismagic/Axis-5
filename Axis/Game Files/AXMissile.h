@@ -6,11 +6,11 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "AXMobileObject.h"
+#import "AXMobileSprite.h"
 
 @class AXParticleEmitter;
 
-@interface AXMissile : AXMobileObject {
+@interface AXMissile : AXMobileSprite {
     AXParticleEmitter *particleEmitter;
     AXPoint emitterOffset;
     BOOL destroyed;

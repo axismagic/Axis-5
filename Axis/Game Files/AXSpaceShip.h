@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "AXMobileObject.h"
+#import "AXMobileSprite.h"
 
-@interface AXSpaceShip : AXMobileObject {
+@interface AXSpaceShip : AXMobileSprite {
     
 }
 

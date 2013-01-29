@@ -37,8 +37,8 @@
      mesh.colorStride = BBSpaceShipColorStride;
     */
     
-    self.mesh = [[AXMaterialController sharedMaterialController] quadFromAtlasKey:@"ship"];
-    self.scale = AXPointMake(40, 40, 1.0);
+    self.mesh = [[AXMaterialController sharedMaterialController] quadFromAtlasKey:@"HeroSide"];
+    //self.scale = AXPointMake(75, 75, 1.0);
     
     self.collider = [AXCollider collider];
     [self.collider setCheckForCollisions:YES];

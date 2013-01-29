@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "AXMobileObject.h"
+#import "AXMobileSprite.h"
 
-@interface AXRock : AXMobileObject {
+@interface AXRock : AXMobileSprite {
     CGFloat *verts;
     CGFloat *colors;
     NSInteger smashCount;
