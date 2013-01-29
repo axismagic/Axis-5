@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>xLocation</key>
+		<integer>2</integer>
+		<key>yLocation</key>
+		<integer>2</integer>
+		<key>width</key>
+		<integer>220</integer>
+		<key>height</key>
+		<integer>138</integer>
+		<key>name</key>
+		<string>flatbeak</string>
+	</dict>
+	<dict>
+		<key>xLocation</key>
+		<integer>2</integer>
+		<key>yLocation</key>
+		<integer>142</integer>
+		<key>width</key>
+		<integer>158</integer>
+		<key>height</key>
+		<integer>200</integer>
+		<key>name</key>
+		<string>soundDuck</string>
+	</dict>
+</array>
+</plist>
