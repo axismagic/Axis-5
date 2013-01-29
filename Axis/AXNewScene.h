@@ -8,8 +8,12 @@
 
 #import "AXScene.h"
 
+#import "AXMobileSprite.h"
+
 @interface AXNewScene : AXScene {
-    
+    AXMobileSprite *hero;
 }
+
+- (void)updateTouches;
 
 @end
