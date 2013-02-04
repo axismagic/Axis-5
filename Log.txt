@@ -1,0 +1,6 @@
+Log Book
+
+Key -
+[LOG].01|02|13 - Log followed by date
+[ISU].01|02|13 - Issue followed by date
+[NXT].01|02|13 - Next task to be focused on followed by date. 
