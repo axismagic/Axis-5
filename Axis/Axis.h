@@ -24,9 +24,9 @@
 #define AXIS_VERSION_FORM @"Milestone I"
 #define AXIS_VERSION_TYPE @"Alpha"
 
-#define AXIS_JUST_COMPLETED @"Major Code Cleanup | "
-#define AXIS_TODO_HIGH @"Touches and input | Auto-Rotation Correction"
-#define AXIS_TODO_LOW @"Movement Actions | Multi-scene update support"
+#define AXIS_JUST_COMPLETED @"Major Code Cleanup | AXActions"
+#define AXIS_TODO_HIGH @"Touches and input | Auto-Rotation Correction | Screen Size Support"
+#define AXIS_TODO_LOW @"Action Strings | Multi-scene update support | Action Mode/Type cleanup"
 
 // Support - If set to off, components are not loaded
 #define AXIS_SUPPORT_THE_GAME_ENGINE 1 // The Game Engine. If set to off, Game Engine is not complete
