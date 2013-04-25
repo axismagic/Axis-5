@@ -85,11 +85,15 @@
     self.actionReady = YES;
 }
 
-- (AXPoint)getActionFrameEffect {
+- (void)getActionFrameEffect {
     if (_actionReady) {
-        // use start, end and duration to work out per frame movement. Will support easing.
+        if (_actionComplete) {
+            NSLog(@"Action Complete, needs removal");
+            return;
+        }
         
-        AXPoint secondsEffect = AXPointMake(_endEffect.x - _startEffect.x, _endEffect.y - _startEffect.y, _endEffect.z - _startEffect.z);
+        // use start, end and duration to work out per frame movement. Will support easing.
+        AXPoint secondsEffect = AXPointSubtract(_endEffect, _startEffect);
         
         AXPoint frameEffect = AXPointMake(secondsEffect.x / (_actionDuration * 60), secondsEffect.y / (_actionDuration * 60), secondsEffect.z / (_actionDuration * 60));
         
@@ -97,11 +101,9 @@
         if (_actionFinishedCounter == _actionDuration *60)
             self.actionComplete = YES;
         
-        return frameEffect;
-    }
-    
-    NSLog(@"Action Not Ready, no frame movement given");
-    return AXPointMake(0, 0, 0);
+        [_objectDelegate updateState:_actionMode withEffect:frameEffect];
+    } else
+        NSLog(@"Action Not Ready");
 }
 
 @end

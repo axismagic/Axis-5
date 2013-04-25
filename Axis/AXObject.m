@@ -253,19 +253,8 @@
     // loop actions
     if ([actions count] > 0) {
         for (AXAction *action in actions) {
-            if (action.actionType == kATmovement) {
-                AXPoint frameEffect = [action getActionFrameEffect];
-                
-                self.location = AXPointAdd(self.location, frameEffect);
-            } else if (action.actionType == kATscale) {
-                AXPoint frameEffect = [action getActionFrameEffect];
-                
-                self.scale = AXPointMake(self.scale.x + frameEffect.x, self.scale.y + frameEffect.y, self.scale.z + frameEffect.z);
-            } else if (action.actionType == kATrotation) {
-                AXPoint frameEffect = [action getActionFrameEffect];
-                
-                self.rotation = AXPointMake(self.rotation.x + frameEffect.x, self.rotation.y + frameEffect.y, self.rotation.z + frameEffect.z);
-            }
+            
+            [action getActionFrameEffect];
             
             if (action.actionComplete)
                 [actionsToRemove addObject:action];
@@ -284,9 +273,9 @@
     if (actionsToRemove == nil)
         actionsToRemove = [[NSMutableArray alloc] init];
     
-    // ***** check confliction mode first
+    // check confliction mode
     if (_actionConflictionMode != kActionConflictionAcceptAll) {
-        // **** what to do for strings? ??free pass??
+        // **** what to do for actionStrings? ??free pass??
         for (AXAction *eAction in actions) {
             if (_actionConflictionMode == kActionConflictionRemoveNew) {
                 if (eAction.actionMode == action.actionMode)
@@ -329,6 +318,15 @@
         actionState = self.rotation;
     
     return actionState;
+}
+
+- (void)updateState:(CGFloat)state withEffect:(AXPoint)effect {
+    if (state == kATmovement)
+        self.location = AXPointAdd(_location, effect);
+    else if (state == kATscale)
+        self.location = AXPointAdd(_location, effect);
+    else if (state == kATrotation)
+        self.location = AXPointAdd(_location, effect);
 }
 
 @end

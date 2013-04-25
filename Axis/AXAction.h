@@ -28,6 +28,7 @@ enum eActionsToBy {
 /* Used to ask objects directly for the startEffect */
 
 - (AXPoint)requestCurrentActionStateForMode:(CGFloat)mode;
+- (void)updateState:(CGFloat)state withEffect:(AXPoint)effect;
 
 @end
 
@@ -68,6 +69,6 @@ enum eActionsToBy {
 - (void)setupActionWithType:(CGFloat)type mode:(CGFloat)mode effect:(AXPoint)effect duration:(CGFloat)duration;
 - (void)activateAction;
 - (void)activateAction:(AXPoint)startEffect; // *R*
-- (AXPoint)getActionFrameEffect;
+- (void)getActionFrameEffect;
 
 @end
