@@ -11,6 +11,7 @@
 
 #import "EAGLView.h"
 #import "AXConfiguration.h"
+#import "AXDataConstructs.h"
 
 #define USE_DEPTH_BUFFER 0
 
@@ -104,7 +105,7 @@
     glLoadIdentity();
     
     // opengl origin, bottom left
-    if (viewType == 1) {
+    if (viewType == AXVTPortrait) {
         // view type portrait
         if (self.contentScaleFactor == 2.0)
             glOrthof(0, backingWidth/2.0, 0, backingHeight/2.0, -1.0f, 1.0f);
@@ -136,7 +137,7 @@
     [self destroyFrameBuffer];
     [self createFrameBuffer];
     //[self setupViewLandscape];
-    [self setupViewType:1];
+    [self setupViewType:AXVTPortrait];
 }
 
 - (BOOL)createFrameBuffer {

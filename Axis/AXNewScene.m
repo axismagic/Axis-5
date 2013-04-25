@@ -69,9 +69,11 @@
             // ***** correction works for iPhone 4 only. This corrections needs to happen within input controller (or it needs a method which returns correct y coord)
             
             // get touch location
-            AXPoint touchPointLoc = AXPointMake(touchPoint.x, 480-touchPoint.y, hero.location.z);
+            CGSize correctorFloat = [[AXSceneController sharedSceneController] viewSize];
+            
+            AXPoint touchPointLoc = AXPointMake(touchPoint.x, correctorFloat.height-touchPoint.y, hero.location.z);
             // create new action
-            AXAction *newAction = [[AXAction alloc] init];
+            AXActionOld *newAction = [[AXActionOld alloc] init];
             // setup action
             [newAction setupActionWithType:kATmovement mode:kActionEffectTo effect:touchPointLoc duration:1];
             // get hero to perfrom action
