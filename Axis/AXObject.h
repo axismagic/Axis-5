@@ -13,9 +13,16 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "AXPoint.h"
+#import "AXAction.h"
 
 @class AXScene;
 @class AXObject;
+
+enum ConflictionModes {
+    kActionConflictionAcceptAll = 0, // will accept and run all actions
+    kActionConflictionRemoveExisting = 1, // will remove old conflicting action
+    kActionConflictionRemoveNew = 2 // will not add new conflicting action
+    };
 
 @protocol AXSceneObjectProtocol <NSObject>
 /* This protocol is used to send messages directly to the scene. */
@@ -36,7 +43,7 @@
 
 @end
 
-@interface AXObject : NSObject <AXParentObjectProtocol> {
+@interface AXObject : NSObject <AXParentObjectProtocol, AXActionProtocol> {
     // delegate
     AXScene <AXSceneObjectProtocol> *_sceneDelegate;
     AXObject <AXParentObjectProtocol> *_parentDelegate;
@@ -61,6 +68,11 @@
     BOOL _active;
     BOOL _updates;
     BOOL _renders;
+    
+    // Actions
+    NSMutableArray *actions;
+    NSMutableArray *actionsToRemove;
+    NSInteger _actionConflictionMode;
 }
 
 @property (nonatomic, retain) AXScene <AXSceneObjectProtocol> *sceneDelegate;
@@ -80,6 +92,8 @@
 @property (nonatomic, assign) BOOL updates;
 @property (nonatomic, assign) BOOL renders;
 
+@property (nonatomic, assign) NSInteger actionConflictionMode;
+
 // activate & reset
 - (void)awake;
 
@@ -97,5 +111,9 @@
 // add and remove children
 - (void)addChild:(AXObject*)child;
 - (void)removeChild:(AXObject*)child;
+
+// actions
+- (void)updateActions;
+- (void)performAction:(AXAction*)action;
 
 @end

@@ -16,6 +16,7 @@
 @synthesize matrix = _matrix;
 @synthesize hasChildren = _hasChildren, isChild = _isChild;
 @synthesize active = _active, updates = _updates, renders = _renders;
+@synthesize actionConflictionMode = _actionConflictionMode;
 
 - (void)dealloc {
     self.matrix = nil;
@@ -43,6 +44,8 @@
         self.isChild = NO;
         
         self.active = NO;
+        
+        self.actionConflictionMode = kActionConflictionAcceptAll;
     }
     
     return self;
@@ -104,6 +107,9 @@
     }
     
     if (_updates) {
+        
+        // update actions
+        [self updateActions];
     
         // midPhase Updates - used in mobile object
         [self midPhaseUpdate];
@@ -239,6 +245,90 @@
 
 - (void)removeObjectFromParent:(AXObject *)object {
     [self removeChild:object];
+}
+
+#pragma mark - Action Control
+
+- (void)updateActions {
+    // loop actions
+    if ([actions count] > 0) {
+        for (AXAction *action in actions) {
+            if (action.actionType == kATmovement) {
+                AXPoint frameEffect = [action getActionFrameEffect];
+                
+                self.location = AXPointAdd(self.location, frameEffect);
+            } else if (action.actionType == kATscale) {
+                AXPoint frameEffect = [action getActionFrameEffect];
+                
+                self.scale = AXPointMake(self.scale.x + frameEffect.x, self.scale.y + frameEffect.y, self.scale.z + frameEffect.z);
+            } else if (action.actionType == kATrotation) {
+                AXPoint frameEffect = [action getActionFrameEffect];
+                
+                self.rotation = AXPointMake(self.rotation.x + frameEffect.x, self.rotation.y + frameEffect.y, self.rotation.z + frameEffect.z);
+            }
+            
+            if (action.actionComplete)
+                [actionsToRemove addObject:action];
+        }
+    }
+    
+    if ([actionsToRemove count] > 0) {
+        [actions removeObjectsInArray:actionsToRemove];
+        [actionsToRemove removeAllObjects];
+    }
+}
+
+- (void)performAction:(AXAction*)action {
+    if (actions == nil)
+        actions = [[NSMutableArray alloc] init];
+    if (actionsToRemove == nil)
+        actionsToRemove = [[NSMutableArray alloc] init];
+    
+    // ***** check confliction mode first
+    if (_actionConflictionMode != kActionConflictionAcceptAll) {
+        // **** what to do for strings? ??free pass??
+        for (AXAction *eAction in actions) {
+            if (_actionConflictionMode == kActionConflictionRemoveNew) {
+                if (eAction.actionMode == action.actionMode)
+                    return;
+            } else if (_actionConflictionMode == kActionConflictionRemoveExisting) {
+                if (eAction.actionMode == action.actionMode) {
+                    // remove old action
+                    [actionsToRemove addObject:eAction];
+                    break;
+                }
+            }
+        }
+    }
+    
+    if ([actionsToRemove count] > 0) {
+        [actions removeObjectsInArray:actionsToRemove];
+        [actionsToRemove removeAllObjects];
+    }
+    
+    // make self delegate
+    [action setObjectDelegate:self];
+    // activate action
+    [action activateAction];
+    // add action
+    [actions addObject:action];
+}
+
+#pragma mark Action Delegate Methods
+
+- (AXPoint)requestCurrentActionStateForMode:(CGFloat)mode {
+    /* Rather than action being activated by the AXObject, action activates itself and requests required details from object through protocols.
+     */
+    AXPoint actionState = AXPointMake(0, 0, 0);
+    
+    if (mode == kATmovement)
+        actionState = self.location;
+    else if (mode == kATscale)
+        actionState = self.scale;
+    else if (mode == kATrotation)
+        actionState = self.rotation;
+    
+    return actionState;
 }
 
 @end
