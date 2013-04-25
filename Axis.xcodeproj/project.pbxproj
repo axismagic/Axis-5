@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B0B74FD172459C40097C52C /* AXAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0B74FC172459C40097C52C /* AXAction.m */; };
+		4B5053A417284C2A00E27C7E /* AXActionString.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5053A317284C2A00E27C7E /* AXActionString.m */; };
 		4B67E1AE16B7F79400001A84 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B67E1AD16B7F79400001A84 /* Default-568h@2x.png */; };
 		C50DF7AE1591C5D100BBB433 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C50DF7AD1591C5D100BBB433 /* UIKit.framework */; };
 		C50DF7B01591C5D100BBB433 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C50DF7AF1591C5D100BBB433 /* Foundation.framework */; };
@@ -71,6 +73,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4B0B74FB172459C40097C52C /* AXAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXAction.h; sourceTree = "<group>"; };
+		4B0B74FC172459C40097C52C /* AXAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXAction.m; sourceTree = "<group>"; };
+		4B5053A217284C2A00E27C7E /* AXActionString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXActionString.h; sourceTree = "<group>"; };
+		4B5053A317284C2A00E27C7E /* AXActionString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXActionString.m; sourceTree = "<group>"; };
 		4B67E1AD16B7F79400001A84 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		C50DF7A91591C5D100BBB433 /* Axis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Axis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C50DF7AD1591C5D100BBB433 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -295,6 +301,10 @@
 				C5D3245D159323B90001C2D0 /* AXMobileSprite.m */,
 				C5AE345F15C353BB006678E3 /* AXObject.h */,
 				C5AE346015C353BB006678E3 /* AXObject.m */,
+				4B5053A217284C2A00E27C7E /* AXActionString.h */,
+				4B5053A317284C2A00E27C7E /* AXActionString.m */,
+				4B0B74FB172459C40097C52C /* AXAction.h */,
+				4B0B74FC172459C40097C52C /* AXAction.m */,
 				C59B333115A069E500F634F4 /* AXTexturedQuad.h */,
 				C59B333215A069E500F634F4 /* AXTexturedQuad.m */,
 				C52CF44215A3062F0050C1C0 /* AXAnimatedQuad.h */,
@@ -415,7 +425,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = AX;
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0460;
 			};
 			buildConfigurationList = C50DF7A31591C5D000BBB433 /* Build configuration list for PBXProject "Axis" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -529,6 +539,8 @@
 				C587F0E015B20B2A00F21A57 /* AXNewScene.m in Sources */,
 				C5AE346115C353BB006678E3 /* AXObject.m in Sources */,
 				C55BD1EE15C8231300C81E92 /* AXHero.m in Sources */,
+				4B0B74FD172459C40097C52C /* AXAction.m in Sources */,
+				4B5053A417284C2A00E27C7E /* AXActionString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,6 +587,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -600,6 +616,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
