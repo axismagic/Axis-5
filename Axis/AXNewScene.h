@@ -13,6 +13,7 @@
 
 @interface AXNewScene : AXScene {
     AXMobileSprite *hero;
+    AXMobileSprite *enemy;
 }
 
 - (void)updateTouches;

@@ -45,7 +45,7 @@
         
         self.active = NO;
         
-        self.actionQueuemode = AXACActionQueueSetQueue;
+        self.actionQueuemode = AXACQueueSetQueue;
     }
     
     return self;
@@ -272,29 +272,34 @@
     if ([activities count] == 0) {
         // grab new action
         if ([actions count] > 0) {
-            // check arrays
-            if (activities == nil)
-                activities = [[NSMutableArray alloc] init];
             
-            // check queue mode
-            if (_actionQueueMode == AXACActionQueueSetAcceptAll) {
+            
+            /*// check queue mode
+            if (_actionQueueMode == AXACQueueSetNoQueue_RunAllSimultaneous) {
                 // grab all actions and run simultaneously
                 for (AXAction *newAction in actions) {
-                    AXActivity *newActivity = [[self makeActivity:newAction] retain];
+                    AXActivity *newActivity = [[self interpretAction:newAction] retain];
                     [activities addObject:newActivity];
                     [newActivity release];
                 }
                 // clear actions
                 [actions removeAllObjects];
-            } else {
+            } else {*/
+            if (_actionQueueMode == AXACQueueSetQueue) {
+                // check arrays
+                if (activities == nil)
+                    activities = [[NSMutableArray alloc] init];
+                
                 // grab top action - standard queue mode
                 AXAction *topAction = [actions objectAtIndex:0];
-                AXActivity *newActivity = [[self makeActivity:topAction] retain];
+                AXActivity *newActivity = [[self interpretAction:topAction] retain];
                 // add activity to array
                 [activities addObject:newActivity];
                 // cleanup
                 [actions removeObjectAtIndex:0];
                 [newActivity release];
+            } else {
+                NSLog(@"Error, Action misshandled - is in queue but object mode set to no queue");
             }
         }
     }
@@ -321,7 +326,7 @@
     }
 }
 
-- (AXActivity*)makeActivity:(AXAction*)newAction {
+- (AXActivity*)interpretAction:(AXAction*)newAction {
     // create activity from action
     AXActivity *newActivity = [[AXActivity alloc] initWithAction:newAction];
     [newActivity setDelegate:self];
@@ -331,16 +336,49 @@
         NSLog(@"activity failed to activate");
         return nil;
     }
-    
 }
 
 - (void)performAction:(AXAction *)action {
     // check queue mode
-    if (_actionQueueMode == AXACActionQueueSetIgnoreNew && [activities count] > 0)
+    if (_actionQueueMode == AXACQueueSetNoQueue_IgnoreNew && [activities count] > 0)
         return; // ignores new actions if currently running through actvities
-    if (_actionQueueMode == AXACActionQueueSetInterrupt && [activities count] > 0) {
+    else if (_actionQueueMode == AXACQueueSetNoQueue_IgnoreNew) {
+        // add new action directly, skip queue; as no current activity
+        if (activities == nil)
+            activities = [[NSMutableArray alloc] init];
+        
+        AXActivity *newActivity = [self interpretAction:action];
+        // add activity to array
+        [activities addObject:newActivity];
+        
+        // skip add to queue as now done
+        return;
+        
+    }
+    if (_actionQueueMode == AXACQueueSetNoQueue_InterruptCurrent) {
+        if (activities == nil)
+            activities = [[NSMutableArray alloc] init];
         // remove current activities
         [activities removeAllObjects];
+        
+        // add new activity straight away
+        AXActivity *newActivity = [self interpretAction:action];
+        [activities addObject:newActivity];
+        
+        return;
+    }
+    
+    if (_actionQueueMode == AXACQueueSetNoQueue_RunAllSimultaneous) {
+        // add new action directly, skip queue; as all simultaneous
+        if (activities == nil)
+            activities = [[NSMutableArray alloc] init];
+        
+        AXActivity *newActivity = [self interpretAction:action];
+        // add activity to array
+        [activities addObject:newActivity];
+        
+        // skip add to queue as now done
+        return;
     }
     
     if (actions == nil)

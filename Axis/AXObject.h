@@ -119,6 +119,8 @@ enum ConflictionModes {
 // actions
 - (void)updateActions;
 - (void)performAction:(AXAction*)action;
+- (AXActivity*)interpretAction:(AXAction*)action;
+// ****? - (void)interpretActionAndMoveToActivities:(AXAction *)action;
 // action control
 /*- (void)playNow:(AXAction*)action;
 - (void)cancelCurrentAction;

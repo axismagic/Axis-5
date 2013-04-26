@@ -19,6 +19,14 @@
     [self addChild:hero];
     [hero activate];
     [hero release];
+    
+    enemy = [[AXMobileSprite alloc] initWithSpriteImage:@"HeroFront"];
+    enemy.location = AXPointMake(250.0, 100.0, 0.0);
+    enemy.collisionDetection = YES;
+    enemy.actionQueuemode = AXACQueueSetNoQueue_InterruptCurrent;
+    [self addChild:enemy];
+    [enemy activate];
+    [enemy release];
 }
 
 - (void)updateScene {
@@ -72,11 +80,11 @@
             AXPoint touchPointLoc = AXPointMake(touchPoint.x, correctorFloat.height-touchPoint.y, hero.location.z);
             // create new action
             AXAction *newAction = [[AXAction alloc] initWithTransformationType:AXACTransformationMovement transformationMode:AXACTransformTo transformation:touchPointLoc duration:1];
-            AXAction *newAction2 = [[AXAction alloc] initWithTransformationType:AXACDelay transformationMode:AXACTransformTo transformation:touchPointLoc duration:1];
-            AXAction *newAction3 = [[AXAction alloc] initWithTransformationType:AXACTransformationMovement transformationMode:AXACTransformBy transformation:AXPointMake(0, 100, 0) duration:1];
+            AXAction *newActionS = [[AXAction alloc] initWithTransformationType:AXACTransformationScale transformationMode:AXACTransformBy transformation:AXPointMake(1, 1, 0) duration:1];
+            
             [hero performAction:newAction];
-            [hero performAction:newAction2];
-            [hero performAction:newAction3];
+            [hero performAction:newActionS];
+            [enemy performAction:newAction];
             
             
         }

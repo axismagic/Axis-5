@@ -36,6 +36,22 @@ static inline AXPoint AXPointSubtract(AXPoint p1, AXPoint p2) {
     return (AXPoint) {x, y, z};
 }
 
+static inline AXPoint AXPointDivide(AXPoint p1, AXPoint p2) {
+    CGFloat x = p1.x / p2.x;
+    CGFloat y = p1.y / p2.y;
+    CGFloat z = p1.z / p2.z;
+    
+    return (AXPoint) {x, y, z};
+}
+
+static inline AXPoint AXPointMultiply(AXPoint p1, AXPoint p2) {
+    CGFloat x = p1.x * p2.x;
+    CGFloat y = p1.y * p2.y;
+    CGFloat z = p1.z * p2.z;
+    
+    return (AXPoint) {x, y, z};
+}
+
 static inline float AXPointDistance(AXPoint p1, AXPoint p2) {
     return sqrt(((p1.x - p2.x) * (p1.x - p2.x)) + 
                 ((p1.y - p2.y) * (p1.y - p2.y)) + 
