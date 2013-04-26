@@ -14,6 +14,7 @@
 
 #import "AXPoint.h"
 #import "AXAction.h"
+#import "AXActivity.h"
 
 @class AXScene;
 @class AXObject;
@@ -43,7 +44,7 @@ enum ConflictionModes {
 
 @end
 
-@interface AXObject : NSObject <AXParentObjectProtocol, AXActionProtocol> {
+@interface AXObject : NSObject <AXParentObjectProtocol, AXActivityProtocol> {
     // delegate
     AXScene <AXSceneObjectProtocol> *_sceneDelegate;
     AXObject <AXParentObjectProtocol> *_parentDelegate;
@@ -69,10 +70,13 @@ enum ConflictionModes {
     BOOL _updates;
     BOOL _renders;
     
-    // Actions
+    // Actions Queue Mode
+    NSInteger _actionQueueMode;
+    // Actions & Activities
+    NSMutableArray *activities;
+    NSMutableArray *activitiesToRemove;
     NSMutableArray *actions;
     NSMutableArray *actionsToRemove;
-    NSInteger _actionConflictionMode;
 }
 
 @property (nonatomic, retain) AXScene <AXSceneObjectProtocol> *sceneDelegate;
@@ -92,7 +96,7 @@ enum ConflictionModes {
 @property (nonatomic, assign) BOOL updates;
 @property (nonatomic, assign) BOOL renders;
 
-@property (nonatomic, assign) NSInteger actionConflictionMode;
+@property (nonatomic, assign) NSInteger actionQueuemode;
 
 // activate & reset
 - (void)awake;
@@ -115,5 +119,9 @@ enum ConflictionModes {
 // actions
 - (void)updateActions;
 - (void)performAction:(AXAction*)action;
+// action control
+/*- (void)playNow:(AXAction*)action;
+- (void)cancelCurrentAction;
+- (void)cancelAllActions;*/
 
 @end

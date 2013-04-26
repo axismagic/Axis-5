@@ -16,8 +16,6 @@
     hero = [[AXMobileSprite alloc] initWithSpriteImage:@"HeroFront"];
     hero.location = AXPointMake(100.0, 100.0, 0.0);
     hero.collisionDetection = YES;
-    // setup hero action mode
-    hero.actionConflictionMode = kActionConflictionRemoveExisting;
     [self addChild:hero];
     [hero activate];
     [hero release];
@@ -73,11 +71,13 @@
             
             AXPoint touchPointLoc = AXPointMake(touchPoint.x, correctorFloat.height-touchPoint.y, hero.location.z);
             // create new action
-            AXActionOld *newAction = [[AXActionOld alloc] init];
-            // setup action
-            [newAction setupActionWithType:kATmovement mode:kActionEffectTo effect:touchPointLoc duration:1];
-            // get hero to perfrom action
+            AXAction *newAction = [[AXAction alloc] initWithTransformationType:AXACTransformationMovement transformationMode:AXACTransformTo transformation:touchPointLoc duration:1];
+            AXAction *newAction2 = [[AXAction alloc] initWithTransformationType:AXACDelay transformationMode:AXACTransformTo transformation:touchPointLoc duration:1];
+            AXAction *newAction3 = [[AXAction alloc] initWithTransformationType:AXACTransformationMovement transformationMode:AXACTransformBy transformation:AXPointMake(0, 100, 0) duration:1];
             [hero performAction:newAction];
+            [hero performAction:newAction2];
+            [hero performAction:newAction3];
+            
             
         }
         if (touch.phase == UITouchPhaseMoved) {

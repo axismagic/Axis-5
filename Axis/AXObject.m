@@ -16,7 +16,7 @@
 @synthesize matrix = _matrix;
 @synthesize hasChildren = _hasChildren, isChild = _isChild;
 @synthesize active = _active, updates = _updates, renders = _renders;
-@synthesize actionConflictionMode = _actionConflictionMode;
+@synthesize actionQueuemode = _actionQueueMode;
 
 - (void)dealloc {
     self.matrix = nil;
@@ -45,7 +45,7 @@
         
         self.active = NO;
         
-        self.actionConflictionMode = kActionConflictionAcceptAll;
+        self.actionQueuemode = AXACActionQueueSetQueue;
     }
     
     return self;
@@ -249,10 +249,10 @@
 
 #pragma mark - Action Control
 
-- (void)updateActions {
+/*- (void)updateActions {
     // loop actions
     if ([actions count] > 0) {
-        for (AXAction *action in actions) {
+        for (AXActionOld *action in actions) {
             
             [action getActionFrameEffect];
             
@@ -265,9 +265,92 @@
         [actions removeObjectsInArray:actionsToRemove];
         [actionsToRemove removeAllObjects];
     }
+}*/
+
+- (void)updateActions {
+    // grab new action from queue if no activities
+    if ([activities count] == 0) {
+        // grab new action
+        if ([actions count] > 0) {
+            // check arrays
+            if (activities == nil)
+                activities = [[NSMutableArray alloc] init];
+            
+            // check queue mode
+            if (_actionQueueMode == AXACActionQueueSetAcceptAll) {
+                // grab all actions and run simultaneously
+                for (AXAction *newAction in actions) {
+                    AXActivity *newActivity = [[self makeActivity:newAction] retain];
+                    [activities addObject:newActivity];
+                    [newActivity release];
+                }
+                // clear actions
+                [actions removeAllObjects];
+            } else {
+                // grab top action - standard queue mode
+                AXAction *topAction = [actions objectAtIndex:0];
+                AXActivity *newActivity = [[self makeActivity:topAction] retain];
+                // add activity to array
+                [activities addObject:newActivity];
+                // cleanup
+                [actions removeObjectAtIndex:0];
+                [newActivity release];
+            }
+        }
+    }
+    
+    // loop through activities
+    if ([activities count] > 0) {
+        for (AXActivity *currentActivity in activities) {
+            // get the frame effect
+            [currentActivity makeFrameTransformation];
+            
+            if (currentActivity.complete) {
+                if (activitiesToRemove == nil)
+                    activitiesToRemove = [[NSMutableArray alloc] init];
+                
+                // remove activity
+                [activitiesToRemove addObject:currentActivity];
+            }
+        }
+    }
+    
+    if ([activitiesToRemove count] > 0) {
+        [activities removeObjectsInArray:activitiesToRemove];
+        [activitiesToRemove removeAllObjects];
+    }
 }
 
-- (void)performAction:(AXAction*)action {
+- (AXActivity*)makeActivity:(AXAction*)newAction {
+    // create activity from action
+    AXActivity *newActivity = [[AXActivity alloc] initWithAction:newAction];
+    [newActivity setDelegate:self];
+    if ([newActivity activate]) {
+        return newActivity;
+    } else {
+        NSLog(@"activity failed to activate");
+        return nil;
+    }
+    
+}
+
+- (void)performAction:(AXAction *)action {
+    // check queue mode
+    if (_actionQueueMode == AXACActionQueueSetIgnoreNew && [activities count] > 0)
+        return; // ignores new actions if currently running through actvities
+    if (_actionQueueMode == AXACActionQueueSetInterrupt && [activities count] > 0) {
+        // remove current activities
+        [activities removeAllObjects];
+    }
+    
+    if (actions == nil)
+        actions = [[NSMutableArray alloc] init];
+    
+    // add to queue
+    [actions addObject:action];
+}
+
+/*- (void)performAction:(AXActionOld*)action {
     if (actions == nil)
         actions = [[NSMutableArray alloc] init];
     if (actionsToRemove == nil)
@@ -276,7 +359,7 @@
     // check confliction mode
     if (_actionConflictionMode != kActionConflictionAcceptAll) {
         // **** what to do for actionStrings? ??free pass??
-        for (AXAction *eAction in actions) {
+        for (AXActionOld *eAction in actions) {
             if (_actionConflictionMode == kActionConflictionRemoveNew) {
                 if (eAction.actionMode == action.actionMode)
                     return;
@@ -301,13 +384,36 @@
     [action activateAction];
     // add action
     [actions addObject:action];
+}*/
+
+#pragma mark Activity Delegate Methods
+
+- (AXPoint)returnCurrentTrasnformationForType:(NSInteger)type {
+    if (type == AXACTransformationMovement)
+        return self.location;
+    else if (type == AXACTransformationScale)
+        return self.scale;
+    else if (type == AXACTransformationRotation)
+        return self.rotation;
+    else {
+        NSLog(@"Failed to match type to activity mode");
+        return AXPointMake(0, 0, 0);
+    }
 }
 
-#pragma mark Action Delegate Methods
+- (void)updateWithTransformation:(AXPoint)transformationUpdate type:(NSInteger)type {
+    if (type == AXACTransformationMovement) {
+        self.location = AXPointAdd(_location, transformationUpdate);
+    } else if (type == AXACTransformationScale) {
+        self.scale = AXPointAdd(_scale, transformationUpdate);
+    } else if (type == AXACTransformationRotation) {
+        self.rotation = AXPointAdd(_rotation, transformationUpdate);
+    }
+}
 
-- (AXPoint)requestCurrentActionStateForMode:(CGFloat)mode {
-    /* Rather than action being activated by the AXObject, action activates itself and requests required details from object through protocols.
-     */
+/*- (AXPoint)requestCurrentActionStateForMode:(CGFloat)mode {
+    // Rather than action being activated by the AXObject, action activates itself and requests required details from object through protocols.
+    
     AXPoint actionState = AXPointMake(0, 0, 0);
     
     if (mode == kATmovement)
@@ -327,6 +433,6 @@
         self.location = AXPointAdd(_location, effect);
     else if (state == kATrotation)
         self.location = AXPointAdd(_location, effect);
-}
+}*/
 
 @end
