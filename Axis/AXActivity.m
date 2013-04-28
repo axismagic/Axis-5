@@ -99,14 +99,14 @@
 
 - (void)makeFrameTransformation {
     if (_activated && !_complete) {
-        // increase counter
-        self.activityCounter++;
-        if (_activityCounter >= _durationFrames)
-            self.complete = YES;
-        
-        if (_type == AXACDelay)
-            // do nothing
+        if (_type == AXACDelay) {
+            // do nothing, only increase counter
+            self.activityCounter++;
+            if (_activityCounter >= _durationFrames)
+                self.complete = YES;
+            
             return;
+        }
         
         // get transformation for duration (might be different to _transformation due to _mode
         AXPoint durationTransformation = AXPointSubtract(_endTransformation, _startTrasnformation);
@@ -114,6 +114,12 @@
         AXPoint frameTransformation = AXPointMake(durationTransformation.x / _durationFrames, durationTransformation.y / _durationFrames, durationTransformation.z / _durationFrames);
         
         [_delegate updateWithTransformation:frameTransformation type:_type];
+        
+        // increase counter
+        // counter increases at end so if complete, activity does not run again
+        self.activityCounter++;
+        if (_activityCounter >= _durationFrames)
+            self.complete = YES;
     }
 }
 

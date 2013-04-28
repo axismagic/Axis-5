@@ -34,3 +34,8 @@ enum AXACActionQueueModes {
     AXACQueueSetNoQueue_IgnoreNew = 2,
     AXACQueueSetNoQueue_RunAllSimultaneous = 3
 };
+
+enum AXACActionSetModes {
+    AXACActionSetRunModeQueue = 0,
+    AXACActionSetRunModeSimultaneous = 1
+};

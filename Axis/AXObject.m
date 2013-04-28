@@ -327,14 +327,27 @@
 }
 
 - (AXActivity*)interpretAction:(AXAction*)newAction {
-    // create activity from action
-    AXActivity *newActivity = [[AXActivity alloc] initWithAction:newAction];
-    [newActivity setDelegate:self];
-    if ([newActivity activate]) {
-        return newActivity;
+    // check if activity or set
+    if ([newAction isKindOfClass:[AXActionSet class]]) {
+        // create activity set
+        AXActivitySet *newSet = [[AXActivitySet alloc] initWithActionSet:(AXActionSet*)newAction];
+        [newSet setDelegate:self];
+        if ([newSet activate]) {
+            return newSet;
+        } else {
+            NSLog(@"Set failed to activate");
+            return nil;
+        }
     } else {
-        NSLog(@"activity failed to activate");
-        return nil;
+        // create activity from action
+        AXActivity *newActivity = [[AXActivity alloc] initWithAction:newAction];
+        [newActivity setDelegate:self];
+        if ([newActivity activate]) {
+            return newActivity;
+        } else {
+            NSLog(@"activity failed to activate");
+            return nil;
+        }
     }
 }
 

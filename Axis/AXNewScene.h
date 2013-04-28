@@ -9,7 +9,7 @@
 #import "AXScene.h"
 
 #import "AXMobileSprite.h"
-#import "AXActionString.h"
+#import "AXActionSet.h"
 
 @interface AXNewScene : AXScene {
     AXMobileSprite *hero;

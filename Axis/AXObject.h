@@ -14,7 +14,9 @@
 
 #import "AXPoint.h"
 #import "AXAction.h"
+#import "AXActionSet.h"
 #import "AXActivity.h"
+#import "AXActivitySet.h"
 
 @class AXScene;
 @class AXObject;

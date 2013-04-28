@@ -81,10 +81,17 @@
             // create new action
             AXAction *newAction = [[AXAction alloc] initWithTransformationType:AXACTransformationMovement transformationMode:AXACTransformTo transformation:touchPointLoc duration:1];
             AXAction *newActionS = [[AXAction alloc] initWithTransformationType:AXACTransformationScale transformationMode:AXACTransformBy transformation:AXPointMake(1, 1, 0) duration:1];
+            AXAction *newActionModeDown = [[AXAction alloc] initWithTransformationType:AXACTransformationMovement transformationMode:AXACTransformBy transformation:AXPointMake(0, -100, 0) duration:1];
             
-            [hero performAction:newAction];
-            [hero performAction:newActionS];
-            [enemy performAction:newAction];
+            AXActionSet *newActionSet = [[AXActionSet alloc] initWithActionRunMode:AXACActionSetRunModeSimultaneous actions:newAction, newActionS, nil];
+            AXActionSet *newActionSet2 = [[AXActionSet alloc] initWithActionRunMode:AXACActionSetRunModeQueue actions:newActionModeDown, newActionS, nil];
+            
+            [hero performAction:newActionSet];
+            [hero performAction:newActionSet2];
+            
+            //[hero performAction:newAction];
+            //[hero performAction:newActionS];
+            //[enemy performAction:newAction];
             
             
         }
