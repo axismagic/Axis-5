@@ -24,7 +24,7 @@
     enemy.location = AXPointMake(250.0, 100.0, 0.0);
     enemy.collisionDetection = YES;
     enemy.actionQueuemode = AXACQueueSetNoQueue_InterruptCurrent;
-    [self addChild:enemy];
+    [hero addChild:enemy];
     [enemy activate];
     [enemy release];
 }
@@ -86,8 +86,9 @@
             AXActionSet *newActionSet = [[AXActionSet alloc] initWithActionRunMode:AXACActionSetRunModeSimultaneous actions:newAction, newActionS, nil];
             AXActionSet *newActionSet2 = [[AXActionSet alloc] initWithActionRunMode:AXACActionSetRunModeQueue actions:newActionModeDown, newActionS, nil];
             
-            [hero performAction:newActionSet];
-            [hero performAction:newActionSet2];
+            AXActionSet *newActionMaster = [[AXActionSet alloc] initWithActionRunMode:AXACActionSetRunModeQueue actions:newActionSet, newActionSet2, nil];
+            
+            [hero performAction:newActionMaster];
             
             //[hero performAction:newAction];
             //[hero performAction:newActionS];

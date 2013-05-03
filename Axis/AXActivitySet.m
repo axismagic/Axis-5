@@ -18,6 +18,8 @@
     self = [super init];
     if (self != nil) {
         self.activitySetRunMode = AXACActionSetRunModeQueue;
+        
+        self.type = AXACTypeSet;
     }
     
     return self;
@@ -48,9 +50,16 @@
     NSArray *actionsToConvert = [[NSArray alloc] initWithArray:[actionSet allActions]];
     if (activities == nil)
         activities = [[NSMutableArray alloc] init];
+    
     for (AXAction *newAction in actionsToConvert) {
-        AXActivity *newActivity = [[AXActivity alloc] initWithAction:newAction];
-        [activities addObject:newActivity];
+        // if is action set, add that instead
+        if ([newAction isKindOfClass:[AXActionSet class]]) {
+            AXActivitySet *newActivitySet = [[AXActivitySet alloc] initWithActionSet:(AXActionSet*)newAction];
+            [activities addObject:newActivitySet];
+        } else {
+            AXActivity *newActivity = [[AXActivity alloc] initWithAction:newAction];
+            [activities addObject:newActivity];
+        }
     }
     [actionsToConvert release];
 }
