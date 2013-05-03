@@ -13,6 +13,8 @@
 #import "AXConfiguration.h"
 #import "AXDataConstructs.h"
 
+#import "AXSceneController.h"
+
 #define USE_DEPTH_BUFFER 0
 
 @interface EAGLView ()
@@ -105,13 +107,16 @@
     glLoadIdentity();
     
     // opengl origin, bottom left
-    if (viewType == AXVTPortrait) {
-        // view type portrait
-        if (self.contentScaleFactor == 2.0)
-            glOrthof(0, backingWidth/2.0, 0, backingHeight/2.0, -1.0f, 1.0f);
-        else
-            glOrthof(0, backingWidth, 0, backingHeight, -1.0f, 1.0f);
-    }
+    // ***** add choice of origin locations
+    // view type portrait
+    if (self.contentScaleFactor == 2.0)
+        glOrthof(0, backingWidth/2.0, 0, backingHeight/2.0, -1.0f, 1.0f);
+    else
+        glOrthof(0, backingWidth, 0, backingHeight, -1.0f, 1.0f);
+    
+    [[AXSceneController sharedSceneController] setViewSize:self.bounds.size];
+    
+    NSLog(@"Screen Size: %f x %f", self.bounds.size.width, self.bounds.size.height);
     
     glMatrixMode(GL_MODELVIEW);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);

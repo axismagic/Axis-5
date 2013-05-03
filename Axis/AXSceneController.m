@@ -147,7 +147,7 @@
 #pragma mark Loop Management
 
 - (void)loop {
-    // if mode != runnning, return; (enum: running, paused, etc)
+    // **** if mode != runnning, return; (enum: running, paused, etc)
     
     NSAutoreleasePool *aPool = [[NSAutoreleasePool alloc] init];
     
@@ -198,6 +198,8 @@
     }*/
     
     [aPool release];
+    
+    // log size
 }
 
 - (void)startLoop {

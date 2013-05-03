@@ -48,11 +48,8 @@
     [glView release];
     
     // set our view as the first window view
-    [self.window addSubview:sceneController.inputController.view];
+    self.window.rootViewController = sceneController.inputController;
     [self.window makeKeyAndVisible];
-    
-    // ***** Warning, views flipped due to sideways openGL View
-    sceneController.viewSize = _window.screen.bounds.size;
     
     // tell the director to continue setup
     [[AXDirector sharedDirector] setupEngine];

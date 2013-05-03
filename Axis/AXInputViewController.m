@@ -206,6 +206,7 @@
     self.forwardMagnitude = 0.0;
 }*/
 
+
 #pragma mark Unload, Dealloc
 
 - (void)didReceiveMemoryWarning {

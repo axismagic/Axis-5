@@ -72,12 +72,13 @@
         if (touch.phase != UITouchPhaseEnded) {
             CGPoint touchPoint = [touch locationInView:[touch view]];
             // correct y coordinate
-            // ***** correction works for iPhone 4 only. This corrections needs to happen within input controller (or it needs a method which returns correct y coord)
+            // ***** This corrections needs to happen within input controller (or it needs a method which returns correct y coord)
             
             // get touch location
             CGSize correctorFloat = [[AXSceneController sharedSceneController] viewSize];
             
             AXPoint touchPointLoc = AXPointMake(touchPoint.x, correctorFloat.height-touchPoint.y, hero.location.z);
+            
             // create new action
             AXAction *newAction = [[AXAction alloc] initWithTransformationType:AXACTransformationMovement transformationMode:AXACTransformTo transformation:touchPointLoc duration:1];
             AXAction *newActionS = [[AXAction alloc] initWithTransformationType:AXACTransformationScale transformationMode:AXACTransformBy transformation:AXPointMake(1, 1, 0) duration:1];
