@@ -17,10 +17,11 @@ enum AXViewTypes {
 
 enum AXACActionTypes {
     AXACDelay = 0,
-    AXACTransformationMovement = 1,
-    AXACTransformationScale = 2,
-    AXACTransformationRotation = 3,
-    AXACAnimation = 4
+    AXACTypeSet = 1,
+    AXACTransformationMovement = 2,
+    AXACTransformationScale = 3,
+    AXACTransformationRotation = 4,
+    AXACAnimation = 5,
 };
 
 enum AXACActionModes {

@@ -26,7 +26,7 @@
 
 #define AXIS_JUST_COMPLETED @"Major Code Cleanup | AXActions & Activities | Screen Size Support"
 #define AXIS_TODO_HIGH @"Touches and input | Auto-Rotation Correction | Full Screen Touch Support"
-#define AXIS_TODO_LOW @"AXActivity Set| Multi-scene update support | Action Mode/Type cleanup"
+#define AXIS_TODO_LOW @"Multi-scene update support"
 
 // Support - If set to off, components are not loaded
 #define AXIS_SUPPORT_THE_GAME_ENGINE 1 // The Game Engine. If set to off, Game Engine is not complete
