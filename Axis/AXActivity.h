@@ -1,5 +1,5 @@
 //
-//  AXInterpretedAction.h
+//  AXActivity.h
 //  Axis
 //
 //  Created by Jethro Wilson on 25/04/2013.

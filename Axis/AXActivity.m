@@ -1,5 +1,5 @@
 //
-//  AXInterpretedAction.m
+//  AXActivity.m
 //  Axis
 //
 //  Created by Jethro Wilson on 25/04/2013.

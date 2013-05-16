@@ -1,5 +1,5 @@
 //
-//  AXActionString.m
+//  AXActionSet.m
 //  Axis
 //
 //  Created by Jethro Wilson on 24/04/2013.

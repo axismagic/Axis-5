@@ -249,24 +249,6 @@
 
 #pragma mark - Action Control
 
-/*- (void)updateActions {
-    // loop actions
-    if ([actions count] > 0) {
-        for (AXActionOld *action in actions) {
-            
-            [action getActionFrameEffect];
-            
-            if (action.actionComplete)
-                [actionsToRemove addObject:action];
-        }
-    }
-    
-    if ([actionsToRemove count] > 0) {
-        [actions removeObjectsInArray:actionsToRemove];
-        [actionsToRemove removeAllObjects];
-    }
-}*/
-
 - (void)updateActions {
     // grab new action from queue if no activities
     if ([activities count] == 0) {
@@ -400,42 +382,6 @@
     // add to queue
     [actions addObject:action];
 }
-
-/*- (void)performAction:(AXActionOld*)action {
-    if (actions == nil)
-        actions = [[NSMutableArray alloc] init];
-    if (actionsToRemove == nil)
-        actionsToRemove = [[NSMutableArray alloc] init];
-    
-    // check confliction mode
-    if (_actionConflictionMode != kActionConflictionAcceptAll) {
-        // **** what to do for actionStrings? ??free pass??
-        for (AXActionOld *eAction in actions) {
-            if (_actionConflictionMode == kActionConflictionRemoveNew) {
-                if (eAction.actionMode == action.actionMode)
-                    return;
-            } else if (_actionConflictionMode == kActionConflictionRemoveExisting) {
-                if (eAction.actionMode == action.actionMode) {
-                    // remove old action
-                    [actionsToRemove addObject:eAction];
-                    break;
-                }
-            }
-        }
-    }
-    
-    if ([actionsToRemove count] > 0) {
-        [actions removeObjectsInArray:actionsToRemove];
-        [actionsToRemove removeAllObjects];
-    }
-    
-    // make self delegate
-    [action setObjectDelegate:self];
-    // activate action
-    [action activateAction];
-    // add action
-    [actions addObject:action];
-}*/
 
 #pragma mark Activity Delegate Methods
 
