@@ -8,7 +8,7 @@
 
 #import "AXScene.h"
 
-#import "AXInterfaceController.h"
+#import "AXVisualInterfaceController.h"
 #import "AXCollisionController.h"
 #import "AXSprite.h"
 
