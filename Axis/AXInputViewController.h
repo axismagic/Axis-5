@@ -8,20 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-enum {
-    kAXTouchBegan = 1,
-    kAXTouchMoved = 2,
-    kAXTouchEnded = 3,
-    kAXTouchCancelled = 4,
-    kAXTouchStationary = 5,
-};
-
 @interface AXInputViewController : UIViewController {
     BOOL _inputActive;
     
-    //
-    
     NSMutableSet *_touchEvents;
+    
+    //
     
     NSMutableArray *interfaceObjects;
     
@@ -33,16 +25,16 @@ enum {
 
 @property (nonatomic, assign) BOOL inputActive;
 
-//
-
 @property (nonatomic, retain) NSMutableSet *touchEvents;
+
+//
 
 @property (assign) CGFloat forwardMagnitude;
 @property (assign) CGFloat rightMagnitude;
 @property (assign) CGFloat leftMagnitude;
 @property (assign) BOOL fireMissile;
 
-- (void)touches:(NSSet*)touches withEvent:(UIEvent*)event touchType:(NSInteger)touchType;
+- (void)touches:(NSSet*)touches withEvent:(UIEvent*)event;
 
 //
 

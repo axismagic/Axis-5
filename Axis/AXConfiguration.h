@@ -19,8 +19,8 @@
 
 // Engine Console Debug
 #define AX_CONSOLE_LOG_FRAME_RATE 0 // Show Main Frame Rate
-#define AX_CONSOLE_LOG_LOW_FRAME_RATE_WARNING 0 // Highlight Low Frame
-#define AX_CONSOLE_LOG_LOW_FRAME_RATE_WARNING_MARK 40.0 // Low Frame Mark
+#define AX_CONSOLE_LOG_LOW_FRAME_RATE_WARNING 1 // Highlight Low Frame
+#define AX_CONSOLE_LOG_LOW_FRAME_RATE_WARNING_MARK 50.0 // Low Frame Mark
 
 // Engine Calculus
 #define RANDOM_SEED() srandom(time(NULL))

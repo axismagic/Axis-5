@@ -12,6 +12,8 @@
 #import "AXArrowButton.h"
 #import "AXTexturedButton.h"
 
+#import "AXTouch.h"
+
 @implementation AXInputViewController
 
 @synthesize inputActive = _inputActive;
@@ -23,9 +25,6 @@
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
         // initialise touch storage set
         self.touchEvents = [[NSMutableSet alloc] init];
-        forwardMagnitude = 0.0;
-        leftMagnitude = 0.0;
-        rightMagnitude = 0.0;
     }
     
     return self;
@@ -131,31 +130,82 @@
 
 #pragma mark Touch Event Handlers
 
-- (void)touches:(NSSet *)touches withEvent:(UIEvent *)event touchType:(NSInteger)touchType {
+- (void)touches:(NSSet *)touches withEvent:(UIEvent *)event {
     // Store touches
     // ***** Store the touches
     
+    for (UITouch *touch in [touches allObjects]) {
+        @autoreleasepool {
+            // setup
+            double now = CACurrentMediaTime();
+            CGSize yCorrector = [[AXSceneController sharedSceneController] viewSize];
+            
+            // convert UITouch to AXTouch
+            for (UITouch *uiTouch in [touches allObjects]) {
+                AXTouch *touch = [AXTouch touch];
+                CGPoint location = [uiTouch locationInView:self.view];
+                CGPoint previousLocation = [uiTouch previousLocationInView:self.view];
+                // add new properties
+                touch.timeStamp = now;
+                touch.currentPoint = CGPointMake(location.x, yCorrector.height - location.y);
+                touch.previousPoint = CGPointMake(previousLocation.x, yCorrector.height - previousLocation.y);
+                touch.tapCount = uiTouch.tapCount;
+                touch.phase = (AXTouchPhase)uiTouch.phase;
+                
+                [_touchEvents addObject:touch];
+            }
+        }
+    }
+    
+    /*if (!self.paused && _lastTouchTimestamp != event.timestamp)
+    {
+        @autoreleasepool
+        {
+            CGSize viewSize = self.view.bounds.size;
+            float xConversion = _stage.width / viewSize.width;
+            float yConversion = _stage.height / viewSize.height;
+            
+            // convert to SPTouches and forward to stage
+            NSMutableSet *touches = [NSMutableSet set];
+            double now = CACurrentMediaTime();
+            for (UITouch *uiTouch in [event touchesForView:self.view])
+            {
+                CGPoint location = [uiTouch locationInView:self.view];
+                CGPoint previousLocation = [uiTouch previousLocationInView:self.view];
+                SPTouch *touch = [SPTouch touch];
+                touch.timestamp = now; // timestamp of uiTouch not compatible to Sparrow timestamp
+                touch.globalX = location.x * xConversion;
+                touch.globalY = location.y * yConversion;
+                touch.previousGlobalX = previousLocation.x * xConversion;
+                touch.previousGlobalY = previousLocation.y * yConversion;
+                touch.tapCount = uiTouch.tapCount;
+                touch.phase = (SPTouchPhase)uiTouch.phase;
+                [touches addObject:touch];
+            }
+            [_touchProcessor processTouches:touches];
+            _lastTouchTimestamp = event.timestamp;
+        }
+    }*/
+    
     // temporary
-    [_touchEvents addObjectsFromArray:[touches allObjects]];
+    //[_touchEvents addObjectsFromArray:[touches allObjects]];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self touches:touches withEvent:event touchType:kAXTouchBegan];
+    [self touches:touches withEvent:event];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self touches:touches withEvent:event touchType:kAXTouchMoved];
+    [self touches:touches withEvent:event];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self touches:touches withEvent:event touchType:kAXTouchEnded];
+    [self touches:touches withEvent:event];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self touches:touches withEvent:event touchType:kAXTouchCancelled];
+    [self touches:touches withEvent:event];
 }
-
-//
 
 - (void)clearEvents {
     [self.touchEvents removeAllObjects];

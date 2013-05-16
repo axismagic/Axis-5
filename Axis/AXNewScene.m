@@ -7,6 +7,7 @@
 //
 
 #import "AXNewScene.h"
+#import "AXTouch.h"
 
 @implementation AXNewScene
 
@@ -63,42 +64,22 @@
 #pragma mark - Touches
 
 - (void)updateTouches {
+    // get touches
     NSSet *touches = [[AXSceneController sharedSceneController].inputController touchEvents];
     
     if ([touches count] == 0)
         return;
     
-    for (UITouch *touch in [touches allObjects]) {
-        if (touch.phase != UITouchPhaseEnded) {
-            CGPoint touchPoint = [touch locationInView:[touch view]];
-            // correct y coordinate
-            // ***** This corrections needs to happen within input controller (or it needs a method which returns correct y coord)
+    for (AXTouch *touch in [touches allObjects]) {
+        if (touch.phase == AXTouchPhaseBegan) {
+            // **** Needs to hide currentPoint - Access through: CGPoint touchPoint = [touch locationInView:[touch view]];
             
-            // get touch location
-            CGSize correctorFloat = [[AXSceneController sharedSceneController] viewSize];
+            AXPoint touchPointLoc = AXPointMake(touch.currentPoint.x, touch.currentPoint.y, hero.location.z);
             
-            AXPoint touchPointLoc = AXPointMake(touchPoint.x, correctorFloat.height-touchPoint.y, hero.location.z);
+            // move to point action
+            AXAction *moveToPoint = [[AXAction alloc] initWithTransformationType:AXACTransformationMovement transformationMode:AXACTransformTo transformation:touchPointLoc duration:1];
             
-            // create new action
-            AXAction *newAction = [[AXAction alloc] initWithTransformationType:AXACTransformationMovement transformationMode:AXACTransformTo transformation:touchPointLoc duration:1];
-            AXAction *newActionS = [[AXAction alloc] initWithTransformationType:AXACTransformationScale transformationMode:AXACTransformBy transformation:AXPointMake(1, 1, 0) duration:1];
-            AXAction *newActionModeDown = [[AXAction alloc] initWithTransformationType:AXACTransformationMovement transformationMode:AXACTransformBy transformation:AXPointMake(0, -100, 0) duration:1];
-            
-            AXActionSet *newActionSet = [[AXActionSet alloc] initWithActionRunMode:AXACActionSetRunModeSimultaneous actions:newAction, newActionS, nil];
-            AXActionSet *newActionSet2 = [[AXActionSet alloc] initWithActionRunMode:AXACActionSetRunModeQueue actions:newActionModeDown, newActionS, nil];
-            
-            AXActionSet *newActionMaster = [[AXActionSet alloc] initWithActionRunMode:AXACActionSetRunModeQueue actions:newActionSet, newActionSet2, nil];
-            
-            [hero performAction:newActionMaster];
-            
-            //[hero performAction:newAction];
-            //[hero performAction:newActionS];
-            //[enemy performAction:newAction];
-            
-            
-        }
-        if (touch.phase == UITouchPhaseMoved) {
-            NSLog(@"Moved");
+            [hero performAction:moveToPoint];
         }
     }
 }
