@@ -32,23 +32,23 @@
     NSLog(@"Todo High Priority: %@", AXIS_TODO_HIGH);
     NSLog(@"Todo Low Priority: %@", AXIS_TODO_LOW);
     
-    // Initialise the SceneController
-    AXDirector *sceneController = [AXDirector sharedDirector];
+    // Initialise the Director
+    AXDirector *director = [AXDirector sharedDirector];
     
     // Initialise the Input Controller
     AXInputViewController *anInputController = [[AXInputViewController alloc] initWithNibName:nil bundle:nil];
-    // Give the SceneController the inputController
-    sceneController.inputController = anInputController;
+    // Give the director the inputController
+    director.inputController = anInputController;
     [anInputController release];
     
     // Initialise main EAGLView with window bounds
     EAGLView *glView = [[EAGLView alloc] initWithFrame:_window.bounds];
-    sceneController.inputController.view = glView;
-    sceneController.openGLView = glView;
+    director.inputController.view = glView;
+    director.openGLView = glView;
     [glView release];
     
     // set our view as the first window view
-    self.window.rootViewController = sceneController.inputController;
+    self.window.rootViewController = director.inputController;
     [self.window makeKeyAndVisible];
     
     // tell the producer to continue setup

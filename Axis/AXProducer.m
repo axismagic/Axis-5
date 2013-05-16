@@ -27,16 +27,16 @@
 }
 
 - (void)setupEngine {
-    // gets the Scene Controller
-    AXDirector *sceneController = [AXDirector sharedDirector];
+    // gets the Director
+    AXDirector *director = [AXDirector sharedDirector];
     
     // Create first scene
     AXNewScene *scene = [[AXNewScene alloc] init];
-    // tell scene controller to load the scene
-    [sceneController loadScene:scene forKey:@"newScene" activate:YES];
+    // tell director to load the scene
+    [director loadScene:scene forKey:@"newScene" activate:YES];
     [scene release];
     // Starts the main loop which updates and renders scenes
-    [sceneController startLoop];
+    [director startLoop];
 }
 
 - (void)dealloc {
