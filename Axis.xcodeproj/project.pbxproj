@@ -60,7 +60,7 @@
 		C5D7622815AED9C800939700 /* AXParticleEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D7622715AED9C800939700 /* AXParticleEmitter.m */; };
 		C5D7622B15AEE28200939700 /* particleAtlas.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5D7622915AEE28200939700 /* particleAtlas.plist */; };
 		C5D7622C15AEE28200939700 /* particleAtlas.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D7622A15AEE28200939700 /* particleAtlas.png */; };
-		C5D7623015AEFFCA00939700 /* AXDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D7622F15AEFFCA00939700 /* AXDirector.m */; };
+		C5D7623015AEFFCA00939700 /* AXProducer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D7622F15AEFFCA00939700 /* AXProducer.m */; };
 		C5EEFF2A15AD8E9000FF320B /* iPad_Window.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5EEFF2915AD8E9000FF320B /* iPad_Window.xib */; };
 		C5FC047E15AF3B1A00000508 /* AXScene.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FC047D15AF3B1A00000508 /* AXScene.m */; };
 /* End PBXBuildFile section */
@@ -168,8 +168,8 @@
 		C5D7622715AED9C800939700 /* AXParticleEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXParticleEmitter.m; path = "Objects/Particle Emitter/AXParticleEmitter.m"; sourceTree = "<group>"; };
 		C5D7622915AEE28200939700 /* particleAtlas.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = particleAtlas.plist; sourceTree = "<group>"; };
 		C5D7622A15AEE28200939700 /* particleAtlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particleAtlas.png; sourceTree = "<group>"; };
-		C5D7622E15AEFFC900939700 /* AXDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXDirector.h; sourceTree = "<group>"; };
-		C5D7622F15AEFFCA00939700 /* AXDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXDirector.m; sourceTree = "<group>"; };
+		C5D7622E15AEFFC900939700 /* AXProducer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXProducer.h; sourceTree = "<group>"; };
+		C5D7622F15AEFFCA00939700 /* AXProducer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXProducer.m; sourceTree = "<group>"; };
 		C5EEFF2615AD879100FF320B /* Axis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Axis.h; sourceTree = "<group>"; };
 		C5EEFF2915AD8E9000FF320B /* iPad_Window.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPad_Window.xib; path = Interface/iPad_Window.xib; sourceTree = "<group>"; };
 		C5FC047C15AF3B1A00000508 /* AXScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXScene.h; sourceTree = "<group>"; };
@@ -244,8 +244,8 @@
 				C50DF7C11591C5D100BBB433 /* AXAppDelegate.m */,
 				C50DF7F41591CBC100BBB433 /* EAGLView.h */,
 				C50DF7F51591CBC200BBB433 /* EAGLView.m */,
-				C5D7622E15AEFFC900939700 /* AXDirector.h */,
-				C5D7622F15AEFFCA00939700 /* AXDirector.m */,
+				C5D7622E15AEFFC900939700 /* AXProducer.h */,
+				C5D7622F15AEFFCA00939700 /* AXProducer.m */,
 				C50DF7F71591D44F00BBB433 /* AXSceneController.h */,
 				C50DF7F81591D44F00BBB433 /* AXSceneController.m */,
 				C5FC047C15AF3B1A00000508 /* AXScene.h */,
@@ -549,7 +549,7 @@
 				C52CF44715A30F9D0050C1C0 /* AXAnimation.m in Sources */,
 				C5D7622515AED8B700939700 /* AXParticle.m in Sources */,
 				C5D7622815AED9C800939700 /* AXParticleEmitter.m in Sources */,
-				C5D7623015AEFFCA00939700 /* AXDirector.m in Sources */,
+				C5D7623015AEFFCA00939700 /* AXProducer.m in Sources */,
 				C5FC047E15AF3B1A00000508 /* AXScene.m in Sources */,
 				C587F0D915B1E1FF00F21A57 /* AXOldSceneController.m in Sources */,
 				C587F0DD15B200CA00F21A57 /* AXVisualInterfaceController.m in Sources */,
