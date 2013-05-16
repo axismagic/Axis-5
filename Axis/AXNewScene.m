@@ -11,8 +11,16 @@
 
 @implementation AXNewScene
 
+- (void)dealloc {
+    [[AXDirector sharedDirector].inputController unregisterObjectForTouches:self];
+    [super dealloc];
+}
+
 - (void)loadScene {
     [super loadScene];
+    
+    // register scene for input
+    [[AXDirector sharedDirector].inputController registerObjectForTouches:self];
     
     hero = [[AXMobileSprite alloc] initWithSpriteImage:@"HeroFront"];
     hero.location = AXPointMake(100.0, 100.0, 0.0);
@@ -44,8 +52,8 @@
     // if (active)
     [_interfaceController updateInterface];
     
-    // update touches
-    [self updateTouches];
+    // *R?* update touches
+    // [self updateTouches];
     
     // update all objects
     // *R?* [sceneObjects makeObjectsPerformSelector:@selector(update)];
@@ -63,7 +71,30 @@
 
 #pragma mark - Touches
 
-- (void)updateTouches {
+- (void)axTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    // loop touches
+    for (UITouch *touch in [touches allObjects]) {
+        if (touch.phase == UITouchPhaseBegan) {
+            NSLog(@"Touch Began");
+        }
+        
+        CGPoint touchPoint = [touch locationInView:[touch view]];
+        // correct y coordinate
+        // ***** This corrections needs to happen within input controller (or it needs a method which returns correct y coord)
+        
+        // get touch location
+        CGSize correctorFloat = [[AXDirector sharedDirector] viewSize];
+        
+        AXPoint touchPointLoc = AXPointMake(touchPoint.x, correctorFloat.height-touchPoint.y, hero.location.z);
+        
+        // move to point action
+        AXAction *moveToPoint = [[AXAction alloc] initWithTransformationType:AXACTransformationMovement transformationMode:AXACTransformTo transformation:touchPointLoc duration:1];
+        
+        [hero performAction:moveToPoint];
+    }
+}
+
+/*- (void)updateTouches {
     // get touches
     NSSet *touches = [[AXDirector sharedDirector].inputController touchEvents];
     
@@ -82,6 +113,6 @@
             [hero performAction:moveToPoint];
         }
     }
-}
+}*/
 
 @end

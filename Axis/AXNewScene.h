@@ -11,11 +11,9 @@
 #import "AXMobileSprite.h"
 #import "AXActionSet.h"
 
-@interface AXNewScene : AXScene {
+@interface AXNewScene : AXScene <AXInputProtocol> {
     AXMobileSprite *hero;
     AXMobileSprite *enemy;
 }
-
-- (void)updateTouches;
 
 @end

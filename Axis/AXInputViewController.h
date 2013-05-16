@@ -7,11 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AXInputProtocol.h"
+#import "AXObject.h"
 
 @interface AXInputViewController : UIViewController {
     BOOL _inputActive;
     
     NSMutableSet *_touchEvents;
+    
+    NSMutableSet *_registeredObjects;
     
     //
     
@@ -25,14 +29,19 @@
 
 @property (nonatomic, assign) BOOL inputActive;
 
-@property (nonatomic, retain) NSMutableSet *touchEvents;
-
 //
 
 @property (assign) CGFloat forwardMagnitude;
 @property (assign) CGFloat rightMagnitude;
 @property (assign) CGFloat leftMagnitude;
 @property (assign) BOOL fireMissile;
+
+//
+
+- (void)registerObjectForTouches:(AXObject*)object;
+- (void)unregisterObjectForTouches:(AXObject*)object;
+
+//
 
 - (void)touches:(NSSet*)touches withEvent:(UIEvent*)event;
 

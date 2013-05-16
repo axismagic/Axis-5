@@ -18,13 +18,11 @@
 
 @synthesize inputActive = _inputActive;
 
-@synthesize touchEvents = _touchEvents;
 @synthesize forwardMagnitude, leftMagnitude, rightMagnitude, fireMissile;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
         // initialise touch storage set
-        self.touchEvents = [[NSMutableSet alloc] init];
     }
     
     return self;
@@ -128,6 +126,20 @@
     return CGRectMake(rectOrigin.x, rectOrigin.y, CGRectGetHeight(rect), CGRectGetWidth(rect));
 }
 
+#pragma mark - Object Registration
+
+- (void)registerObjectForTouches:(AXObject*)object {
+    if (_registeredObjects == nil)
+        _registeredObjects = [[NSMutableSet alloc] init];
+    
+    [_registeredObjects addObject:object];
+}
+
+- (void)unregisterObjectForTouches:(AXObject*)object {
+    if ([_registeredObjects containsObject:object])
+        [_registeredObjects removeObject:object];
+}
+
 #pragma mark Touch Event Handlers
 
 - (void)touches:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -192,23 +204,43 @@
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self touches:touches withEvent:event];
+    //[self touches:touches withEvent:event];
+    for (AXObject *obj in _registeredObjects) {
+        if ([obj respondsToSelector:@selector(axTouchesBegan:withEvent:)]) {
+            [obj axTouchesBegan:touches withEvent:event];
+        }
+    }
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self touches:touches withEvent:event];
+    //[self touches:touches withEvent:event];
+    for (AXObject *obj in _registeredObjects) {
+        if ([obj respondsToSelector:@selector(axTouchesMoved:withEvent:)]) {
+            [obj axTouchesMoved:touches withEvent:event];
+        }
+    }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self touches:touches withEvent:event];
+    //[self touches:touches withEvent:event];
+    for (AXObject *obj in _registeredObjects) {
+        if ([obj respondsToSelector:@selector(axTouchesEnded:withEvent:)]) {
+            [obj axTouchesEnded:touches withEvent:event];
+        }
+    }
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self touches:touches withEvent:event];
+    //[self touches:touches withEvent:event];
+    for (AXObject *obj in _registeredObjects) {
+        if ([obj respondsToSelector:@selector(axTouchesCancelled:withEvent:)]) {
+            [obj axTouchesCancelled:touches withEvent:event];
+        }
+    }
 }
 
 - (void)clearEvents {
-    [self.touchEvents removeAllObjects];
+    //[self.touchEvents removeAllObjects];
 }
 
 /*- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
