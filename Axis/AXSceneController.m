@@ -177,6 +177,7 @@
     // add scenes to updating array
     
     // add scenes
+    // ****
     /*if ([scenesToAdd count] > 0) {
         [scenes addEntriesFromDictionary:scenesToAdd];
         //[scenes addObjectsFromArray:scenesToAdd];
