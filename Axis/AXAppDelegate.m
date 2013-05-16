@@ -12,7 +12,7 @@
 #import "AXConfiguration.h"
 
 #import "EAGLView.h"
-#import "AXDirector.h"
+#import "AXProducer.h"
 #import "AXSceneController.h"
 #import "AXInputViewController.h"
 
@@ -51,8 +51,8 @@
     self.window.rootViewController = sceneController.inputController;
     [self.window makeKeyAndVisible];
     
-    // tell the director to continue setup
-    [[AXDirector sharedDirector] setupEngine];
+    // tell the producer to continue setup
+    [[AXProducer sharedProducer] setupEngine];
 }
 
 /* Original
