@@ -8,17 +8,17 @@
 
 #import "AXObject.h"
 #import "AXSprite.h"
-#import "AXInterfaceController.h"
+#import "AXVisualInterfaceController.h"
 #import "AXCollisionController.h"
 
 @interface AXScene : AXObject <AXSceneObjectProtocol> {
     // interfaceController
-    AXInterfaceController *_interfaceController;
+    AXVisualInterfaceController *_interfaceController;
     // collisionController
     AXCollisionController *_collisionController;
 }
 
-@property (nonatomic, retain) AXInterfaceController *interfaceController;
+@property (nonatomic, retain) AXVisualInterfaceController *interfaceController;
 @property (nonatomic, retain) AXCollisionController *collisionController;
 
 - (void)loadScene;
