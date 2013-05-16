@@ -15,7 +15,7 @@
 #import "AXPoint.h"
 #import "AXMesh.h"
 #import "AXInputViewController.h"
-#import "AXSceneController.h"
+#import "AXDirector.h"
 #import "AXConfiguration.h"
 #import "AXMaterialController.h"
 #import "AXTexturedQuad.h"

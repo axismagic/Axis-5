@@ -28,7 +28,7 @@
 
 - (void)setupEngine {
     // gets the Scene Controller
-    AXSceneController *sceneController = [AXSceneController sharedSceneController];
+    AXDirector *sceneController = [AXDirector sharedDirector];
     
     // Create first scene
     AXNewScene *scene = [[AXNewScene alloc] init];

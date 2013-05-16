@@ -7,7 +7,7 @@
 //
 
 #import "AXSprite.h"
-#import "AXSceneController.h"
+#import "AXDirector.h"
 #import "AXInputViewController.h"
 #import "AXCollider.h"
 

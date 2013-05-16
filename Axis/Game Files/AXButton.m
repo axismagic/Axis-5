@@ -32,7 +32,7 @@ static CGFloat BBSquareFillVertexes[8] = {-0.5,-0.5, 0.5,-0.5, -0.5,0.5, 0.5,0.5
     _mesh.colors = BBSquareOutlineColorValues;
     _mesh.colorStride = BBSquareColorStride;
     
-    screenRect = [[AXSceneController sharedSceneController].inputController screenRectFromMeshRect:self.meshBounds atPoint:CGPointMake(_location.x, _location.y)];
+    screenRect = [[AXDirector sharedDirector].inputController screenRectFromMeshRect:self.meshBounds atPoint:CGPointMake(_location.x, _location.y)];
     [self setNotPressedVertexes];
 }
 
@@ -42,7 +42,7 @@ static CGFloat BBSquareFillVertexes[8] = {-0.5,-0.5, 0.5,-0.5, -0.5,0.5, 0.5,0.5
 }
 
 - (void)handleTouches {
-    NSSet *touches = [[AXSceneController sharedSceneController].inputController touchEvents];
+    NSSet *touches = [[AXDirector sharedDirector].inputController touchEvents];
     // if no touches, return now
     if ([touches count] == 0)
         return;

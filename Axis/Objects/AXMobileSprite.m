@@ -13,7 +13,7 @@
 @synthesize speed, rotationalSpeed;
 
 - (void)midPhaseUpdate {
-    CGFloat deltaTime = [[AXSceneController sharedSceneController] deltaTime];
+    CGFloat deltaTime = [[AXDirector sharedDirector] deltaTime];
     
     int multiplier;
     if (AX_ENABLE_POINT_PER_SECOND)

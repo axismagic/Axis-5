@@ -13,7 +13,7 @@
 
 #import "EAGLView.h"
 #import "AXProducer.h"
-#import "AXSceneController.h"
+#import "AXDirector.h"
 #import "AXInputViewController.h"
 
 @implementation AXAppDelegate
@@ -33,7 +33,7 @@
     NSLog(@"Todo Low Priority: %@", AXIS_TODO_LOW);
     
     // Initialise the SceneController
-    AXSceneController *sceneController = [AXSceneController sharedSceneController];
+    AXDirector *sceneController = [AXDirector sharedDirector];
     
     // Initialise the Input Controller
     AXInputViewController *anInputController = [[AXInputViewController alloc] initWithNibName:nil bundle:nil];

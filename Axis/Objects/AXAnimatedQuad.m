@@ -7,7 +7,7 @@
 //
 
 #import "AXAnimatedQuad.h"
-#import "AXSceneController.h"
+#import "AXDirector.h"
 
 @implementation AXAnimatedQuad
 
@@ -42,7 +42,7 @@
 }
 
 - (void)updateAnimation {
-    elapsedTime += [AXSceneController sharedSceneController].deltaTime;
+    elapsedTime += [AXDirector sharedDirector].deltaTime;
     NSInteger frame = (int)(elapsedTime/(1.0/speed));
     if (loops)
         frame = frame % [frameQuads count];

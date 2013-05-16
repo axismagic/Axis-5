@@ -116,8 +116,8 @@
     CGPoint rectOrigin = CGPointZero;
     // since view is rotated, x and y are flipped
     // *****
-    CGFloat vWidth = [AXSceneController sharedSceneController].viewSize.width;
-    CGFloat vHeight = [AXSceneController sharedSceneController].viewSize.height;
+    CGFloat vWidth = [AXDirector sharedDirector].viewSize.width;
+    CGFloat vHeight = [AXDirector sharedDirector].viewSize.height;
     
     screenCenter.x = meshCenter.y + vWidth/2;
     screenCenter.y = meshCenter.x + vHeight/2;
@@ -138,7 +138,7 @@
         @autoreleasepool {
             // setup
             double now = CACurrentMediaTime();
-            CGSize yCorrector = [[AXSceneController sharedSceneController] viewSize];
+            CGSize yCorrector = [[AXDirector sharedDirector] viewSize];
             
             // convert UITouch to AXTouch
             for (UITouch *uiTouch in [touches allObjects]) {

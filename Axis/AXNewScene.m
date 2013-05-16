@@ -65,7 +65,7 @@
 
 - (void)updateTouches {
     // get touches
-    NSSet *touches = [[AXSceneController sharedSceneController].inputController touchEvents];
+    NSSet *touches = [[AXDirector sharedDirector].inputController touchEvents];
     
     if ([touches count] == 0)
         return;

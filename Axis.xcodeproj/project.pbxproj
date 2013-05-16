@@ -27,7 +27,7 @@
 		C50DF7E41591C5D200BBB433 /* AxisTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF7E31591C5D200BBB433 /* AxisTests.m */; };
 		C50DF7F01591C8EE00BBB433 /* AXInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF7EF1591C8EE00BBB433 /* AXInputViewController.m */; };
 		C50DF7F61591CBC200BBB433 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF7F51591CBC200BBB433 /* EAGLView.m */; };
-		C50DF7F91591D44F00BBB433 /* AXSceneController.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF7F81591D44F00BBB433 /* AXSceneController.m */; };
+		C50DF7F91591D44F00BBB433 /* AXDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF7F81591D44F00BBB433 /* AXDirector.m */; };
 		C50DF7FC1591D58800BBB433 /* AXMesh.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF7FB1591D58800BBB433 /* AXMesh.m */; };
 		C50DF7FF1591D72100BBB433 /* AXSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = C50DF7FE1591D72100BBB433 /* AXSprite.m */; };
 		C50DF8011591DFF800BBB433 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C50DF8001591DFF800BBB433 /* QuartzCore.framework */; };
@@ -110,8 +110,8 @@
 		C50DF7EF1591C8EE00BBB433 /* AXInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXInputViewController.m; sourceTree = "<group>"; };
 		C50DF7F41591CBC100BBB433 /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
 		C50DF7F51591CBC200BBB433 /* EAGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EAGLView.m; sourceTree = "<group>"; };
-		C50DF7F71591D44F00BBB433 /* AXSceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXSceneController.h; sourceTree = "<group>"; };
-		C50DF7F81591D44F00BBB433 /* AXSceneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXSceneController.m; sourceTree = "<group>"; };
+		C50DF7F71591D44F00BBB433 /* AXDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXDirector.h; sourceTree = "<group>"; };
+		C50DF7F81591D44F00BBB433 /* AXDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXDirector.m; sourceTree = "<group>"; };
 		C50DF7FA1591D58800BBB433 /* AXMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXMesh.h; path = Objects/AXMesh.h; sourceTree = "<group>"; };
 		C50DF7FB1591D58800BBB433 /* AXMesh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AXMesh.m; path = Objects/AXMesh.m; sourceTree = "<group>"; };
 		C50DF7FD1591D72100BBB433 /* AXSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AXSprite.h; path = Objects/AXSprite.h; sourceTree = "<group>"; };
@@ -246,8 +246,8 @@
 				C50DF7F51591CBC200BBB433 /* EAGLView.m */,
 				C5D7622E15AEFFC900939700 /* AXProducer.h */,
 				C5D7622F15AEFFCA00939700 /* AXProducer.m */,
-				C50DF7F71591D44F00BBB433 /* AXSceneController.h */,
-				C50DF7F81591D44F00BBB433 /* AXSceneController.m */,
+				C50DF7F71591D44F00BBB433 /* AXDirector.h */,
+				C50DF7F81591D44F00BBB433 /* AXDirector.m */,
 				C5FC047C15AF3B1A00000508 /* AXScene.h */,
 				C5FC047D15AF3B1A00000508 /* AXScene.m */,
 				C587F0DE15B20B2900F21A57 /* AXNewScene.h */,
@@ -531,7 +531,7 @@
 				C50DF7C21591C5D100BBB433 /* AXAppDelegate.m in Sources */,
 				C50DF7F01591C8EE00BBB433 /* AXInputViewController.m in Sources */,
 				C50DF7F61591CBC200BBB433 /* EAGLView.m in Sources */,
-				C50DF7F91591D44F00BBB433 /* AXSceneController.m in Sources */,
+				C50DF7F91591D44F00BBB433 /* AXDirector.m in Sources */,
 				C50DF7FC1591D58800BBB433 /* AXMesh.m in Sources */,
 				C50DF7FF1591D72100BBB433 /* AXSprite.m in Sources */,
 				C50DF80D15923A8E00BBB433 /* AXButton.m in Sources */,

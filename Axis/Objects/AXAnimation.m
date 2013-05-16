@@ -30,7 +30,7 @@
     [(AXAnimatedQuad*)_mesh updateAnimation];
     if ([(AXAnimatedQuad*)_mesh didFinish])
         [_parentDelegate removeObjectFromParent:self];
-        //[[AXSceneController sharedSceneController] removeObjectFromScene:self];
+        //[[AXDirector sharedDirector] removeObjectFromScene:self];
 }
 
 @end

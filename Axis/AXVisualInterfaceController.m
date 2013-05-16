@@ -8,7 +8,7 @@
 
 #import "AXVisualInterfaceController.h"
 
-#import "AXSceneController.h"
+#import "AXDirector.h"
 
 #import "AXTexturedButton.h"
 

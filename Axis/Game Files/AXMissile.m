@@ -74,7 +74,7 @@
 - (void)update {
     if (destroyed) {
         if ((particleEmitter.emitCounter <= 0) && (![particleEmitter activeParticles])) {
-            [[AXSceneController sharedSceneController] removeObjectFromScene:self];
+            [[AXDirector sharedDirector] removeObjectFromScene:self];
         }
         return;
     }
@@ -87,7 +87,7 @@
     
     // if not emitting and are active, start emitting
     if (!particleEmitter.emit && _active && !destroyed) {
-        [[AXSceneController sharedSceneController] addObjectToScene:particleEmitter];
+        [[AXDirector sharedDirector] addObjectToScene:particleEmitter];
         particleEmitter.emit = YES;
     }
 }
@@ -106,7 +106,7 @@
         outOfArena = YES;
     
     if (outOfArena) {
-        [[AXSceneController sharedSceneController] removeObjectFromScene:self];
+        [[AXDirector sharedDirector] removeObjectFromScene:self];
     }
 }
 
@@ -119,7 +119,7 @@
     // smash the rock
     [(AXRock*)sceneObject smash];
     // remove self
-    [[AXSceneController sharedSceneController] removeObjectFromScene:self];
+    [[AXDirector sharedDirector] removeObjectFromScene:self];
     
     // destroy ourselves
     [self handleCollision];
@@ -134,7 +134,7 @@
 
 - (void)dealloc {
     if (particleEmitter != nil)
-        [[AXSceneController sharedSceneController] removeObjectFromScene:particleEmitter];
+        [[AXDirector sharedDirector] removeObjectFromScene:particleEmitter];
     
     [particleEmitter release];
     [super dealloc];

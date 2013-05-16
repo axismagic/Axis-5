@@ -49,14 +49,14 @@
 - (void)update {
     [super update];
     
-    CGFloat rightTurn = [[AXSceneController sharedSceneController].inputController rightMagnitude];
-    CGFloat leftTurn = [[AXSceneController sharedSceneController].inputController leftMagnitude];
+    CGFloat rightTurn = [[AXDirector sharedDirector].inputController rightMagnitude];
+    CGFloat leftTurn = [[AXDirector sharedDirector].inputController leftMagnitude];
     
     _rotation.z += ((rightTurn * -1.0) + leftTurn) * TURN_SPEED_FACTOR;
     
-    if ([[AXSceneController sharedSceneController].inputController fireMissile]) [self fireMissile];
+    if ([[AXDirector sharedDirector].inputController fireMissile]) [self fireMissile];
     
-    CGFloat forwardMag = [[AXSceneController sharedSceneController].inputController forwardMagnitude] * THRUST_SPEED_FACTOR;
+    CGFloat forwardMag = [[AXDirector sharedDirector].inputController forwardMagnitude] * THRUST_SPEED_FACTOR;
     if (forwardMag <= 0.0001) return;
     
     CGFloat radians = _rotation.z/AX_CALC_RADIANS_TO_DEGREES;
@@ -77,10 +77,10 @@
     missile.location = AXPointMatrixMultiply(AXPointMake(0.0, 0.5, 0.0), _matrix);
     missile.rotation = AXPointMake(0.0, 0.0, self.rotation.z);
     
-    [[AXSceneController sharedSceneController] addObjectToScene:missile];
+    [[AXDirector sharedDirector] addObjectToScene:missile];
     [missile release];
     
-    [[AXSceneController sharedSceneController].inputController setFireMissile:NO];
+    [[AXDirector sharedDirector].inputController setFireMissile:NO];
 }
 
 - (void)didCollideWith:(AXSprite*)sceneObject {

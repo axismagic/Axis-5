@@ -13,7 +13,7 @@
 #import "AXConfiguration.h"
 #import "AXDataConstructs.h"
 
-#import "AXSceneController.h"
+#import "AXDirector.h"
 
 #define USE_DEPTH_BUFFER 0
 
@@ -114,7 +114,7 @@
     else
         glOrthof(0, backingWidth, 0, backingHeight, -1.0f, 1.0f);
     
-    [[AXSceneController sharedSceneController] setViewSize:self.bounds.size];
+    [[AXDirector sharedDirector] setViewSize:self.bounds.size];
     
     NSLog(@"Screen Size: %f x %f", self.bounds.size.width, self.bounds.size.height);
     
