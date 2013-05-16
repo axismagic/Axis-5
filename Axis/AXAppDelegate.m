@@ -22,10 +22,10 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
     // Display Versioning Information in the console.
-    if (![AXIS_VERSION_TYPE isEqual: @"Public"])
+    if (![AXIS_VERSION_NAME_ADDITION isEqual:nil])
         NSLog(@"Axis: The Game Engine - %@'s %@", AXIS_VERSION_NAME, AXIS_VERSION_NAME_ADDITION);
     else
-        NSLog(@"Axis: The Game Engine - %@ %@", AXIS_VERSION_NAME, AXIS_VERSION_NAME_ADDITION);
+        NSLog(@"Axis: The Game Engine - %@", AXIS_VERSION_NAME);
     NSLog(@"%@ Engine %@ %@ build %@", AXIS_VERSION_FORM, AXIS_VERSION_TYPE, [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]);
     
     NSLog(@"Juco: %@", AXIS_JUST_COMPLETED);
