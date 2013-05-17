@@ -25,8 +25,8 @@
 #define AXIS_VERSION_TYPE @"Alpha"
 
 #define AXIS_JUST_COMPLETED @"Touch Dispatch | Touches Input | Auto-Rotation Correction | Major Code Cleanup | AXActions & Activities"
-#define AXIS_TODO_HIGH @"Resource Control"
-#define AXIS_TODO_LOW @"Auto-Rotation Control | Multi-scene update support | Frame Rate Control | Touch Swallow Dispatch | AXAction & AXActivity Cleanup"
+#define AXIS_TODO_HIGH @"VisualInterfaceController | Resource Control"
+#define AXIS_TODO_LOW @"Clean Collision Controller | Auto-Rotation Control | Multi-scene update support | Frame Rate Control | Touch Swallow Dispatch | AXAction & AXActivity Cleanup"
 
 // Support - If set to off, components are not loaded
 #define AXIS_SUPPORT_THE_GAME_ENGINE 1 // The Game Engine. If set to off, Game Engine is not complete

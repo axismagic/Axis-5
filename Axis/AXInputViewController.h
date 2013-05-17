@@ -16,27 +16,9 @@
     NSMutableSet *_touchEvents;
     
     NSMutableSet *_registeredObjects;
-    
-    //
-    
-    NSMutableArray *interfaceObjects;
-    
-    CGFloat forwardMagnitude;
-    CGFloat rightMagnitude;
-    CGFloat leftMagnitude;
-    BOOL fireMissile;
 }
 
 @property (nonatomic, assign) BOOL inputActive;
-
-//
-
-@property (assign) CGFloat forwardMagnitude;
-@property (assign) CGFloat rightMagnitude;
-@property (assign) CGFloat leftMagnitude;
-@property (assign) BOOL fireMissile;
-
-//
 
 - (void)registerObjectForTouches:(AXObject*)object;
 - (void)unregisterObjectForTouches:(AXObject*)object;
@@ -45,20 +27,13 @@
 
 - (void)touches:(NSSet*)touches withEvent:(UIEvent*)event;
 
-//
-
-//- (void)loadInterface;
-//- (void)updateInterface;
-//- (void)renderInterface;
-
-- (CGRect)screenRectFromMeshRect:(CGRect)rect atPoint:(CGPoint)meshCenter;
-
 - (void)clearEvents;
 - (void)didReceiveMemoryWarning;
 - (void)loadView;
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)viewDidUnload;
-
 - (void)dealloc;
+
+// *R?*
+- (CGRect)screenRectFromMeshRect:(CGRect)rect atPoint:(CGPoint)meshCenter;
 
 @end

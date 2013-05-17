@@ -18,6 +18,8 @@
 #import "AXActivity.h"
 #import "AXActivitySet.h"
 
+#import "AXInputProtocol.h"
+
 @class AXScene;
 @class AXObject;
 
@@ -25,28 +27,31 @@ enum ConflictionModes {
     kActionConflictionAcceptAll = 0, // will accept and run all actions
     kActionConflictionRemoveExisting = 1, // will remove old conflicting action
     kActionConflictionRemoveNew = 2 // will not add new conflicting action
-    };
+};
 
 @protocol AXSceneObjectProtocol <NSObject>
 /* This protocol is used to send messages directly to the scene. */
 
-- (void)addObjectCollider:(AXObject*)object;
-- (void)removeObjectCollider:(AXObject*)object;
-
+// add objects directly to scene
 - (void)addObjectToScene:(AXObject*)object;
 - (void)removeObjectFromScene:(AXObject*)object;
+
+// add colliders directly to scene for object
+- (void)addObjectCollider:(AXObject*)object;
+- (void)removeObjectCollider:(AXObject*)object;
 
 @end
 
 @protocol AXParentObjectProtocol <NSObject>
 /* This protocol is used to send messgaes directly to the parent. */
 
+// add object to parent
 - (void)addObjectToParent:(AXObject*)object;
 - (void)removeObjectFromParent:(AXObject*)object;
 
 @end
 
-@interface AXObject : NSObject <AXParentObjectProtocol, AXActivityProtocol> {
+@interface AXObject : NSObject <AXParentObjectProtocol, AXActivityProtocol, AXInputProtocol> {
     // delegate
     AXScene <AXSceneObjectProtocol> *_sceneDelegate;
     AXObject <AXParentObjectProtocol> *_parentDelegate;

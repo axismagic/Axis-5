@@ -11,14 +11,14 @@
 #import "AXVisualInterfaceController.h"
 #import "AXCollisionController.h"
 
-@interface AXScene : AXObject <AXSceneObjectProtocol> {
+@interface AXScene : AXObject <AXSceneObjectProtocol, AXVisualInterfaceProtocol> {
     // interfaceController
-    AXVisualInterfaceController *_interfaceController;
+    AXVisualInterfaceController *_visualInterfaceController;
     // collisionController
     AXCollisionController *_collisionController;
 }
 
-@property (nonatomic, retain) AXVisualInterfaceController *interfaceController;
+@property (nonatomic, retain) AXVisualInterfaceController *visualInterfaceController;
 @property (nonatomic, retain) AXCollisionController *collisionController;
 
 - (void)loadScene;

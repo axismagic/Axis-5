@@ -7,21 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AXObject.h"
 
-@interface AXVisualInterfaceController : NSObject {
-    NSMutableArray *interfaceObjects;
+@protocol AXVisualInterfaceProtocol <AXSceneObjectProtocol>
+
+@optional
+// your messages back to scene
+- (void)updateWithTouchLocation:(AXPoint)location;
+
+@end
+
+@interface AXVisualInterfaceController : AXObject {
     
-    //CGFloat forwardMagnitude;
-    //CGFloat rightMagnitude;
-    //CGFloat leftMagnitude;
 }
 
-//@property (assign) CGFloat forwardMagnitude;
-//@property (assign) CGFloat rightMagnitude;
-//@property (assign) CGFloat leftMagnitude;
+@property (nonatomic, retain) AXScene <AXVisualInterfaceProtocol> *sceneDelegate;
 
 - (void)loadInterface;
-- (void)updateInterface;
-- (void)renderInterface;
 
 @end

@@ -16,8 +16,6 @@
 #import "AXScene.h"
 
 // *****
-#import "AXSpaceShip.h"
-#import "AXRock.h"
 #import "AXParticleEmitter.h"
 
 @implementation AXDirector

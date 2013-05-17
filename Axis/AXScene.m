@@ -14,11 +14,11 @@
 
 @implementation AXScene
 
-@synthesize interfaceController = _interfaceController, collisionController = _collisionController;
+@synthesize visualInterfaceController = _visualInterfaceController, collisionController = _collisionController;
 
 - (void)dealloc {
     self.collisionController = nil;
-    self.interfaceController = nil;
+    self.visualInterfaceController = nil;
     [super dealloc];
 }
 
@@ -48,65 +48,39 @@
     self.collisionController = aCollisionController;
     [aCollisionController release];
     [self.collisionController activate];
-    
+    // debug draw colliders
     if (AX_DEBUG_DRAW_COLLIDERS)
-        //[self addObjectToScene:collisionController];
         [self addChild:_collisionController];
     
     // load interface
-    // AXInterfaceController *anInterfaceController = [[AXInterfaceController alloc] init];
-    // self.interfaceController = anInterfaceController;
-    // [anInterfaceController release];
-    // [_interfaceController loadInterface];
-    
-    // create the ship
-    /*AXSpaceShip *ship = [[AXSpaceShip alloc] init];
-    ship.speed = AXPointMake(0.2, 0.2, 0.0);
-    ship.rotationalSpeed = AXPointMake(0.0, 0.0, 0.2);
-    [self addObjectToScene:ship];
-    [ship release];
-    
-    // create child rock
-    AXRock *rocksecond = [AXRock randomRock];
-    rocksecond.translation = AXPointMake(ship.translation.x, ship.translation.y - 100, 0.0);
-    rocksecond.rotationalSpeed = AXPointMake(0.0, 0.0, 0.0);
-    rocksecond.speed = AXPointMake(0.2, 0.0, 0.0);
-    [ship addChild:rocksecond];
-    
-    // create child rock
-    AXRock *rock = [AXRock randomRock];
-    rock.translation = AXPointMake(ship.translation.x, ship.translation.y + 100, 0.0);
-    rock.rotationalSpeed = AXPointMake(0.0, 0.0, 0.0);
-    rock.speed = AXPointMake(0.2, 0.0, 0.0);
-    [ship addChild:rock];
-    
-    // release the ship
-    [ship release];*/
+    AXVisualInterfaceController *aVisualInterfaceController = [[AXVisualInterfaceController alloc] init];
+    self.visualInterfaceController = aVisualInterfaceController;
+    [aVisualInterfaceController release];
+    [_visualInterfaceController setSceneDelegate:self];
+    [_visualInterfaceController setParentDelegate:self];
+    [_visualInterfaceController activate];
+    [_visualInterfaceController loadInterface];
 }
 
 #pragma mark Updates
 
 - (void)updateScene {
+    // update interface
+    if (_visualInterfaceController.updates)
+        [_visualInterfaceController update];
+    
+    // update all other objects
+    [children makeObjectsPerformSelector:@selector(update)];
+    
+    // handle collisions
+    [_collisionController handleCollisions];
+    
     // add new objects
     if ([childrenToAdd count] > 0) {
         //[sceneObjects addObjectsFromArray:objectsToAdd];
         [children addObjectsFromArray:childrenToAdd];
         [childrenToAdd removeAllObjects];
     }
-    
-    // update interface
-    // ***** only if is active?
-    // if (active)
-    [_interfaceController updateInterface];
-    
-    // update all objects
-    //[sceneObjects makeObjectsPerformSelector:@selector(update)];
-    [children makeObjectsPerformSelector:@selector(update)];
-    
-    // handle collisions
-    [_collisionController handleCollisions];
-    
-    // ***** render and object remove order?
     
     // remove old objects
     if ([childrenToRemove count] > 0) {
@@ -117,11 +91,11 @@
 
 - (void)renderScene {
     // render all objects
-    //[sceneObjects makeObjectsPerformSelector:@selector(render)];
     [children makeObjectsPerformSelector:@selector(render)];
     
     // render interface above the scene
-    [_interfaceController renderInterface];
+    if (_visualInterfaceController.renders)
+        [_visualInterfaceController render];
 }
 
 #pragma mark Child Control
@@ -178,7 +152,7 @@
         [_collisionController removeObject:(AXSprite*)object];
 }
 
-// used to add or remove things directly to the scene
+// add or remove things directly to the scene
 - (void)addObjectToScene:(AXObject *)object {
     [self addChild:object];
 }

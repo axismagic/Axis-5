@@ -13,7 +13,6 @@
 
 @interface AXNewScene : AXScene <AXInputProtocol> {
     AXMobileSprite *hero;
-    AXMobileSprite *enemy;
 }
 
 @end
