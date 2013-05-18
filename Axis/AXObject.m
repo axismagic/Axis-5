@@ -205,7 +205,7 @@
         childrenToAdd = [[NSMutableArray alloc] init];
     
     // if child is not already owned, add new child
-    NSAssert(!child.isChild, @"Child must not be owned");
+    NSAssert(!child.isChild, @"Child must not be owned already");
     
     child.isChild = YES;
     if (!_hasChildren)

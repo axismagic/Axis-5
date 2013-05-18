@@ -42,7 +42,7 @@ static CGFloat BBSquareFillVertexes[8] = {-0.5,-0.5, 0.5,-0.5, -0.5,0.5, 0.5,0.5
 }
 
 - (void)handleTouches {
-    NSSet *touches = [[AXDirector sharedDirector].inputController touchEvents];
+   /* NSSet *touches = [[AXDirector sharedDirector].inputController touchEvents];
     // if no touches, return now
     if ([touches count] == 0)
         return;
@@ -57,7 +57,7 @@ static CGFloat BBSquareFillVertexes[8] = {-0.5,-0.5, 0.5,-0.5, -0.5,0.5, 0.5,0.5
     }
     
     if (!pointInBounds)
-        [self touchUp];
+        [self touchUp];*/
 }
 
 - (void)touchUp {
