@@ -13,16 +13,6 @@ enum AXViewTypes {
     AXVTlandscape = 1
 };
 
-#pragma mark - Touches
-
-typedef enum {
-    AXTouchPhaseBegan = 0,
-    AXTouchPhaseMoved = 1,
-    AXTouchPhaseStationary = 2,
-    AXTouchPhaseEnded = 3,
-    AXTouchPhaseCancelled = 4,
-} AXTouchPhase;
-
 #pragma mark - AXAC Action Enums
 
 enum AXACActionTypes {

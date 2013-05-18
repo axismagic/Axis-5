@@ -16,18 +16,26 @@
     NSMutableSet *_touchEvents;
     
     NSMutableSet *_registeredObjects;
+    NSMutableSet *_registeredSwallowingObjects;
+    NSMutableSet *_registeredRemainingObjects;
+    
+    NSMutableSet *_handlersToAdd;
+    NSMutableSet *_handlersToRemove;
+    
+    BOOL _loopLock;
 }
 
 @property (nonatomic, assign) BOOL inputActive;
+@property (nonatomic, assign) BOOL loopLock;
 
-- (void)registerObjectForTouches:(AXObject*)object;
+- (void)registerObjectForTouches:(AXObject *)object swallowsTouchesType:(AXInputObjectSwallowType)swallowType;
 - (void)unregisterObjectForTouches:(AXObject*)object;
+- (void)unregisterObjectForTouches:(AXObject *)object swallowsTouchesType:(AXInputObjectSwallowType)swallowType;
 
 //
 
-- (void)touches:(NSSet*)touches withEvent:(UIEvent*)event;
+- (void)touches:(NSSet *)touches withEvent:(UIEvent *)event touchTypeSelector:(SEL)touchTypeSelector;
 
-- (void)clearEvents;
 - (void)didReceiveMemoryWarning;
 - (void)loadView;
 - (void)viewDidUnload;

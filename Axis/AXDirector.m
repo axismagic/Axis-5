@@ -185,8 +185,6 @@
     [self updateScenes];
     [self renderScenes];
     
-    [_inputController clearEvents];
-    
     // remove scenes from updating array
     
     // remove scenes

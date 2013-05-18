@@ -31,6 +31,7 @@
     NSLog(@"Juco: %@", AXIS_JUST_COMPLETED);
     NSLog(@"Todo High Priority: %@", AXIS_TODO_HIGH);
     NSLog(@"Todo Low Priority: %@", AXIS_TODO_LOW);
+    NSLog(@"Issues: %@", AXIS_ISSUES);
     
     // Initialise the Director
     AXDirector *director = [AXDirector sharedDirector];

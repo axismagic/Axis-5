@@ -8,6 +8,8 @@
 
 #import "AXNewScene.h"
 
+#import "AXHeroOne.h"
+
 @implementation AXNewScene
 
 - (void)dealloc {
@@ -18,13 +20,13 @@
 - (void)loadScene {
     [super loadScene];
     
-    hero = [[AXMobileSprite alloc] initWithSpriteImage:@"HeroFront"];
-    hero.location = AXPointMake(100.0, 100.0, 0.0);
-    hero.collisionDetection = YES;
-    hero.actionQueuemode = AXACQueueSetNoQueue_InterruptCurrent;
-    [self addChild:hero];
-    [hero activate];
-    [hero release];
+    // load heros
+    AXHeroOne *heroOne = [[AXHeroOne alloc] initWithSpriteImage:@"HeroFront"];
+    heroOne.location = AXPointMake(300, 100, 0);
+    heroOne.collisionDetection = YES;
+    [self addChild:heroOne];
+    [heroOne activate];
+    [heroOne release];
 }
 
 #pragma mark - Visual Interface Updates

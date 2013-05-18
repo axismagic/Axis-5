@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "AXObject.h"
 
+@class AXSprite;
+
 @protocol AXVisualInterfaceProtocol <AXSceneObjectProtocol>
 
 @optional
@@ -18,7 +20,7 @@
 @end
 
 @interface AXVisualInterfaceController : AXObject {
-    
+    AXSprite *leftStickThumb;
 }
 
 @property (nonatomic, retain) AXScene <AXVisualInterfaceProtocol> *sceneDelegate;
