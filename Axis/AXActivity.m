@@ -12,7 +12,7 @@
 
 @synthesize activated = _activated;
 @synthesize activityCounter = _activityCounter, complete = _complete;
-@synthesize startTransformation = _startTrasnformation;
+@synthesize startTransformation = _startTransformation;
 @synthesize endTransformation = _endTransformation;
 @synthesize delegate = _delegate;
 
@@ -20,23 +20,23 @@
     self = [super init];
     if (self != nil) {
         // action stuff
-        self.type = 0;
-        self.mode = 0;
-        self.duration = 1;
-        self.durationFrames = _duration * 60;
+        _type = 0;
+        _mode = 0;
+        _duration = 1;
+        _durationFrames = _duration * 60;
         
-        self.transformation = AXPointMake(0, 0, 0);
+        _transformation = AXPointMake(0, 0, 0);
         
         // activity stuff
-        self.activated = NO;
+        _activated = NO;
         
-        self.activityCounter = 0;
-        self.complete = NO;
+        _activityCounter = 0;
+        _complete = NO;
         
-        self.startTransformation = AXPointMake(0, 0, 0);
-        self.endTransformation = AXPointMake(0, 0, 0);
+        _startTransformation = AXPointMake(0, 0, 0);
+        _endTransformation = AXPointMake(0, 0, 0);
         
-        self.delegate = nil;
+        _delegate = nil;
         
     }
     return self;
@@ -47,22 +47,22 @@
     self = [super init];
     if (self != nil) {
         // setup self from action
-        self.type = action.type;
-        self.mode = action.mode;
-        self.duration = action.duration;
-        self.durationFrames = action.durationFrames;
-        self.transformation = action.transformation;
+        _type = action.type;
+        _mode = action.mode;
+        _duration = action.duration;
+        _durationFrames = action.durationFrames;
+        _transformation = action.transformation;
         
         // activity stuff
-        self.activated = NO;
+        _activated = NO;
         
-        self.activityCounter = 0;
-        self.complete = NO;
+        _activityCounter = 0;
+        _complete = NO;
         
-        self.startTransformation = AXPointMake(0, 0, 0);
-        self.endTransformation = AXPointMake(0, 0, 0);
+        _startTransformation = AXPointMake(0, 0, 0);
+        _endTransformation = AXPointMake(0, 0, 0);
         
-        self.delegate = nil;
+        _delegate = nil;
     }
     
     return self;
@@ -78,7 +78,7 @@
         // work out end transformation
         if (_mode == AXACTransformBy) {
             // transform by adds transformation to start point
-            self.endTransformation = AXPointAdd(_startTrasnformation, _transformation);
+            self.endTransformation = AXPointAdd(_startTransformation, _transformation);
         } else if (_mode == AXACTransformTo) {
             // transform to transforms regardless of start point
             self.endTransformation = _transformation;
@@ -109,7 +109,7 @@
         }
         
         // get transformation for duration (might be different to _transformation due to _mode
-        AXPoint durationTransformation = AXPointSubtract(_endTransformation, _startTrasnformation);
+        AXPoint durationTransformation = AXPointSubtract(_endTransformation, _startTransformation);
         // get frame transformation
         AXPoint frameTransformation = AXPointMake(durationTransformation.x / _durationFrames, durationTransformation.y / _durationFrames, durationTransformation.z / _durationFrames);
         

@@ -16,12 +16,12 @@
 - (id)init {
     self = [super init];
     if (self != nil) {
-        self.type = 0;
-        self.mode = 0;
-        self.duration = 1;
-        self.durationFrames = _duration * 60;
+        _type = 0;
+        _mode = 0;
+        _duration = 1;
+        _durationFrames = _duration * 60;
         
-        self.transformation = AXPointMake(0, 0, 0);
+        _transformation = AXPointMake(0, 0, 0);
     }
     
     return self;
@@ -37,6 +37,7 @@
         
         self.transformation = newTransformation;*/
         // setup self
+        [self init];
         [self setupActionWithType:newType transformationMode:newMode transformation:newTransformation duration:newDuration];
     }
     

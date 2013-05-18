@@ -15,16 +15,16 @@
     // Action Settings
     NSInteger _type; // Transformation / Animation Type
     NSInteger _mode; // To / By
-    NSInteger _duration;
-    NSInteger _durationFrames;
+    CGFloat _duration;
+    CGFloat _durationFrames;
     
     AXPoint _transformation;
 }
 
 @property (nonatomic, assign) NSInteger type;
 @property (nonatomic, assign) NSInteger mode;
-@property (nonatomic, assign) NSInteger duration;
-@property (nonatomic, assign) NSInteger durationFrames;
+@property (nonatomic, assign) CGFloat duration;
+@property (nonatomic, assign) CGFloat durationFrames;
 @property (nonatomic, assign) AXPoint transformation;
 
 - (id)initWithTransformationType:(NSInteger)newType transformationMode:(NSInteger)newMode transformation:(AXPoint)newTransformation duration:(CGFloat)newDuration;

@@ -26,7 +26,7 @@
     BOOL _complete;
     
     // details
-    AXPoint _startTrasnformation;
+    AXPoint _startTransformation;
     AXPoint _endTransformation;
     
     // delegate
