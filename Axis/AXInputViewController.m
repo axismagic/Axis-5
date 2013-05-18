@@ -47,6 +47,15 @@
     return CGRectMake(rectOrigin.x, rectOrigin.y, CGRectGetHeight(rect), CGRectGetWidth(rect));
 }
 
+#pragma mark - Point Conversion
+
+- (AXPoint)convertTouchPointToAxisPoint:(CGPoint)touchPoint {
+    CGSize correctSize = [[AXDirector sharedDirector] viewSize];
+    AXPoint axisPoint = AXPointMake(touchPoint.x, correctSize.height-touchPoint.y, 0);
+    
+    return axisPoint;
+}
+
 #pragma mark - Object Registration
 
 - (void)registerObjectForTouches:(AXObject *)object swallowsTouchesType:(AXInputObjectSwallowType)swallowType {

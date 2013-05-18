@@ -9,21 +9,26 @@
 #import <Foundation/Foundation.h>
 #import "AXObject.h"
 
-@class AXSprite;
+@class AXDynamicJoyStick;
+@class AXActionButton;
 
 @protocol AXVisualInterfaceProtocol <AXSceneObjectProtocol>
 
 @optional
 // your messages back to scene
 - (void)updateWithTouchLocation:(AXPoint)location;
+- (void)actionoccured:(BOOL)action;
 
 @end
 
 @interface AXVisualInterfaceController : AXObject {
-    AXSprite *leftStickThumb;
+    AXDynamicJoyStick *_leftStick;
+    AXActionButton *_actionButton;
 }
 
 @property (nonatomic, retain) AXScene <AXVisualInterfaceProtocol> *sceneDelegate;
+@property (nonatomic, retain) AXDynamicJoyStick *leftStick;
+@property (nonatomic, retain) AXActionButton *actionButton;
 
 - (void)loadInterface;
 

@@ -28,11 +28,11 @@
 @property (nonatomic, assign) BOOL inputActive;
 @property (nonatomic, assign) BOOL loopLock;
 
+- (AXPoint)convertTouchPointToAxisPoint:(CGPoint)touchPoint;
+
 - (void)registerObjectForTouches:(AXObject *)object swallowsTouchesType:(AXInputObjectSwallowType)swallowType;
 - (void)unregisterObjectForTouches:(AXObject*)object;
 - (void)unregisterObjectForTouches:(AXObject *)object swallowsTouchesType:(AXInputObjectSwallowType)swallowType;
-
-//
 
 - (void)touches:(NSSet *)touches withEvent:(UIEvent *)event touchTypeSelector:(SEL)touchTypeSelector;
 

@@ -9,9 +9,19 @@
 #import "AXVisualInterfaceController.h"
 
 #import "AXDirector.h"
+
+#import "AXDynamicJoyStick.h"
+#import "AXActionButton.h"
 #import "AXSprite.h"
 
+@interface AXVisualInterfaceController ()
+
+@end
+
 @implementation AXVisualInterfaceController
+
+@synthesize leftStick = _leftStick;
+@synthesize actionButton = _actionButton;
 
 - (id)init {
     self = [super init];
@@ -42,17 +52,15 @@
     if (children == nil)
         children = [[NSMutableArray alloc] init];
     
-    leftStickThumb = [[AXSprite alloc] initWithSpriteImage:@"baseStick"];
-    leftStickThumb.location = AXPointMake(100, 100, 0);
-    [self addChild:leftStickThumb];
-    [leftStickThumb activate];
-    [leftStickThumb release];
+    self.leftStick = [[AXDynamicJoyStick alloc] init];
+    self.leftStick.location = AXPointMake(100, 100, 0);
+    [self addChild:self.leftStick];
+    [self.leftStick activate];
     
-    /*AXThumbStick *thumbStick = [[AXThumbStick alloc] initWithSpriteImage:@"DualStickThumb"];
-    thumbStick.location = AXPointMake(200, 200, 0);
-    [self addChild:thumbStick];
-    [thumbStick activate];
-    [thumbStick release];*/
+    self.actionButton = [[AXActionButton alloc] initWithSpriteImage:@"thumbStick"];
+    self.actionButton.location = AXPointMake(400, 100, 0);
+    [self addChild:self.actionButton];
+    [self.actionButton activate];
     
     /*AXTexturedButton *rightButton = [[AXTexturedButton alloc] initWithUpKey:@"rightUp" downKey:@"rightDown"];
     rightButton.scale = AXPointMake(50.0, 50.0, 1.0);
@@ -68,7 +76,11 @@
     [rightButton release];*/
 }
 
-// no update or render as is taken care of in AXObject
+- (void)update {
+    [super update];
+    [self.sceneDelegate updateWithTouchLocation:AXPointMake(self.leftStick.movementPower.x, self.leftStick.movementPower.y, 0)];
+    [self.sceneDelegate actionoccured:self.actionButton.actionOn];
+}
 
 #pragma mark - Touches
 
@@ -91,7 +103,7 @@
         
         AXPoint touchPointLoc = AXPointMake(touchPoint.x, correctorFloat.height-touchPoint.y, 0);
         
-        leftStickThumb.location = touchPointLoc;
+        //leftStickThumb.location = touchPointLoc;
         
         [self.sceneDelegate updateWithTouchLocation:touchPointLoc];
     }
@@ -112,7 +124,7 @@
         
         AXPoint touchPointLoc = AXPointMake(touchPoint.x, correctorFloat.height-touchPoint.y, 0);
         
-        leftStickThumb.location = touchPointLoc;
+        //leftStickThumb.location = touchPointLoc;
     }
 }
 

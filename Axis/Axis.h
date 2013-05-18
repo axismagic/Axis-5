@@ -24,9 +24,9 @@
 #define AXIS_VERSION_FORM @"Milestone I"
 #define AXIS_VERSION_TYPE @"Alpha"
 
-#define AXIS_JUST_COMPLETED @"Touch Swallow Dispatch | VisualInterfaceController | Touch Dispatch | Touches Input | Auto-Rotation Correction | Major Code Cleanup | AXActions & Activities"
-#define AXIS_TODO_HIGH @"Resource Control"
-#define AXIS_TODO_LOW @"Clean Collision Controller | Auto-Rotation Control | Frame Rate Control | AXAction & AXActivity Cleanup | Multi-scene update support"
+#define AXIS_JUST_COMPLETED @"Action Button and Dynamic Stick | Touch Swallow Dispatch | VisualInterfaceController | Touch Dispatch | Touches Input | Auto-Rotation Correction | Major Code Cleanup | AXActions & Activities"
+#define AXIS_TODO_HIGH @"Child Location Setup Control | AXActions Broken, Sprites Disapear on perform: scale? | Resource Control"
+#define AXIS_TODO_LOW @"Set AXObject Properties, scale, location etc. | Clean Collision Controller | Auto-Rotation Control | Frame Rate Control | AXAction & AXActivity Cleanup | Multi-scene update support"
 #define AXIS_ISSUES @"Visual Interface Objects disapear when told to perform actions."
 
 // Support - If set to off, components are not loaded

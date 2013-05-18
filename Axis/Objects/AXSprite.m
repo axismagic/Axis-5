@@ -36,21 +36,21 @@ static CGFloat spinnySquareColors[16] = {
 - (id)init {
     self = [super init];
     if (self != nil) {
-        self.vectorFromParent = AXPointMake(0.0, 0.0, 0.0);
+        _vectorFromParent = AXPointMake(0.0, 0.0, 0.0);
         
-        self.location = AXPointMake(0.0, 0.0, 0.0);
-        self.rotation = AXPointMake(0.0, 0.0, 0.0);
-        self.scale = AXPointMake(1.0, 1.0, 1.0);
+        _location = AXPointMake(0.0, 0.0, 0.0);
+        _rotation = AXPointMake(0.0, 0.0, 0.0);
+        _scale = AXPointMake(1.0, 1.0, 1.0);
         
-        self.matrix = (CGFloat*) malloc(16 * sizeof(CGFloat));
-        self.collider = nil;
+        _matrix = (CGFloat*) malloc(16 * sizeof(CGFloat));
+        _collider = nil;
         
-        self.meshBounds = CGRectZero;
+        _meshBounds = CGRectZero;
         
-        self.hasChildren = NO;
-        self.isChild = NO;
+        _hasChildren = NO;
+        _isChild = NO;
         
-        self.active = NO;
+        _active = NO;
     }
     
     return self;
@@ -59,23 +59,9 @@ static CGFloat spinnySquareColors[16] = {
 - (id)initWithSpriteImage:(NSString *)spriteName {
     self = [super init];
     if (self != nil) {
-        self.vectorFromParent = AXPointMake(0.0, 0.0, 0.0);
+        [self init];
         
-        self.location = AXPointMake(0.0, 0.0, 0.0);
-        self.rotation = AXPointMake(0.0, 0.0, 0.0);
-        self.scale = AXPointMake(1.0, 1.0, 1.0);
-        
-        self.matrix = (CGFloat*) malloc(16 * sizeof(CGFloat));
-        self.collider = nil;
-        
-        self.meshBounds = CGRectZero;
-        
-        self.hasChildren = NO;
-        self.isChild = NO;
-        
-        self.active = NO;
-        
-        self.mesh = [[AXMaterialController sharedMaterialController] quadFromAtlasKey:spriteName];
+        _mesh = [[AXMaterialController sharedMaterialController] quadFromAtlasKey:spriteName];
     }
     
     return self;

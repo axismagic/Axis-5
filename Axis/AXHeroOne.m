@@ -26,7 +26,7 @@
     AXPoint correctPoint = AXPointMake(touchPoint.x, correctSize.height - touchPoint.y, 0);
     
     CGFloat distance = AXPointDistance(self.location, correctPoint);
-    if (distance < self.meshBounds.size.height) {
+    if (distance < self.meshBounds.size.height/2) {
         NSLog(@"Touch Claimed");
         return YES;
     } else {

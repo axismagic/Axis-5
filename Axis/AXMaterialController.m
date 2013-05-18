@@ -27,6 +27,7 @@
     self = [super init];
     if (self != nil) {
         [self loadAtlasData:@"HeroSpriteSheet"];
+        [self loadAtlasData:@"dualSticks"];
         //[self loadAtlasData:@"Ducks"];
         //[self loadAtlasData:@"SpaceRocksAtlas"];
         //[self loadAtlasData:@"particleAtlas"];
