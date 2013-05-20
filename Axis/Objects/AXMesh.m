@@ -54,7 +54,7 @@
             yMax = mesh.vertexes[position + 1] * scale.y;
     }*/
     
-    for (index = 0; index < mesh.vertexCount; index++) {
+    /* **** shouldn't matter, this version should be best for (index = 0; index < mesh.vertexCount; index++) {
         NSInteger position = index * mesh.vertexStride;
         if (xMin > mesh.vertexes[position] * scale.x * mesh.size.width)
             xMin = mesh.vertexes[position] * scale.x * mesh.size.width;
@@ -64,6 +64,18 @@
             yMin = mesh.vertexes[position + 1] * scale.y * mesh.size.height;
         if (yMax < mesh.vertexes[position + 1] * scale.y * mesh.size.height)
             yMax = mesh.vertexes[position + 1] * scale.y * mesh.size.height;
+    }*/
+    
+    for (index = 0; index < mesh.vertexCount; index++) {
+        NSInteger position = index * mesh.vertexStride;
+        if (xMin > mesh.vertexes[position] * scale.x)
+            xMin = mesh.vertexes[position] * scale.x;
+        if (xMax < mesh.vertexes[position] * scale.x)
+            xMax = mesh.vertexes[position] * scale.x;
+        if (yMin > mesh.vertexes[position + 1] * scale.y)
+            yMin = mesh.vertexes[position + 1] * scale.y;
+        if (yMax < mesh.vertexes[position + 1] * scale.y)
+            yMax = mesh.vertexes[position + 1] * scale.y;
     }
     
     CGRect meshBounds = CGRectMake(xMin, yMin, xMax - xMin, yMax - yMin);
