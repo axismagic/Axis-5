@@ -112,7 +112,7 @@ static CGFloat spinnySquareColors[16] = {
 #pragma mark - Updates
 
 - (void)secondMidPhaseUpdate {
-    glScalef(self.mesh.size.width, self.mesh.size.height, 1.0);
+    //glScalef(self.mesh.size.width, self.mesh.size.height, 1.0);
 }
 
 - (void)postUpdate {

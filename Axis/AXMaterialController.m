@@ -72,20 +72,42 @@
 }
 
 - (AXTexturedQuad*)texturedQuadFromAtlasRecord:(NSDictionary *)record atlasSize:(CGSize)atlasSize materialKey:(NSString *)key {
-    AXTexturedQuad *quad = [[AXTexturedQuad alloc] init];
     
     GLfloat xLocation = [[record objectForKey:@"xLocation"] floatValue];
     GLfloat yLocation = [[record objectForKey:@"yLocation"] floatValue];
     GLfloat width = [[record objectForKey:@"width"] floatValue];
     GLfloat height = [[record objectForKey:@"height"] floatValue];
     
-    quad.size = CGSizeMake(width, height);
-    
     // find normalized texture coordinates
     GLfloat uMin = xLocation/atlasSize.width;
     GLfloat vMin = yLocation/atlasSize.height;
     GLfloat uMax = (xLocation + width)/atlasSize.width;
     GLfloat vMax = (yLocation + height)/atlasSize.height;
+    
+    // find texture coords
+    /*GLfloat uMin = xLocation;
+    GLfloat vMin = yLocation;
+    GLfloat uMax = xLocation + width;
+    GLfloat vMax = yLocation + height;*/
+    
+    CGFloat *texVerts = (CGFloat*) malloc(8 * sizeof(CGFloat));
+    texVerts[0] = -width/2;
+    texVerts[1] = -height/2;
+    
+    texVerts[2] = width/2;
+    texVerts[3] = -height/2;
+    
+    texVerts[4] = -width/2;
+    texVerts[5] = height/2;
+    
+    texVerts[6] = width/2;
+    texVerts[7] = height/2;
+    
+    // create texture
+    AXTexturedQuad *quad = [[AXTexturedQuad alloc] initWithVertexes:texVerts];
+    //AXTexturedQuad *quad = [[AXTexturedQuad alloc] init];
+    
+    quad.size = CGSizeMake(width, height);
     
     quad.uvCoordinates[0] = uMin;
     quad.uvCoordinates[1] = vMax;

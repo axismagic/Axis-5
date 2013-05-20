@@ -130,10 +130,9 @@
     // if renders, render self
     if (_renders) {
         glPushMatrix();
-        glLoadIdentity();
         
-        glMultMatrixf(self.matrix);
-        [self secondMidPhaseUpdate];
+        glLoadMatrixf(self.matrix);
+        //[self secondMidPhaseUpdate];
         
         [_mesh render];
         

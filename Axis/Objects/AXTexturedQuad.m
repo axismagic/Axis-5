@@ -18,6 +18,18 @@ static CGFloat BBTexturedQuadColorValues[16] = {1.0,1.0,1.0,1.0, 1.0,1.0,1.0,1.0
 
 @synthesize uvCoordinates, materialKey;
 
+- (id)initWithVertexes:(CGFloat*)newVertexes {
+    self = [super initWithVertexes:newVertexes vertexCount:4 vertexStride:2 renderStyle:GL_TRIANGLE_STRIP];
+    if (self != nil) {
+        // 4 vertexes
+        uvCoordinates = (CGFloat*) malloc(8 * sizeof(CGFloat));
+        colors = BBTexturedQuadColorValues;
+        colorStride = 4;
+    }
+    
+    return self;
+}
+
 - (id)init {
     self = [super initWithVertexes:BBTexturedQuadVertexes vertexCount:4 vertexStride:2 renderStyle:GL_TRIANGLE_STRIP];
     if (self != nil) {

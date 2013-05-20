@@ -71,7 +71,6 @@
         glRotatef(self.rotation.z, 0.0f, 0.0f, 1.0f);
         
         // width and height set in render
-        // ***** Scaling by width and height after rotationa and translation may cause errors
         //[self secondMidPhaseUpdate];
         
         // scale
@@ -139,10 +138,11 @@
     // if renders, render self
     if (_renders) {
         glPushMatrix();
-        glLoadIdentity();
+        //glLoadIdentity();
         
-        glMultMatrixf(self.matrix);
-        [self secondMidPhaseUpdate];
+        //glMultMatrixf(self.matrix);
+        glLoadMatrixf(self.matrix);
+        //[self secondMidPhaseUpdate];
         
         [_mesh render];
         

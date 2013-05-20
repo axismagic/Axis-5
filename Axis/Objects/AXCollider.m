@@ -50,12 +50,14 @@ static CGFloat BBCircleColorValues[80] =
         maxRadius = sceneObject.scale.y;
     if ((maxRadius < sceneObject.scale.z) && ([sceneObject mesh].vertexStride > 2))
         maxRadius = sceneObject.scale.z;*/
-    maxRadius = sceneObject.mesh.size.width * sceneObject.scale.x;
-    if (maxRadius < sceneObject.mesh.size.height * sceneObject.scale.y)
-        maxRadius = sceneObject.mesh.size.height * sceneObject.scale.y;
+    // find largest scale
+    maxRadius = sceneObject.scale.x;
+    if (maxRadius <  sceneObject.scale.y)
+        maxRadius = sceneObject.scale.y;
     if ((maxRadius < sceneObject.scale.z) && ([sceneObject mesh].vertexStride > 2))
         maxRadius = sceneObject.scale.z;
     
+    // set radius
     maxRadius *= [sceneObject mesh].radius;
     
     // scene object iVars

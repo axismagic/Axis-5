@@ -17,4 +17,6 @@
 @property (assign) GLfloat *uvCoordinates;
 @property (retain) NSString *materialKey;
 
+- (id)initWithVertexes:(CGFloat*)newVertexes;
+
 @end
