@@ -202,7 +202,7 @@
         // enable blending
         glEnable(GL_BLEND);
     } else {
-        NSLog(@"No Texture");
+        NSLog(@"WARN: No Texture");
         [uiImage release];
         return CGSizeZero;
     }

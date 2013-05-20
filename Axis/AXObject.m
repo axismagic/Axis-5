@@ -93,7 +93,7 @@
     }
     
     // work out relative positions of children (their offset from self)
-    if (_hasChildren) {
+    /*if (_hasChildren) {
         // loop through children and work out relative position
         for (AXObject *child in children) {
             // work out relative position
@@ -104,7 +104,7 @@
             // give child new relative position
             child.vectorFromParent = childRelativePosition;
         }
-    }
+    }*/
     
     if (_updates) {
         
@@ -141,13 +141,17 @@
     
     // update children with new positions from thier saved relative ones
     if (_hasChildren) {
-        for (AXObject *child in children) {
+        //for (AXObject *child in children) {
+            //AXPoint newLoc = AXPointMatrixMultiply(AXPointMake(0.1, 0.1, 0), self.matrix);
+            //child.location = newLoc;
+        //}
+        /*for (AXObject *child in children) {
             AXPoint childNewPosition = AXPointMake(_location.x + child.vectorFromParent.x,
                                                    _location.y + child.vectorFromParent.y,
                                                    _location.z + child.location.z);
             
             child.location = childNewPosition;
-        }
+        }*/
         
         // update all children
         [children makeObjectsPerformSelector:@selector(update)];

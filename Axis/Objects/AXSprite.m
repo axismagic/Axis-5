@@ -59,8 +59,9 @@ static CGFloat spinnySquareColors[16] = {
 - (id)initWithSpriteImage:(NSString *)spriteName {
     self = [super init];
     if (self != nil) {
+        // normal init
         [self init];
-        
+        // init mesh
         _mesh = [[AXMaterialController sharedMaterialController] quadFromAtlasKey:spriteName];
     }
     

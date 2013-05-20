@@ -6,8 +6,8 @@
 //
 //
 
-#import "AXSprite.h"
+#import "AXMobileSprite.h"
 
-@interface AXHeroOne : AXSprite
+@interface AXHeroOne : AXMobileSprite
 
 @end

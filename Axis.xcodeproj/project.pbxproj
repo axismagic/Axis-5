@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B3502D117491B1E00F9326E /* AXEnemy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B3502D017491B1E00F9326E /* AXEnemy.m */; };
 		4B35F7B3172989E1006541E0 /* AXAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B35F7B2172989E1006541E0 /* AXAction.m */; };
 		4B35F7B7172995CD006541E0 /* AXActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B35F7B6172995CD006541E0 /* AXActivity.m */; };
 		4B5053A417284C2A00E27C7E /* AXActionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5053A317284C2A00E27C7E /* AXActionSet.m */; };
@@ -78,6 +79,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4B3502CF17491B1E00F9326E /* AXEnemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXEnemy.h; sourceTree = "<group>"; };
+		4B3502D017491B1E00F9326E /* AXEnemy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXEnemy.m; sourceTree = "<group>"; };
 		4B35F7B1172989E1006541E0 /* AXAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXAction.h; sourceTree = "<group>"; };
 		4B35F7B2172989E1006541E0 /* AXAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXAction.m; sourceTree = "<group>"; };
 		4B35F7B417298C31006541E0 /* AXDataConstructs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AXDataConstructs.h; sourceTree = "<group>"; };
@@ -212,6 +215,8 @@
 			children = (
 				4BFB05151747D06F00607979 /* AXHeroOne.h */,
 				4BFB05161747D06F00607979 /* AXHeroOne.m */,
+				4B3502CF17491B1E00F9326E /* AXEnemy.h */,
+				4B3502D017491B1E00F9326E /* AXEnemy.m */,
 				4BFB05231747F60600607979 /* AXDynamicJoyStick.h */,
 				4BFB05241747F60600607979 /* AXDynamicJoyStick.m */,
 				4BFB052617480C6100607979 /* AXActionButton.h */,
@@ -579,6 +584,7 @@
 				4BFB05171747D06F00607979 /* AXHeroOne.m in Sources */,
 				4BFB05251747F60600607979 /* AXDynamicJoyStick.m in Sources */,
 				4BFB052817480C6100607979 /* AXActionButton.m in Sources */,
+				4B3502D117491B1E00F9326E /* AXEnemy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

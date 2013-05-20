@@ -9,6 +9,7 @@
 #import "AXNewScene.h"
 
 #import "AXHeroOne.h"
+#import "AXEnemy.h"
 
 @implementation AXNewScene
 
@@ -20,17 +21,21 @@
 - (void)loadScene {
     [super loadScene];
     
-    // load heros
-    hero = [[AXMobileSprite alloc] initWithSpriteImage:@"HeroFront"];
-    hero.location = AXPointMake(300, 100, 0);
+    // load hero
+    hero = [[AXHeroOne alloc] initWithSpriteImage:@"HeroFront"];
+    hero.location = AXPointMake(100, 100, 0);
     hero.collisionDetection = YES;
     [self addChild:hero];
     [hero activate];
     [hero release];
     
-    /*AXAction *upScale = [[AXAction alloc] initWithTransformationType:AXACTransformationScale transformationMode:AXACTransformBy transformation:AXPointMake(1.0, 1.0, 0) duration:0.75];
-    
-    [hero performAction:upScale];*/
+    // load enemy
+    enemy = [[AXEnemy alloc] initWithSpriteImage:@"HeroSide"];
+    enemy.location = AXPointMake(100, 50, 0);
+    enemy.collisionDetection = YES;
+    [hero addChild:enemy];
+    [enemy activate];
+    [enemy release];
 }
 
 #pragma mark - Visual Interface Updates
@@ -47,11 +52,12 @@
 - (void)actionoccured:(BOOL)action {
     if (!action)
         return;
-    /*AXAction *upScale = [[AXAction alloc] initWithTransformationType:AXACTransformationScale transformationMode:AXACTransformBy transformation:AXPointMake(1.0, 1.0, 0) duration:0.75];
+    AXAction *upScale = [[AXAction alloc] initWithTransformationType:AXACTransformationScale transformationMode:AXACTransformTo transformation:AXPointMake(2.0, 2.0, 0) duration:0.75];
     
-    [hero performAction:upScale];*/
+    [hero performAction:upScale];
+    hero.rotation = AXPointMake(hero.rotation.x, hero.rotation.y, hero.rotation.z-5);
     
-    hero.scale = AXPointMake(2, 2, 1);
+    //hero.scale = AXPointMake(2, 2, 1);
 }
 
 @end

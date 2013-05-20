@@ -11,8 +11,12 @@
 #import "AXMobileSprite.h"
 #import "AXActionSet.h"
 
+@class AXHeroOne;
+@class AXEnemy;
+
 @interface AXNewScene : AXScene <AXInputProtocol> {
-    AXMobileSprite *hero;
+    AXHeroOne *hero;
+    AXEnemy *enemy;
 }
 
 @end

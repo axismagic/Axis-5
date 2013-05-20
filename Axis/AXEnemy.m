@@ -1,23 +1,16 @@
 //
-//  AXHeroOne.m
+//  AXEnemy.m
 //  Axis
 //
-//  Created by Jethro Wilson on 18/05/2013.
+//  Created by Jethro Wilson on 19/05/2013.
 //
 //
-
-#import "AXHeroOne.h"
-
-#import "AXInputProtocol.h"
 
 #import "AXEnemy.h"
 
-@implementation AXHeroOne
+@implementation AXEnemy
 
-- (void)activate {
-    [super activate];
-    //[[[AXDirector sharedDirector] inputController] registerObjectForTouches:self swallowsTouchesType:AXInputObjectSwallows];
-}
+@synthesize pMat = _pMat;
 
 - (void)update {
     // if not active, do not update self or children
@@ -61,6 +54,7 @@
         // update openGL on self
         glPushMatrix();
         glLoadIdentity();
+        glMultMatrixf(self.pMat);
         
         // move to my position
         glTranslatef(self.location.x, self.location.y, self.location.z);
@@ -70,8 +64,6 @@
         glRotatef(self.rotation.y, 0.0f, 1.0f, 0.0f);
         glRotatef(self.rotation.z, 0.0f, 0.0f, 1.0f);
         
-        // width and height set in render
-        // ***** Scaling by width and height after rotationa and translation may cause errors
         //[self secondMidPhaseUpdate];
         
         // scale
@@ -79,6 +71,7 @@
         
         // save matrix
         glGetFloatv(GL_MODELVIEW_MATRIX, self.matrix);
+        
         // restore matrix
         glPopMatrix();
     }
@@ -87,12 +80,10 @@
     
     // update children with new positions from thier saved relative ones
     if (_hasChildren) {
-        for (AXEnemy *child in children) {
-            
-            child.pMat = self.matrix;
-            //AXPoint newLoc = AXPointMatrixMultiply(AXPointMake(1, 1, 0), self.matrix);
-            //child.location = newLoc;
-        }
+        //for (AXObject *child in children) {
+        //AXPoint newLoc = AXPointMatrixMultiply(AXPointMake(0.1, 0.1, 0), self.matrix);
+        //child.location = newLoc;
+        //}
         /*for (AXObject *child in children) {
          AXPoint childNewPosition = AXPointMake(_location.x + child.vectorFromParent.x,
          _location.y + child.vectorFromParent.y,
@@ -153,27 +144,6 @@
     // render children
     if (_hasChildren && AX_ENABLE_RENDER_CHILDREN_ABOVE)
         [children makeObjectsPerformSelector:@selector(render)];
-}
-
-#pragma mark - Touches
-
-- (BOOL)axTouchIsMine:(UITouch *)touch {
-    // get touch location
-    CGPoint touchPoint = [touch locationInView:[touch view]];
-    CGSize correctSize = [[AXDirector sharedDirector] viewSize];
-    AXPoint correctPoint = AXPointMake(touchPoint.x, correctSize.height - touchPoint.y, 0);
-    
-    CGFloat distance = AXPointDistance(self.location, correctPoint);
-    if (distance < self.meshBounds.size.height/2) {
-        NSLog(@"Touch Claimed");
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
-- (void)axTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    NSLog(@"Hero1 Touch Began");
 }
 
 @end
