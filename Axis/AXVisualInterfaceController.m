@@ -33,8 +33,6 @@
 }
 
 - (void)dealloc {
-    // unregister touches
-    //[[AXDirector sharedDirector].inputController unregisterObjectForTouches:self];
     [super dealloc];
 }
 
@@ -48,7 +46,7 @@
     [self.leftStick activate];
     
     self.actionButton = [[AXActionButton alloc] initWithSpriteImage:@"thumbStick"];
-    self.actionButton.location = AXPointMake(400, 100, 0);
+    self.actionButton.location = AXPointMake(450, 100, 0);
     [self addChild:self.actionButton];
     [self.actionButton activate];
     
@@ -67,7 +65,11 @@
 }
 
 - (void)update {
+    if (!_active)
+        return;
+    
     [super update];
+    // update scene delegate with touch updates
     [self.sceneDelegate updateWithTouchLocation:AXPointMake(self.leftStick.movementPower.x, self.leftStick.movementPower.y, 0)];
     [self.sceneDelegate actionoccured:self.actionButton.actionOn];
 }

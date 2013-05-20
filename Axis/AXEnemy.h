@@ -9,9 +9,7 @@
 #import "AXMobileSprite.h"
 
 @interface AXEnemy : AXMobileSprite {
-    CGFloat *_pMat;
+    
 }
-
-@property (nonatomic, assign) CGFloat *pMat;
 
 @end

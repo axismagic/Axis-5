@@ -25,10 +25,10 @@
 - (void)activate {
     // setup dynamic joy stick
     _stickBase = [[AXSprite alloc] initWithSpriteImage:@"baseStick"];
-    _stickBase.location = AXPointMake(100, 100, 0);
+    _stickBase.location = AXPointMake(0, 0, 0);
     [self addChild:_stickBase];
     _thumbPad = [[AXSprite alloc] initWithSpriteImage:@"thumbStick"];
-    _thumbPad.location = AXPointMake(100, 100, 0);
+    _thumbPad.location = AXPointMake(0, 0, 0);
     [self addChild:_thumbPad];
     // activate stick parts
     
@@ -62,12 +62,14 @@
 
 - (void)axTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     for (UITouch *touch in touches) {
+        // get touch location
         CGPoint touchPoint = [touch locationInView:[touch view]];
+        // convert to Axis Coords
         AXPoint touchPointLocation = [[[AXDirector sharedDirector] inputController] convertTouchPointToAxisPoint:touchPoint];
         
-        self.thumbPad.location = touchPointLocation;
+        self.thumbPad.location = AXPointMake(touchPointLocation.x - self.location.x, touchPointLocation.y - self.location.y, 0);
         
-        self.movementPower = CGPointMake((touchPointLocation.x-100)/100, (touchPointLocation.y-100)/100);
+        self.movementPower = CGPointMake(self.thumbPad.location.x/100, self.thumbPad.location.y/100);
     }
 }
 
@@ -78,15 +80,15 @@
         
         CGFloat distance = AXPointDistance(touchPointLocation, self.location);
         if (distance < self.stickBase.meshBounds.size.height/2) {
-            self.thumbPad.location = touchPointLocation;
+            self.thumbPad.location = AXPointMake(touchPointLocation.x - self.location.x, touchPointLocation.y - self.location.y, 0);;
         } else {
             // distance
-            CGFloat hyp = AXPointDistance(touchPointLocation, AXPointMake(100, 100, 0));
+            CGFloat hyp = AXPointDistance(touchPointLocation, self.location);
             
             CGFloat radius = self.stickBase.meshBounds.size.height/2;
             CGFloat factor = hyp/radius;
             
-            CGPoint localTouchPoint = CGPointMake(touchPointLocation.x - 100, touchPointLocation.y - 100);
+            CGPoint localTouchPoint = CGPointMake(touchPointLocation.x - self.location.x, touchPointLocation.y - self.location.y);
             
             CGFloat newX;
             CGFloat newY;
@@ -103,22 +105,20 @@
                 newY = localTouchPoint.y;
             }
             
-            self.thumbPad.location = AXPointMake(newX + 100, newY + 100, 0);
+            self.thumbPad.location = AXPointMake(newX, newY, 0);
         }
     }
     
-    self.movementPower = CGPointMake((self.thumbPad.location.x-100)/100, (self.thumbPad.location.y-100)/100);
+    self.movementPower = CGPointMake(self.thumbPad.location.x/100, self.thumbPad.location.y/100);
 }
 
 - (void)axTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    self.thumbPad.location = self.location;
-    
+    self.thumbPad.location = AXPointMake(0, 0, 0);
     self.movementPower = CGPointMake(0, 0);
 }
 
 - (void)axTouchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-    self.thumbPad.location = self.location;
-    
+    self.thumbPad.location = AXPointMake(0, 0, 0);
     self.movementPower = CGPointMake(0, 0);
 }
 

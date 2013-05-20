@@ -65,6 +65,7 @@ enum ConflictionModes {
     AXPoint _scale;
     
     CGFloat *_matrix;
+    CGFloat *_parentMatrix;
     
     // Parent/Child variables
     NSMutableArray *children;
@@ -95,6 +96,7 @@ enum ConflictionModes {
 @property (nonatomic, assign) AXPoint scale;
 
 @property (nonatomic, assign) CGFloat *matrix;
+@property (nonatomic, assign) CGFloat *parentMatrix;
 
 @property (nonatomic, assign) BOOL hasChildren;
 @property (nonatomic, assign) BOOL isChild;
@@ -103,7 +105,7 @@ enum ConflictionModes {
 @property (nonatomic, assign) BOOL updates;
 @property (nonatomic, assign) BOOL renders;
 
-@property (nonatomic, assign) NSInteger actionQueuemode;
+@property (nonatomic, assign) NSInteger actionQueueMode;
 
 // activate & reset
 - (void)awake;
@@ -113,10 +115,6 @@ enum ConflictionModes {
 
 // update phases and render
 - (void)update;
-- (void)preUpdate;
-- (void)midPhaseUpdate;
-- (void)secondMidPhaseUpdate;
-- (void)postUpdate;
 - (void)render;
 
 // add and remove children

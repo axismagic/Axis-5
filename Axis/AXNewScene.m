@@ -23,7 +23,7 @@
     
     // load hero
     hero = [[AXHeroOne alloc] initWithSpriteImage:@"HeroFront"];
-    hero.location = AXPointMake(100, 100, 0);
+    hero.location = AXPointMake(250, 100, 0);
     hero.collisionDetection = YES;
     [self addChild:hero];
     [hero activate];

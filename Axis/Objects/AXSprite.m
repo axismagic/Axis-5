@@ -111,14 +111,17 @@ static CGFloat spinnySquareColors[16] = {
 
 #pragma mark - Updates
 
-- (void)secondMidPhaseUpdate {
-    //glScalef(self.mesh.size.width, self.mesh.size.height, 1.0);
-}
-
-- (void)postUpdate {
+- (void)update {
+    if (!_updates)
+        return;
+    
+    [super update];
+    
     if (_collider != nil)
         [_collider updateCollider:self];
 }
+
+#pragma mark Render
 
 - (void)render {
     // if not active, do not render self or children

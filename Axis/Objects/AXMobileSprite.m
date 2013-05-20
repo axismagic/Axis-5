@@ -12,7 +12,10 @@
 
 @synthesize speed, rotationalSpeed;
 
-- (void)midPhaseUpdate {
+- (void)update {
+    if (!_active)
+        return;
+    
     CGFloat deltaTime = [[AXDirector sharedDirector] deltaTime];
     
     int multiplier;
@@ -30,6 +33,8 @@
     _rotation.z += rotationalSpeed.z * deltaTime * multiplier;
     
     //[self checkArenaBounds];
+    
+    [super update];
 }
 
 - (void)checkArenaBounds {

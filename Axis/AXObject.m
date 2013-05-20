@@ -13,10 +13,10 @@
 @synthesize sceneDelegate = _sceneDelegate, parentDelegate = _parentDelegate;
 @synthesize vectorFromParent = _vectorFromParent;
 @synthesize location = _location, rotation = _rotation, scale = _scale;
-@synthesize matrix = _matrix;
+@synthesize matrix = _matrix, parentMatrix = _parentMatrix;
 @synthesize hasChildren = _hasChildren, isChild = _isChild;
 @synthesize active = _active, updates = _updates, renders = _renders;
-@synthesize actionQueuemode = _actionQueueMode;
+@synthesize actionQueueMode = _actionQueueMode;
 
 - (void)dealloc {
     self.matrix = nil;
@@ -29,23 +29,28 @@
 - (id)init {
     self = [super init];
     if (self != nil) {
-        self.sceneDelegate = nil;
-        self.parentDelegate = nil;
+        _sceneDelegate = nil;
+        _parentDelegate = nil;
         
-        self.vectorFromParent = AXPointMake(0.0, 0.0, 0.0);
+        _vectorFromParent = AXPointMake(0.0, 0.0, 0.0);
         
-        self.location = AXPointMake(0.0, 0.0, 0.0);
-        self.rotation = AXPointMake(0.0, 0.0, 0.0);
-        self.scale = AXPointMake(1.0, 1.0, 1.0);
+        _location = AXPointMake(0.0, 0.0, 0.0);
+        _rotation = AXPointMake(0.0, 0.0, 0.0);
+        _scale = AXPointMake(1.0, 1.0, 1.0);
         
-        self.matrix = (CGFloat*) malloc(16 * sizeof(CGFloat));
+        // **** make identity matricies
+        _matrix = (CGFloat*) malloc(16 * sizeof(CGFloat));
+        _parentMatrix = (CGFloat*) malloc(16 * sizeof(CGFloat));
+        glPushMatrix();
+        glLoadIdentity();
+        glGetFloatv(GL_MODELVIEW_MATRIX, _parentMatrix);
         
-        self.hasChildren = NO;
-        self.isChild = NO;
+        _hasChildren = NO;
+        _isChild = NO;
         
-        self.active = NO;
+        _active = NO;
         
-        self.actionQueuemode = AXACQueueSetQueue;
+        _actionQueueMode = AXACQueueSetQueue;
     }
     
     return self;
@@ -80,9 +85,6 @@
     if (!_active)
         return;
     
-    // preUpdate
-    [self preUpdate];
-    
     // add new objects
     if ([childrenToAdd count] > 0) {
         if (children == nil)
@@ -92,31 +94,15 @@
         [childrenToAdd removeAllObjects];
     }
     
-    // work out relative positions of children (their offset from self)
-    /*if (_hasChildren) {
-        // loop through children and work out relative position
-        for (AXObject *child in children) {
-            // work out relative position
-            AXPoint childRelativePosition = AXPointMake(child.location.x - _location.x, 
-                                                        child.location.y - _location.y,
-                                                        child.location.z - _location.z);
-            
-            // give child new relative position
-            child.vectorFromParent = childRelativePosition;
-        }
-    }*/
-    
     if (_updates) {
         
         // update actions
         [self updateActions];
-    
-        // midPhase Updates - used in mobile object
-        [self midPhaseUpdate];
         
         // update openGL on self
         glPushMatrix();
         glLoadIdentity();
+        glMultMatrixf(self.parentMatrix);
         
         // move to my position
         glTranslatef(self.location.x, self.location.y, self.location.z);
@@ -125,8 +111,6 @@
         glRotatef(self.rotation.x, 1.0f, 0.0f, 0.0f);
         glRotatef(self.rotation.y, 0.0f, 1.0f, 0.0f);
         glRotatef(self.rotation.z, 0.0f, 0.0f, 1.0f);
-        
-        [self secondMidPhaseUpdate];
         
         // scale
         glScalef(self.scale.x, self.scale.y, self.scale.z);
@@ -137,21 +121,11 @@
         glPopMatrix();
     }
     
-    // ***** update collider? - perhaps in sprite, moved to postUpdate
-    
     // update children with new positions from thier saved relative ones
     if (_hasChildren) {
-        //for (AXObject *child in children) {
-            //AXPoint newLoc = AXPointMatrixMultiply(AXPointMake(0.1, 0.1, 0), self.matrix);
-            //child.location = newLoc;
-        //}
-        /*for (AXObject *child in children) {
-            AXPoint childNewPosition = AXPointMake(_location.x + child.vectorFromParent.x,
-                                                   _location.y + child.vectorFromParent.y,
-                                                   _location.z + child.location.z);
-            
-            child.location = childNewPosition;
-        }*/
+        for (AXObject *child in children) {
+            child.parentMatrix = self.matrix;
+        }
         
         // update all children
         [children makeObjectsPerformSelector:@selector(update)];
@@ -165,26 +139,6 @@
         if ([children count] == 0)
             self.hasChildren = NO;
     }
-    
-    // postUpdate
-    [self postUpdate];
-}
-
-- (void)preUpdate {
-    
-}
-
-- (void)midPhaseUpdate {
-    /* Overridden in Mobile object to apply changes before updated by OpenGL */
-}
-
-- (void)secondMidPhaseUpdate {
-    // ***** arrange better?
-    /* Overridden by AXSprite to adjust size */
-}
-
-- (void)postUpdate {
-    /* ***** potentially used in sprite to add collider. */
 }
 
 #pragma mark Render
