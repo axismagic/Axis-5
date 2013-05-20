@@ -42,6 +42,7 @@ static CGFloat BBCircleColorValues[80] =
     if (sceneObject == nil)
         return;
     
+    // **** replace with custom matrix multiplication to ensure correct size, rotation and location set. This will also enable custom shapes - not just circles.
     transformedCentroid = AXPointMatrixMultiply([sceneObject mesh].centroid, [sceneObject matrix]);
     //transformedCentroid = AXPointMatrixMultiply(AXPointMake(1, 1, 0), [sceneObject matrix]);
     self.location = transformedCentroid;
