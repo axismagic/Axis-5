@@ -89,6 +89,7 @@
 		4B5053A217284C2A00E27C7E /* AXActionSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXActionSet.h; sourceTree = "<group>"; };
 		4B5053A317284C2A00E27C7E /* AXActionSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXActionSet.m; sourceTree = "<group>"; };
 		4B67E1AD16B7F79400001A84 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
+		4B94B308174AD2DF0080E2D2 /* AXMatrix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AXMatrix.h; sourceTree = "<group>"; };
 		4BBD999D1746BCDE006462B9 /* AXInputHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXInputHandler.h; sourceTree = "<group>"; };
 		4BBD999E1746BCDE006462B9 /* AXInputHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXInputHandler.m; sourceTree = "<group>"; };
 		4BCA0934172D8DDA002385B7 /* AXActivitySet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXActivitySet.h; sourceTree = "<group>"; };
@@ -366,6 +367,7 @@
 				C5D324641593266E0001C2D0 /* AXConfiguration.h */,
 				4B35F7B417298C31006541E0 /* AXDataConstructs.h */,
 				C50DF809159238A600BBB433 /* AXPoint.h */,
+				4B94B308174AD2DF0080E2D2 /* AXMatrix.h */,
 			);
 			name = "Engine Support";
 			sourceTree = "<group>";

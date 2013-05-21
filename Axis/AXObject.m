@@ -8,6 +8,8 @@
 
 #import "AXObject.h"
 
+#import "AXMatrix.h"
+
 @implementation AXObject
 
 @synthesize sceneDelegate = _sceneDelegate, parentDelegate = _parentDelegate;
@@ -38,9 +40,12 @@
         _rotation = AXPointMake(0.0, 0.0, 0.0);
         _scale = AXPointMake(1.0, 1.0, 1.0);
         
-        // **** make identity matricies
         _matrix = (CGFloat*) malloc(16 * sizeof(CGFloat));
         _parentMatrix = (CGFloat*) malloc(16 * sizeof(CGFloat));
+        // **** make identity matricies
+        AXMatrixSetIdentity(_matrix);
+        AXMatrixSetIdentity(_parentMatrix);
+        
         glPushMatrix();
         glLoadIdentity();
         glGetFloatv(GL_MODELVIEW_MATRIX, _parentMatrix);
@@ -101,18 +106,31 @@
         
         // update openGL on self
         glPushMatrix();
-        glLoadIdentity();
-        glMultMatrixf(self.parentMatrix);
+        // inherit coordinate system
+        //glLoadMatrixf(self.parentMatrix);
+        // matrix mult test
+        CGFloat *newMatrix = (CGFloat*) malloc(16 * sizeof(CGFloat));
+        CGFloat *newMatrixID = (CGFloat*) malloc(16 * sizeof(CGFloat));
+        AXMatrixSetIdentity(newMatrixID);
+        AXMatrixMultiply(newMatrixID, self.parentMatrix, newMatrix);
         
-        // move to my position
-        glTranslatef(self.location.x, self.location.y, self.location.z);
+        CGFloat *newMatrixTranslate = (CGFloat*) malloc(16 * sizeof(CGFloat));
+        AXMatrixSetTranslation(newMatrixTranslate, self.location.x, self.location.y, self.location.z);
+        CGFloat *newMatrixFinal = (CGFloat*) malloc(16 * sizeof(CGFloat));
+        // store
+        AXMatrixMultiply(newMatrix, newMatrixTranslate, newMatrixFinal);
+        // load
+        glLoadMatrixf(newMatrixFinal);
         
-        // rotate
+        // update position
+        //glTranslatef(self.location.x, self.location.y, self.location.z);
+        
+        // update rotation
         glRotatef(self.rotation.x, 1.0f, 0.0f, 0.0f);
         glRotatef(self.rotation.y, 0.0f, 1.0f, 0.0f);
         glRotatef(self.rotation.z, 0.0f, 0.0f, 1.0f);
         
-        // scale
+        // update scale
         glScalef(self.scale.x, self.scale.y, self.scale.z);
         
         // save matrix
@@ -124,6 +142,7 @@
     // update children with new positions from thier saved relative ones
     if (_hasChildren) {
         for (AXObject *child in children) {
+            // set child coordinate system as our own
             child.parentMatrix = self.matrix;
         }
         
