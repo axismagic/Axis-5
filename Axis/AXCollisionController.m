@@ -106,7 +106,7 @@
 }
 
 - (void)update {
-    
+    [super update];
 }
 
 - (void)render {

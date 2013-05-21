@@ -8,18 +8,24 @@
 
 #pragma mark AXMatrix
 
-// matrix
-typedef GLfloat AXMatrix[16];
+static inline void AXMatrixBuildIdentity(GLfloat *matrix);
+
+static inline CGFloat* AXMatrixAlloc() {
+    GLfloat *matrix = (GLfloat*) malloc(16 * sizeof(GLfloat));
+    AXMatrixBuildIdentity(matrix);
+    return matrix;
+}
 
 // Set to Identity Matrix
-static inline void AXMatrixSetIdentity(CGFloat *matrix) {
+static inline void AXMatrixBuildIdentity(GLfloat *matrix) {
     matrix[0] = matrix[5] = matrix[10] = matrix[15] = 1.0;
     matrix[1] = matrix[2] = matrix[3] = matrix[4] = 0.0;
     matrix[6] = matrix[7] = matrix[8] = matrix[9] = 0.0;
     matrix[11] = matrix[12] = matrix[13] = matrix[14] = 0.0;
 }
 
-static inline void AXMatrixSetTranslation(CGFloat *matrix, CGFloat xTranslate, CGFloat yTranslate, CGFloat zTranslate) {
+// Build Trasnlation Matrix
+static inline void AXMatrixBuildTranslation(GLfloat *matrix, GLfloat xTranslate, GLfloat yTranslate, GLfloat zTranslate) {
     matrix[0] = matrix[5] = matrix[10] = matrix[15] = 1.0;
     matrix[1] = matrix[2] = matrix[3] = matrix[4] = 0.0;
     matrix[6] = matrix[7] = matrix[8] = matrix[9] = 0.0;
@@ -29,7 +35,8 @@ static inline void AXMatrixSetTranslation(CGFloat *matrix, CGFloat xTranslate, C
     matrix[14] = zTranslate;
 }
 
-static inline void AXMatrixSetScale(CGFloat *matrix, CGFloat xScale, CGFloat yScale, CGFloat zScale) {
+// Build Scale Matrix
+static inline void AXMatrixBuildScale(GLfloat *matrix, GLfloat xScale, GLfloat yScale, GLfloat zScale) {
     matrix[1] = matrix[2] = matrix[3] = matrix[4] = 0.0;
     matrix[6] = matrix[7] = matrix[8] = matrix[9] = 0.0;
     matrix[11] = matrix[12] = matrix[13] = matrix[14] = 0.0;
@@ -39,39 +46,40 @@ static inline void AXMatrixSetScale(CGFloat *matrix, CGFloat xScale, CGFloat ySc
     matrix[15] = 1.0;
 }
 
-static inline void AXMatrixSetRotationByRadians(CGFloat *matrix, CGFloat angle, CGFloat x, CGFloat y, CGFloat z) {
-    CGFloat mag = sqrt((x*x) + (y*y) + (z*z));
+// Build Rotation Matrix
+static inline void AXMatrixBuildRotationByRadians(GLfloat *matrix, GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
+    GLfloat mag = sqrt((x*x) + (y*y) + (z*z));
     if (mag == 0.0) {
         x = 1.0;
         y = 0.0;
         z = 0.0;
-    } else if (mag != 0) {
+    } else if (mag != 1.0) {
         x /= mag;
         y /= mag;
         z /= mag;
     }
     
-    CGFloat c = cosf(angle);
-    CGFloat s = cosf(angle);
+    GLfloat c = cosf(angle);
+    GLfloat s = sinf(angle);
     matrix[3] = matrix[7] = matrix[11] = matrix[12] = matrix[13] = matrix[14] = 0.0;
     matrix[15] = 1.0;
     
     matrix[0] = (x*x)*(1-c) + c;
-    matrix[1] = (y*y)*(1-c) + (z*s);
+    matrix[1] = (y*x)*(1-c) + (z*s);
     matrix[2] = (x*z)*(1-c) - (y*s);
-    matrix[4] = (x*y)*(1-c) - (z*s);
-    matrix[5] = (y*y)*(1-c) + c;
-    matrix[6] = (y*z)*(1-c) + (x*s);
-    matrix[8] = (x*z)*(1-c) + (y*s);
-    matrix[9] = (y*z)*(1-c) - (x*s);
-    matrix[10] = (z*z)*(1-c) + c;
+    matrix[4] = (x*y)*(1-c)-(z*s);
+    matrix[5] = (y*y)*(1-c)+c;
+    matrix[6] = (y*z)*(1-c)+(x*s);
+    matrix[8] = (x*z)*(1-c)+(y*s);
+    matrix[9] = (y*z)*(1-c)-(x*s);
+    matrix[10] = (z*z)*(1-c)+c;
 }
 
-static inline void AXMatrixSetRotationByDegrees(CGFloat *matrix, CGFloat angle, CGFloat x, CGFloat y, CGFloat z) {
-    AXMatrixSetRotationByRadians(matrix, angle * M_PI / 180, x, y, z);
+static inline void AXMatrixBuildRotationByDegrees(GLfloat *matrix, CGFloat angle, GLfloat x, GLfloat y, GLfloat z) {
+    AXMatrixBuildRotationByRadians(matrix, angle * M_PI / 180.0, x, y, z);
 }
 
-static inline void AXMatrixSetHear(CGFloat *matrix, CGFloat xShear, CGFloat yShear) {
+static inline void AXMatrixBuildShear(GLfloat *matrix, GLfloat xShear, GLfloat yShear) {
     matrix[0] = matrix[5] = matrix[10] = matrix[15] = 1.0;
     matrix[1] = matrix[2] = matrix[3] = 1.0;
     matrix[6] = matrix[7] = matrix[8] = matrix[9] = 0.0;
@@ -79,6 +87,8 @@ static inline void AXMatrixSetHear(CGFloat *matrix, CGFloat xShear, CGFloat yShe
     matrix[1] = xShear;
     matrix[4] = yShear;
 }
+
+// Multiply Matrixes
 
 /*
  These define the vectorized version of the
@@ -121,7 +131,7 @@ static inline void AXMatrixSetHear(CGFloat *matrix, CGFloat xShear, CGFloat yShe
 "bic     r0, r0, #0x00370000  \n\t" \
 "fmxr    fpscr, r0            \n\t"
 #endif
-static inline void AXMatrixMultiply(CGFloat *m1, CGFloat *m2, CGFloat *result)
+static inline void AXMatrixMultiply(GLfloat *m1, GLfloat *m2, GLfloat *resultMatrix)
 {
 #if TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR
     __asm__ __volatile__ ( VFP_VECTOR_LENGTH(3)
@@ -179,29 +189,29 @@ static inline void AXMatrixMultiply(CGFloat *m1, CGFloat *m2, CGFloat *result)
                           "fstmias  %0!, {s28-s31}  \n\t"
                           
                           VFP_VECTOR_LENGTH_ZERO
-                          : "=r" (result), "=r" (m2)
+                          : "=r" (resultMatrix), "=r" (m2)
                           : "r" (m1), "0" (result), "1" (m2)
                           : "r0", "cc", "memory", VFP_CLOBBER_S0_S31
                           );
 #else
-    result[0] = m1[0] * m2[0] + m1[4] * m2[1] + m1[8] * m2[2] + m1[12] * m2[3];
-    result[1] = m1[1] * m2[0] + m1[5] * m2[1] + m1[9] * m2[2] + m1[13] * m2[3];
-    result[2] = m1[2] * m2[0] + m1[6] * m2[1] + m1[10] * m2[2] + m1[14] * m2[3];
-    result[3] = m1[3] * m2[0] + m1[7] * m2[1] + m1[11] * m2[2] + m1[15] * m2[3];
+    resultMatrix[0] = m1[0] * m2[0] + m1[4] * m2[1] + m1[8] * m2[2] + m1[12] * m2[3];
+    resultMatrix[1] = m1[1] * m2[0] + m1[5] * m2[1] + m1[9] * m2[2] + m1[13] * m2[3];
+    resultMatrix[2] = m1[2] * m2[0] + m1[6] * m2[1] + m1[10] * m2[2] + m1[14] * m2[3];
+    resultMatrix[3] = m1[3] * m2[0] + m1[7] * m2[1] + m1[11] * m2[2] + m1[15] * m2[3];
     
-    result[4] = m1[0] * m2[4] + m1[4] * m2[5] + m1[8] * m2[6] + m1[12] * m2[7];
-    result[5] = m1[1] * m2[4] + m1[5] * m2[5] + m1[9] * m2[6] + m1[13] * m2[7];
-    result[6] = m1[2] * m2[4] + m1[6] * m2[5] + m1[10] * m2[6] + m1[14] * m2[7];
-    result[7] = m1[3] * m2[4] + m1[7] * m2[5] + m1[11] * m2[6] + m1[15] * m2[7];
+    resultMatrix[4] = m1[0] * m2[4] + m1[4] * m2[5] + m1[8] * m2[6] + m1[12] * m2[7];
+    resultMatrix[5] = m1[1] * m2[4] + m1[5] * m2[5] + m1[9] * m2[6] + m1[13] * m2[7];
+    resultMatrix[6] = m1[2] * m2[4] + m1[6] * m2[5] + m1[10] * m2[6] + m1[14] * m2[7];
+    resultMatrix[7] = m1[3] * m2[4] + m1[7] * m2[5] + m1[11] * m2[6] + m1[15] * m2[7];
     
-    result[8] = m1[0] * m2[8] + m1[4] * m2[9] + m1[8] * m2[10] + m1[12] * m2[11];
-    result[9] = m1[1] * m2[8] + m1[5] * m2[9] + m1[9] * m2[10] + m1[13] * m2[11];
-    result[10] = m1[2] * m2[8] + m1[6] * m2[9] + m1[10] * m2[10] + m1[14] * m2[11];
-    result[11] = m1[3] * m2[8] + m1[7] * m2[9] + m1[11] * m2[10] + m1[15] * m2[11];
+    resultMatrix[8] = m1[0] * m2[8] + m1[4] * m2[9] + m1[8] * m2[10] + m1[12] * m2[11];
+    resultMatrix[9] = m1[1] * m2[8] + m1[5] * m2[9] + m1[9] * m2[10] + m1[13] * m2[11];
+    resultMatrix[10] = m1[2] * m2[8] + m1[6] * m2[9] + m1[10] * m2[10] + m1[14] * m2[11];
+    resultMatrix[11] = m1[3] * m2[8] + m1[7] * m2[9] + m1[11] * m2[10] + m1[15] * m2[11];
     
-    result[12] = m1[0] * m2[12] + m1[4] * m2[13] + m1[8] * m2[14] + m1[12] * m2[15];
-    result[13] = m1[1] * m2[12] + m1[5] * m2[13] + m1[9] * m2[14] + m1[13] * m2[15];
-    result[14] = m1[2] * m2[12] + m1[6] * m2[13] + m1[10] * m2[14] + m1[14] * m2[15];
-    result[15] = m1[3] * m2[12] + m1[7] * m2[13] + m1[11] * m2[14] + m1[15] * m2[15];
+    resultMatrix[12] = m1[0] * m2[12] + m1[4] * m2[13] + m1[8] * m2[14] + m1[12] * m2[15];
+    resultMatrix[13] = m1[1] * m2[12] + m1[5] * m2[13] + m1[9] * m2[14] + m1[13] * m2[15];
+    resultMatrix[14] = m1[2] * m2[12] + m1[6] * m2[13] + m1[10] * m2[14] + m1[14] * m2[15];
+    resultMatrix[15] = m1[3] * m2[12] + m1[7] * m2[13] + m1[11] * m2[14] + m1[15] * m2[15];
 #endif
 }

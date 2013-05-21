@@ -59,6 +59,7 @@ static inline float AXPointDistance(AXPoint p1, AXPoint p2) {
 }
 
 static inline AXPoint AXPointMatrixMultiply(AXPoint p, CGFloat *m) {
+    // **** *R?* Will become redundant with AXMatrix
     CGFloat x = (p.x*m[0]) + (p.y*m[4]) + (p.z*m[8]) + m[12];
     CGFloat y = (p.x*m[1]) + (p.y*m[5]) + (p.z*m[9]) + m[13];
     CGFloat z = (p.x*m[2]) + (p.y*m[6]) + (p.z*m[10]) + m[14];

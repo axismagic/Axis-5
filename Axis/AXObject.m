@@ -9,6 +9,7 @@
 #import "AXObject.h"
 
 #import "AXMatrix.h"
+#import "AXConfiguration.h"
 
 @implementation AXObject
 
@@ -40,15 +41,8 @@
         _rotation = AXPointMake(0.0, 0.0, 0.0);
         _scale = AXPointMake(1.0, 1.0, 1.0);
         
-        _matrix = (CGFloat*) malloc(16 * sizeof(CGFloat));
-        _parentMatrix = (CGFloat*) malloc(16 * sizeof(CGFloat));
-        // **** make identity matricies
-        AXMatrixSetIdentity(_matrix);
-        AXMatrixSetIdentity(_parentMatrix);
-        
-        glPushMatrix();
-        glLoadIdentity();
-        glGetFloatv(GL_MODELVIEW_MATRIX, _parentMatrix);
+        _matrix = AXMatrixAlloc();
+        _parentMatrix = AXMatrixAlloc();
         
         _hasChildren = NO;
         _isChild = NO;
@@ -106,32 +100,63 @@
         
         // update openGL on self
         glPushMatrix();
-        // inherit coordinate system
-        //glLoadMatrixf(self.parentMatrix);
-        // matrix mult test
-        CGFloat *newMatrix = (CGFloat*) malloc(16 * sizeof(CGFloat));
-        CGFloat *newMatrixID = (CGFloat*) malloc(16 * sizeof(CGFloat));
-        AXMatrixSetIdentity(newMatrixID);
-        AXMatrixMultiply(newMatrixID, self.parentMatrix, newMatrix);
-        
-        CGFloat *newMatrixTranslate = (CGFloat*) malloc(16 * sizeof(CGFloat));
-        AXMatrixSetTranslation(newMatrixTranslate, self.location.x, self.location.y, self.location.z);
-        CGFloat *newMatrixFinal = (CGFloat*) malloc(16 * sizeof(CGFloat));
-        // store
-        AXMatrixMultiply(newMatrix, newMatrixTranslate, newMatrixFinal);
-        // load
-        glLoadMatrixf(newMatrixFinal);
-        
-        // update position
-        //glTranslatef(self.location.x, self.location.y, self.location.z);
-        
-        // update rotation
-        glRotatef(self.rotation.x, 1.0f, 0.0f, 0.0f);
-        glRotatef(self.rotation.y, 0.0f, 1.0f, 0.0f);
-        glRotatef(self.rotation.z, 0.0f, 0.0f, 1.0f);
-        
-        // update scale
-        glScalef(self.scale.x, self.scale.y, self.scale.z);
+        if (AX_ENABLE_CUSTOM_MATRIX_MATHS) { // use custom AXMatrix calls for speed, performance and extra features
+            // build transform matrix
+            GLfloat *translationMatrix = AXMatrixAlloc();
+            AXMatrixBuildTranslation(translationMatrix, self.location.x, self.location.y, self.location.z);
+            // build rotation matrixes
+            GLfloat *rotationXMatrix = AXMatrixAlloc();
+            AXMatrixBuildRotationByDegrees(rotationXMatrix, self.rotation.x, 1.0f, 0.0f, 0.0f);
+            GLfloat *rotationYMatrix = AXMatrixAlloc();
+            AXMatrixBuildRotationByDegrees(rotationYMatrix, self.rotation.y, 0.0f, 1.0f, 0.0f);
+            GLfloat *rotationZMatrix = AXMatrixAlloc();
+            AXMatrixBuildRotationByDegrees(rotationZMatrix, self.rotation.z, 0.0f, 0.0f, 1.0f);
+            
+            GLfloat *scaleMatrix = AXMatrixAlloc();
+            AXMatrixBuildScale(scaleMatrix, self.scale.x, self.scale.y, self.scale.z);
+            
+            // ***** add shear GLfloat *shearMatrix = AXMatrixAlloc();
+            
+            // multiply matrixes
+            GLfloat *tempMatrix1 = AXMatrixAlloc();
+            GLfloat *tempMatrix2 = AXMatrixAlloc();
+            GLfloat *tempMatrix3 = AXMatrixAlloc();
+            GLfloat *tempMatrix4 = AXMatrixAlloc();
+            GLfloat *finalMatrix = AXMatrixAlloc();
+            AXMatrixMultiply(self.parentMatrix, translationMatrix, tempMatrix1);
+            AXMatrixMultiply(tempMatrix1, rotationXMatrix, tempMatrix2);
+            AXMatrixMultiply(tempMatrix2, rotationYMatrix, tempMatrix3);
+            AXMatrixMultiply(tempMatrix3, rotationZMatrix, tempMatrix4);
+            AXMatrixMultiply(tempMatrix4, scaleMatrix, finalMatrix);
+            
+            glLoadMatrixf(finalMatrix);
+            
+            free(tempMatrix1);
+            free(tempMatrix2);
+            free(tempMatrix3);
+            free(tempMatrix4);
+            free(finalMatrix);
+            free(translationMatrix);
+            free(rotationXMatrix);
+            free(rotationYMatrix);
+            free(rotationZMatrix);
+            free(scaleMatrix);
+            
+        } else { // use standard OpenGL calls
+            // inherit coordinate system
+            glLoadMatrixf(self.parentMatrix);
+            
+            // update position
+            glTranslatef(self.location.x, self.location.y, self.location.z);
+            
+            // update rotation
+            glRotatef(self.rotation.x, 1.0f, 0.0f, 0.0f);
+            glRotatef(self.rotation.y, 0.0f, 1.0f, 0.0f);
+            glRotatef(self.rotation.z, 0.0f, 0.0f, 1.0f);
+            
+            // update scale
+            glScalef(self.scale.x, self.scale.y, self.scale.z);
+        }
         
         // save matrix
         glGetFloatv(GL_MODELVIEW_MATRIX, self.matrix);
