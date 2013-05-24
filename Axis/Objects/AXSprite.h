@@ -13,6 +13,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "AXPoint.h"
+#import "AXColour.h"
 #import "AXMesh.h"
 #import "AXInputViewController.h"
 #import "AXDirector.h"
@@ -28,6 +29,8 @@
     // mesh
     AXMesh *_mesh;
     CGRect _meshBounds;
+    AXColour _colour;
+    GLfloat *_colourVerts;
     
     // collider
     BOOL _collisionDetection;
@@ -37,11 +40,16 @@
 @property (nonatomic, retain) AXMesh *mesh;
 @property (nonatomic, assign) CGRect meshBounds;
 
+@property (nonatomic, assign) AXColour colour;
+@property (nonatomic, assign) GLfloat *colourVerts;
+
 @property (nonatomic, assign) BOOL collisionDetection;
 @property (nonatomic, retain) AXCollider *collider;
 
 - (id)initWithSpriteImage:(NSString*)spriteName;
 
 - (void)didCollideWith:(AXSprite*)object;
+
+- (void)setSpriteColour:(AXColour)newColour;
 
 @end

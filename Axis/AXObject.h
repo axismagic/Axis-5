@@ -59,13 +59,13 @@ enum ConflictionModes {
     // locations
     AXPoint _vectorFromParent;
     
-    // location, rotation and scale
+    // location, rotation, shear and scale
     AXPoint _location;
     AXPoint _rotation;
     AXPoint _scale;
+    CGPoint _shear;
     
-    CGFloat *_matrix;
-    CGFloat *_parentMatrix;
+    GLfloat *_matrix;
     
     // Parent/Child variables
     NSMutableArray *children;
@@ -93,10 +93,10 @@ enum ConflictionModes {
 @property (nonatomic, assign) AXPoint vectorFromParent;
 @property (nonatomic, assign) AXPoint location;
 @property (nonatomic, assign) AXPoint rotation;
+@property (nonatomic, assign) CGPoint shear;
 @property (nonatomic, assign) AXPoint scale;
 
-@property (nonatomic, assign) CGFloat *matrix;
-@property (nonatomic, assign) CGFloat *parentMatrix;
+@property (nonatomic, assign) GLfloat *matrix;
 
 @property (nonatomic, assign) BOOL hasChildren;
 @property (nonatomic, assign) BOOL isChild;
@@ -114,7 +114,9 @@ enum ConflictionModes {
 - (void)deactivate;
 
 // update phases and render
-- (void)update;
+- (void)beginUpdate;
+- (void)endUpdate;
+- (void)updateWithMatrix:(GLfloat*)parentMatrix;
 - (void)render;
 
 // add and remove children

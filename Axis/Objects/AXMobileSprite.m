@@ -12,7 +12,25 @@
 
 @synthesize speed, rotationalSpeed;
 
-- (void)update {
+- (void)beginUpdate {
+    CGFloat deltaTime = [[AXDirector sharedDirector] deltaTime];
+    
+    int multiplier;
+    if (AX_ENABLE_POINT_PER_SECOND)
+        multiplier = 1;
+    else
+        multiplier = 60;
+    
+    _location.x += speed.x * deltaTime * multiplier;
+    _location.y += speed.y * deltaTime * multiplier;
+    _location.z += speed.z * deltaTime * multiplier;
+    
+    _rotation.x += rotationalSpeed.x * deltaTime * multiplier;
+    _rotation.y += rotationalSpeed.y * deltaTime * multiplier;
+    _rotation.z += rotationalSpeed.z * deltaTime * multiplier;
+}
+
+/* *R?* - (void)update {
     if (!_active)
         return;
     
@@ -34,8 +52,8 @@
     
     //[self checkArenaBounds];
     
-    [super update];
-}
+    // [super update];
+}*/
 
 - (void)checkArenaBounds {
     // ***** Bound checking currently broken

@@ -73,7 +73,18 @@
     }
 }
 
-- (void)update {
+- (void)endUpdate {
+    // build arrays
+    [self buildVertexArrays];
+    
+    // generate new particles, queue them for addition
+    [self emitNewParticles];
+    
+    // remove old particles
+    [self clearDeadQueue];
+}
+
+/* *R?* - (void)update {
     [super update];
     
     // build arrays
@@ -84,7 +95,7 @@
     
     // remove old particles
     [self clearDeadQueue];
-}
+}*/
 
 - (BOOL)activeParticles {
     if ([activeParticles count] > 0)

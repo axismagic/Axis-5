@@ -24,7 +24,5 @@
 - (void)removeObject:(AXSprite*)object;
 
 - (void)awake;
-- (void)render;
-- (void)update;
 
 @end

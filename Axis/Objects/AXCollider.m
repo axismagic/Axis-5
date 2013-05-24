@@ -27,6 +27,7 @@ static CGFloat BBCircleColorValues[80] =
 @implementation AXCollider
 
 @synthesize checkForCollisions, maxRadius;
+@synthesize mesh = _mesh;
 
 + (AXCollider*)collider {
     AXCollider *collider = [[AXCollider alloc] init];
@@ -39,6 +40,7 @@ static CGFloat BBCircleColorValues[80] =
 }
 
 - (void)updateCollider:(AXSprite*)sceneObject {
+    // *R?*
     if (sceneObject == nil)
         return;
     
@@ -63,10 +65,65 @@ static CGFloat BBCircleColorValues[80] =
     
     // scene object iVars
     self.scale = AXPointMake(maxRadius, maxRadius, 1.0);
+    
+    glPushMatrix();
+    glLoadIdentity();
+    
+    glTranslatef(self.location.x, self.location.y, self.location.z);
+    glScalef(self.scale.x, self.scale.y, self.scale.z);
+    
+    // save matrix
+    glGetFloatv(GL_MODELVIEW_MATRIX, self.matrix);
+    // restore matrix
+    glPopMatrix();
+    
     //scale = AXPointMake([sceneObject mesh].radius * sceneObject.scale.x, [sceneObject mesh].radius * sceneObject.scale.y, 0.0);
 }
 
+- (void)setScaleFromObject:(AXSprite*)sceneObject {
+    /*maxRadius = sceneObject.scale.x;
+    if (maxRadius <  sceneObject.scale.y)
+        maxRadius = sceneObject.scale.y;
+    if ((maxRadius < sceneObject.scale.z) && ([sceneObject mesh].vertexStride > 2))
+        maxRadius = sceneObject.scale.z;*/
+    
+    // set radius
+    maxRadius = [sceneObject mesh].radius;
+    
+    // scene object iVars
+    self.scale = AXPointMake(maxRadius, maxRadius, 1.0);
+}
+
+- (void)updateWithMatrix:(GLfloat *)parentMatrix {
+    // if not active, do not update self or children
+    if (!_active)
+        return;
+    
+    [self beginUpdate];
+    
+    if (_updates) {
+        
+        self.scale = AXPointMake(maxRadius, maxRadius, 1.0);
+        
+        // update openGL on self
+        glPushMatrix();
+        
+        glLoadMatrixf(parentMatrix);
+        
+        // **** needs to init with max radius so this doesn't need to be set in case of errors that pop up later with transformation order. Double check.
+        glScalef(self.scale.x, self.scale.y, self.scale.z);
+        
+        // save matrix
+        glGetFloatv(GL_MODELVIEW_MATRIX, self.matrix);
+        // restore matrix
+        glPopMatrix();
+    }
+    
+    [self endUpdate];
+}
+
 - (BOOL)doesCollideWithCollider:(AXCollider*)aCollider {
+    // *** Max radius not being calculated
     CGFloat collisionDistance = self.maxRadius + aCollider.maxRadius;
     CGFloat objectDistance = AXPointDistance(_location, aCollider.location);
     
@@ -76,6 +133,7 @@ static CGFloat BBCircleColorValues[80] =
 }
 
 - (BOOL)doesCollideWithMesh:(AXSprite*)sceneObject {
+    // *** Max radius not being calculated
     NSInteger index;
     for (index = 0; index < sceneObject.mesh.vertexCount; index++) {
         NSInteger position = index * sceneObject.mesh.vertexStride;
@@ -109,9 +167,10 @@ static CGFloat BBCircleColorValues[80] =
     if (!_mesh || !_active)
         return;
     glPushMatrix();
-    glLoadIdentity();
-    glTranslatef(self.location.x, self.location.y, self.location.z);
-    glScalef(self.scale.x, self.scale.y, self.scale.z);
+    //glLoadIdentity();
+    glLoadMatrixf(self.matrix);
+    //glTranslatef(self.location.x, self.location.y, self.location.z);
+    //glScalef(self.scale.x, self.scale.y, self.scale.z);
     [self.mesh render];
     glPopMatrix();
 }

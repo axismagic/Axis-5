@@ -36,9 +36,13 @@ static CGFloat BBSquareFillVertexes[8] = {-0.5,-0.5, 0.5,-0.5, -0.5,0.5, 0.5,0.5
     [self setNotPressedVertexes];
 }
 
-- (void)update {
+/* *R?*- (void)update {
     [self handleTouches];
     [super update];
+}*/
+
+- (void)beginUpdate {
+    [self handleTouches];
 }
 
 - (void)handleTouches {

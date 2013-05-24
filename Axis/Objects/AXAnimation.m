@@ -25,12 +25,18 @@
     
 }
 
-- (void)update {
+/* *R?* - (void)update {
     [super update];
     [(AXAnimatedQuad*)_mesh updateAnimation];
     if ([(AXAnimatedQuad*)_mesh didFinish])
         [_parentDelegate removeObjectFromParent:self];
         //[[AXDirector sharedDirector] removeObjectFromScene:self];
+}*/
+
+- (void)endUpdate {
+    [(AXAnimatedQuad*)_mesh updateAnimation];
+    if ([(AXAnimatedQuad*)_mesh didFinish])
+        [_parentDelegate removeObjectFromParent:self];
 }
 
 @end

@@ -81,7 +81,7 @@ static inline void AXMatrixBuildRotationByDegrees(GLfloat *matrix, CGFloat angle
 
 static inline void AXMatrixBuildShear(GLfloat *matrix, GLfloat xShear, GLfloat yShear) {
     matrix[0] = matrix[5] = matrix[10] = matrix[15] = 1.0;
-    matrix[1] = matrix[2] = matrix[3] = 1.0;
+    matrix[1] = matrix[2] = matrix[3] = 0.0;
     matrix[6] = matrix[7] = matrix[8] = matrix[9] = 0.0;
     matrix[11] = matrix[12] = matrix[13] = matrix[14] = 0.0;
     matrix[1] = xShear;

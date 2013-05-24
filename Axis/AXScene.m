@@ -67,10 +67,14 @@
 - (void)updateScene {
     // update interface
     if (_visualInterfaceController.updates)
-        [_visualInterfaceController update];
+        [_visualInterfaceController updateWithMatrix:self.matrix];
     
     // update all other objects
-    [children makeObjectsPerformSelector:@selector(update)];
+    //[children makeObjectsPerformSelector:@selector(update)];
+    //[children makeObjectsPerformSelector:@selector(updateWithMatrix:) withObject:self.matrix];
+    for (AXObject *child in children) {
+        [child updateWithMatrix:self.matrix];
+    }
     
     // handle collisions
     [_collisionController handleCollisions];

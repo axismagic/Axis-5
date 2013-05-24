@@ -24,10 +24,10 @@
 #define AXIS_VERSION_FORM @"Milestone I"
 #define AXIS_VERSION_TYPE @"Alpha"
 
-#define AXIS_JUST_COMPLETED @"Matrix Control | Intuitive Size Control | Touch Swallow Dispatch | VisualInterfaceController | Touch Dispatch | Auto-Rotation Correction"
+#define AXIS_JUST_COMPLETED @"Matrix Control | Intuitive Size Control | Touch Swallow Dispatch | VisualInterfaceController"
 #define AXIS_TODO_HIGH @"Custom Matrix Controls | Resource Control"
-#define AXIS_TODO_LOW @"Clean Collision Controller | Auto-Rotation Control | Frame Rate Control | AXAction & AXActivity Cleanup | Multi-scene update support"
-#define AXIS_ISSUES @"Visual Interface Objects disapear when told to perform actions."
+#define AXIS_TODO_LOW @"AXCollider Clean | AXCollider needs to init with max radius | Clean Collision Controller | Auto-Rotation Control | Frame Rate Control | AXAction & AXActivity Cleanup | Multi-scene update support"
+#define AXIS_ISSUES @"AXColliders do not check for collisions"
 
 // Support - If set to off, components are not loaded
 #define AXIS_SUPPORT_THE_GAME_ENGINE 1 // The Game Engine. If set to off, Game Engine is not complete

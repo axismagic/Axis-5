@@ -64,11 +64,17 @@
     [rightButton release];*/
 }
 
-- (void)update {
+/* *R?* - (void)update {
     if (!_active)
         return;
     
     [super update];
+    // update scene delegate with touch updates
+    [self.sceneDelegate updateWithTouchLocation:AXPointMake(self.leftStick.movementPower.x, self.leftStick.movementPower.y, 0)];
+    [self.sceneDelegate actionoccured:self.actionButton.actionOn];
+}*/
+
+- (void)endUpdate {
     // update scene delegate with touch updates
     [self.sceneDelegate updateWithTouchLocation:AXPointMake(self.leftStick.movementPower.x, self.leftStick.movementPower.y, 0)];
     [self.sceneDelegate actionoccured:self.actionButton.actionOn];

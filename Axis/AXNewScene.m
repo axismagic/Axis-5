@@ -33,6 +33,7 @@
     enemy = [[AXEnemy alloc] initWithSpriteImage:@"HeroSide"];
     enemy.location = AXPointMake(100, 50, 0);
     enemy.collisionDetection = YES;
+    enemy.colour = AXColourMake(1, 0, 0, 0.5);
     [hero addChild:enemy];
     [enemy activate];
     [enemy release];

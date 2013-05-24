@@ -29,6 +29,7 @@ static CGFloat spinnySquareColors[16] = {
 @implementation AXSprite
 
 @synthesize mesh = _mesh, meshBounds = _meshBounds;
+@synthesize colourVerts = _colourVerts;
 @synthesize collider = _collider, collisionDetection = _collisionDetection;
 
 #pragma mark - Init
@@ -40,7 +41,12 @@ static CGFloat spinnySquareColors[16] = {
         
         _location = AXPointMake(0.0, 0.0, 0.0);
         _rotation = AXPointMake(0.0, 0.0, 0.0);
+        _shear = CGPointMake(0, 0);
         _scale = AXPointMake(1.0, 1.0, 1.0);
+        
+        _colour = AXColourMake(1.0, 1.0, 1.0, 1.0);
+        
+        _colourVerts = (GLfloat*) malloc(4 * 4 * sizeof(GLfloat));
         
         _matrix = (CGFloat*) malloc(16 * sizeof(CGFloat));
         _collider = nil;
@@ -86,6 +92,7 @@ static CGFloat spinnySquareColors[16] = {
         // ***** needs set Yes or No?
         [self.collider setCheckForCollisions:YES];
         [_sceneDelegate addObjectCollider:self];
+        [self.collider activate];
     }
 }
 
@@ -111,7 +118,7 @@ static CGFloat spinnySquareColors[16] = {
 
 #pragma mark - Updates
 
-- (void)update {
+/*- (void)update {
     if (!_updates)
         return;
     
@@ -119,6 +126,15 @@ static CGFloat spinnySquareColors[16] = {
     
     if (_collider != nil)
         [_collider updateCollider:self];
+}*/
+
+- (void)endUpdate {
+    if (_collider != nil) {
+        // **** optimise
+        [_collider setScaleFromObject:self];
+        [_collider updateWithMatrix:self.matrix];
+        //[_collider updateCollider:self];
+    }
 }
 
 #pragma mark Render
@@ -144,9 +160,11 @@ static CGFloat spinnySquareColors[16] = {
     // if renders, render self
     if (_renders) {
         glPushMatrix();
-        glLoadIdentity();
+        //glLoadIdentity();
         
-        glMultMatrixf(self.matrix);
+        //glMultMatrixf(self.matrix);
+        
+        glLoadMatrixf(self.matrix);
         
         [_mesh render];
         
@@ -157,6 +175,26 @@ static CGFloat spinnySquareColors[16] = {
     // render children
     if (_hasChildren && AX_ENABLE_RENDER_CHILDREN_ABOVE)
         [children makeObjectsPerformSelector:@selector(render)];
+}
+
+#pragma mark Colours
+
+- (void)setColour:(AXColour)colour {
+    _colour = colour;
+    [self setSpriteColour:_colour];
+}
+
+- (void)setSpriteColour:(AXColour)newColour {
+    NSInteger vertexIndex = 0;
+    for (vertexIndex = 0; vertexIndex < 16; vertexIndex += 4) {
+        self.colourVerts[vertexIndex] = newColour.r;
+        self.colourVerts[vertexIndex + 1] = newColour.g;
+        self.colourVerts[vertexIndex + 2] = newColour.b;
+        self.colourVerts[vertexIndex + 3] = newColour.a;
+    }
+    
+    self.mesh.colors = self.colourVerts;
+    self.mesh.colorStride = 4;
 }
 
 #pragma mark Collision Detection

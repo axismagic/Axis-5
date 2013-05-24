@@ -64,6 +64,6 @@
 - (void)render;
 - (void)setDefaultSystem;
 - (void)setParticle:(NSString*)atlasKey;
-- (void)update;
+// *R?* - (void)update;
 
 @end

@@ -15,8 +15,8 @@
 
 @synthesize sceneDelegate = _sceneDelegate, parentDelegate = _parentDelegate;
 @synthesize vectorFromParent = _vectorFromParent;
-@synthesize location = _location, rotation = _rotation, scale = _scale;
-@synthesize matrix = _matrix, parentMatrix = _parentMatrix;
+@synthesize location = _location, rotation = _rotation, shear = _shear, scale = _scale;
+@synthesize matrix = _matrix;
 @synthesize hasChildren = _hasChildren, isChild = _isChild;
 @synthesize active = _active, updates = _updates, renders = _renders;
 @synthesize actionQueueMode = _actionQueueMode;
@@ -39,10 +39,10 @@
         
         _location = AXPointMake(0.0, 0.0, 0.0);
         _rotation = AXPointMake(0.0, 0.0, 0.0);
+        _shear = CGPointMake(0, 0);
         _scale = AXPointMake(1.0, 1.0, 1.0);
         
         _matrix = AXMatrixAlloc();
-        _parentMatrix = AXMatrixAlloc();
         
         _hasChildren = NO;
         _isChild = NO;
@@ -79,10 +79,20 @@
 #pragma mark -
 #pragma mark Update
 
-- (void)update {
+- (void)beginUpdate {
+    
+}
+
+- (void)endUpdate {
+    
+}
+
+- (void)updateWithMatrix:(GLfloat*)parentMatrix {
     // if not active, do not update self or children
     if (!_active)
         return;
+    
+    [self beginUpdate];
     
     // add new objects
     if ([childrenToAdd count] > 0) {
@@ -112,22 +122,26 @@
             GLfloat *rotationZMatrix = AXMatrixAlloc();
             AXMatrixBuildRotationByDegrees(rotationZMatrix, self.rotation.z, 0.0f, 0.0f, 1.0f);
             
+            // shear
+            GLfloat *shearMatrix = AXMatrixAlloc();
+            AXMatrixBuildShear(shearMatrix, self.shear.x, self.shear.y);
+            // scale
             GLfloat *scaleMatrix = AXMatrixAlloc();
             AXMatrixBuildScale(scaleMatrix, self.scale.x, self.scale.y, self.scale.z);
-            
-            // ***** add shear GLfloat *shearMatrix = AXMatrixAlloc();
             
             // multiply matrixes
             GLfloat *tempMatrix1 = AXMatrixAlloc();
             GLfloat *tempMatrix2 = AXMatrixAlloc();
             GLfloat *tempMatrix3 = AXMatrixAlloc();
             GLfloat *tempMatrix4 = AXMatrixAlloc();
+            GLfloat *tempMatrix5 = AXMatrixAlloc();
             GLfloat *finalMatrix = AXMatrixAlloc();
-            AXMatrixMultiply(self.parentMatrix, translationMatrix, tempMatrix1);
+            AXMatrixMultiply(parentMatrix, translationMatrix, tempMatrix1);
             AXMatrixMultiply(tempMatrix1, rotationXMatrix, tempMatrix2);
             AXMatrixMultiply(tempMatrix2, rotationYMatrix, tempMatrix3);
             AXMatrixMultiply(tempMatrix3, rotationZMatrix, tempMatrix4);
-            AXMatrixMultiply(tempMatrix4, scaleMatrix, finalMatrix);
+            AXMatrixMultiply(tempMatrix4, shearMatrix, tempMatrix5);
+            AXMatrixMultiply(tempMatrix5, scaleMatrix, finalMatrix);
             
             glLoadMatrixf(finalMatrix);
             
@@ -135,6 +149,7 @@
             free(tempMatrix2);
             free(tempMatrix3);
             free(tempMatrix4);
+            free(tempMatrix5);
             free(finalMatrix);
             free(translationMatrix);
             free(rotationXMatrix);
@@ -144,7 +159,7 @@
             
         } else { // use standard OpenGL calls
             // inherit coordinate system
-            glLoadMatrixf(self.parentMatrix);
+            glLoadMatrixf(parentMatrix);
             
             // update position
             glTranslatef(self.location.x, self.location.y, self.location.z);
@@ -166,13 +181,11 @@
     
     // update children with new positions from thier saved relative ones
     if (_hasChildren) {
-        for (AXObject *child in children) {
-            // set child coordinate system as our own
-            child.parentMatrix = self.matrix;
-        }
-        
         // update all children
-        [children makeObjectsPerformSelector:@selector(update)];
+        //[children makeObjectsPerformSelector:@selector(updateWithMatrix:) withObject:self.matrix];
+        for (AXObject *child in children) {
+            [child updateWithMatrix:self.matrix];
+        }
     }
     
     // remove old child objects
@@ -183,6 +196,8 @@
         if ([children count] == 0)
             self.hasChildren = NO;
     }
+    
+    [self endUpdate];
 }
 
 #pragma mark Render

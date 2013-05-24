@@ -14,12 +14,16 @@
 
 @end
 
-@interface AXCollider : AXSprite {
+@class AXMesh;
+
+@interface AXCollider : AXObject {
     AXPoint transformedCentroid;
     BOOL checkForCollisions;
     CGFloat maxRadius;
+    AXMesh *_mesh;
 }
 
+@property (nonatomic, retain) AXMesh *mesh;
 @property (assign) BOOL checkForCollisions;
 @property (assign) CGFloat maxRadius;
 
@@ -31,5 +35,7 @@
 - (void)awake;
 - (void)render;
 - (void)dealloc;
+
+- (void)setScaleFromObject:(AXSprite*)sceneObject;
 
 @end

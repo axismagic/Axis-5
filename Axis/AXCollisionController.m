@@ -105,9 +105,9 @@
     
 }
 
-- (void)update {
+/* *R?*- (void)update {
     [super update];
-}
+}*/
 
 - (void)render {
     if (!_active)
