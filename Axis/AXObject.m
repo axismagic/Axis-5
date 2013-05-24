@@ -156,6 +156,7 @@
             free(rotationYMatrix);
             free(rotationZMatrix);
             free(scaleMatrix);
+            free(shearMatrix);
             
         } else { // use standard OpenGL calls
             // inherit coordinate system
@@ -182,10 +183,10 @@
     // update children with new positions from thier saved relative ones
     if (_hasChildren) {
         // update all children
-        //[children makeObjectsPerformSelector:@selector(updateWithMatrix:) withObject:self.matrix];
-        for (AXObject *child in children) {
+        [children makeObjectsPerformSelector:@selector(updateWithMatrix:) withObject:(id)self.matrix];
+        /*for (AXObject *child in children) {
             [child updateWithMatrix:self.matrix];
-        }
+        }*/
     }
     
     // remove old child objects

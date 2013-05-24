@@ -71,10 +71,10 @@
     
     // update all other objects
     //[children makeObjectsPerformSelector:@selector(update)];
-    //[children makeObjectsPerformSelector:@selector(updateWithMatrix:) withObject:self.matrix];
-    for (AXObject *child in children) {
+    [children makeObjectsPerformSelector:@selector(updateWithMatrix:) withObject:(id)self.matrix];
+    /*for (AXObject *child in children) {
         [child updateWithMatrix:self.matrix];
-    }
+    }*/
     
     // handle collisions
     [_collisionController handleCollisions];
